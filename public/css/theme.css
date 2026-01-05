@@ -1,0 +1,49 @@
+:root {
+  --bg-main: #12091f;
+  --bg-card: #1e1233;
+  --bg-accent: #2c1852;
+
+  --purple: #8b5cf6;
+  --purple-soft: #a78bfa;
+
+  --green: #22c55e;
+  --text-main: #f5f3ff;
+  --text-muted: #b9b2d8;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: "Segoe UI", system-ui, sans-serif;
+}
+
+body {
+  margin: 0;
+  background: var(--bg-main);
+  color: var(--text-main);
+}
+
+.top-bar {
+  padding: 16px 24px;
+  background: linear-gradient(90deg, #3b1d7a, #5b21b6);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.subtitle {
+  font-size: 0.9rem;
+  opacity: 0.85;
+}
+
+.progress {
+  background: #2a1f44;
+  border-radius: 8px;
+  overflow: hidden;
+  height: 10px;
+}
+
+.progress-fill {
+  background: linear-gradient(90deg, #22c55e, #4ade80);
+  height: 100%;
+  transition: width 0.3s ease;
+}

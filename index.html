@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fish It – Multi Account Monitor</title>
+
+<style>
+:root {
+  --bg: #0d0d0d;
+  --card: #1a1a1a;
+  --green: #4caf50;
+  --red: #f44336;
+  --blue: #03a9f4;
+  --gray: #9e9e9e;
+}
+
+body {
+  margin: 0;
+  padding: 10px;
+  font-family: system-ui, Arial, sans-serif;
+  background: var(--bg);
+  color: white;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.container {
+  max-width: 700px;
+  margin: auto;
+}
+
+.card {
+  background: var(--card);
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,.5);
+}
+
+.username {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+.status {
+  color: var(--blue);
+  font-weight: bold;
+}
+
+.online {
+  color: var(--green);
+  font-weight: bold;
+}
+
+.offline {
+  color: var(--red);
+  font-weight: bold;
+}
+
+.footer {
+  text-align: center;
+  margin-top: 15px;
+  font-size: 12px;
+  color: var(--gray);
+}
+</style>
+</head>
+
+<body>
+
+<h1>🎣 Fish It – Account Monitor</h1>
+<div class="container" id="list"></div>
+
+<div class="footer">
+  Visual simulation • Auto refresh
+</div>
+
+<script>
+/* =====================================================
+   SIMULATED DATA ENGINE (16 ACCOUNTS)
+   ===================================================== */
+
+const ACCOUNT_COUNT = 16;
+const OFFLINE_LIMIT = 60 * 1000; // 60 detik
+const STATUSES = ["FISHING", "SELLING", "IDLE"];
+
+const accounts = {};
+
+// INIT DATA
+for (let i = 1; i <= ACCOUNT_COUNT; i++) {
+  const name = "Alt_" + String(i).padStart(2, "0");
+  accounts[name] = {
+    status: "FISHING",
+    fish: random(20, 200),
+    money: random(5000, 50000),
+    lastUpdate: Date.now()
+  };
+}
+
+// RANDOM UPDATE (SIMULASI ROBLOX CLIENT)
+setInterval(() => {
+  Object.values(accounts).forEach(acc => {
+
+    // 15% kemungkinan offline
+    if (Math.random() < 0.15) {
+      acc.lastUpdate = Date.now() - random(70000, 150000);
+      return;
+    }
+
+    acc.lastUpdate = Date.now();
+    acc.status = STATUSES[random(0, STATUSES.length - 1)];
+
+    if (acc.status === "FISHING") {
+      acc.fish += random(1, 6);
+      acc.money += random(50, 200);
+    }
+
+    if (acc.status === "SELLING") {
+      acc.money += acc.fish * 10;
+      acc.fish = 0;
+    }
+  });
+}, 4000);
+
+/* =====================================================
+   RENDER UI
+   ===================================================== */
+
+function render() {
+  const container = document.getElementById("list");
+  const now = Date.now();
+  let html = "";
+
+  for (const name in accounts) {
+    const acc = accounts[name];
+    const online = (now - acc.lastUpdate) < OFFLINE_LIMIT;
+
+    html += `
+      <div class="card">
+        <div class="username">${name}</div>
+
+        <div class="row">
+          <span>Status</span>
+          <span class="status">${acc.status}</span>
+        </div>
+
+        <div class="row">
+          <span>Fish</span>
+          <span>${acc.fish}</span>
+        </div>
+
+        <div class="row">
+          <span>Money</span>
+          <span>${acc.money.toLocaleString()}</span>
+        </div>
+
+        <div class="row">
+          <span>Connection</span>
+          <span class="${online ? "online" : "offline"}">
+            ${online ? "ONLINE" : "OFFLINE"}
+          </span>
+        </div>
+      </div>
+    `;
+  }
+
+  container.innerHTML = html;
+}
+
+setInterval(render, 1000);
+render();
+
+/* =====================================================
+   UTILITY
+   ===================================================== */
+function random(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+/* =====================================================
+   NOTE:
+   Untuk DATA REAL:
+   - Hapus SIMULATED ENGINE
+   - Ganti render() dengan fetch() ke Cloudflare Worker
+   ===================================================== */
+</script>
+
+</body>
+</html>

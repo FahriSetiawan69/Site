@@ -1,229 +1,298 @@
 export default {
-  async fetch(req) {
+  async fetch() {
     return new Response(html(), {
-      headers: { "Content-Type": "text/html; charset=utf-8" },
+      headers: { "content-type": "text/html;charset=UTF-8" },
     });
   },
 };
 
 function html() {
-  return `
+return `
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8" />
-<title>Fish It – Multi Account Monitor</title>
+<meta charset="UTF-8">
+<title>Fish It Monitor</title>
+
 <style>
+:root {
+  --bg: #0b0617;
+  --panel: #140b2d;
+  --card: #1e104a;
+  --accent: #a855f7;
+  --soft: #c084fc;
+  --gold: #facc15;
+  --green: #22c55e;
+}
+
 body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #0f172a;
-  color: #e5e7eb;
+  margin:0;
+  font-family: Inter, Arial;
+  background: radial-gradient(circle at top, #2b145f, #05010d);
+  color:#e9d5ff;
 }
-h2 { margin: 0 0 6px 0; }
+
+h2 { margin:12px }
+
 .grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 12px;
-  padding: 12px;
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:14px;
+  padding:14px;
 }
+
 .slot {
-  background: #020617;
-  border: 1px solid #1e293b;
-  border-radius: 8px;
-  padding: 10px;
-  cursor: pointer;
+  background:linear-gradient(180deg,#1e104a,#140b2d);
+  border-radius:14px;
+  padding:12px;
+  border:1px solid #3b1d75;
+  cursor:pointer;
+  transition:.2s;
 }
-.slot:hover { border-color: #38bdf8; }
-.small { font-size: 12px; color: #94a3b8; }
-.quest {
-  margin-top: 6px;
-  background: #020617;
-  padding: 6px;
-  border-radius: 6px;
-  border: 1px dashed #334155;
+.slot:hover { transform:scale(1.02); border-color:var(--accent); }
+
+.small { font-size:12px; opacity:.8 }
+
+.quest-box {
+  margin-top:8px;
+  border:1px dashed #5b21b6;
+  border-radius:8px;
+  padding:6px;
 }
+
 .modal {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,.7);
-  display: none;
-  align-items: center;
-  justify-content: center;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.75);
+  display:none;
+  align-items:center;
+  justify-content:center;
 }
-.modal.active { display: flex; }
+.modal.show { display:flex }
+
 .panel {
-  width: 90%;
-  max-width: 900px;
-  background: #020617;
-  border-radius: 10px;
-  padding: 12px;
-  border: 1px solid #334155;
+  width:94%;
+  max-width:1000px;
+  background:linear-gradient(180deg,#1a0f3d,#0c051b);
+  border-radius:16px;
+  padding:14px;
+  border:1px solid #5b21b6;
+}
+
+.header {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.close { cursor:pointer; color:#f472b6 }
+
+.tabs {
+  margin-top:12px;
+  display:flex;
+  gap:8px;
 }
 .tabs button {
-  margin-right: 6px;
+  background:#2b145f;
+  color:#e9d5ff;
+  border:none;
+  padding:6px 12px;
+  border-radius:8px;
+  cursor:pointer;
 }
+.tabs button.active { background:var(--accent) }
+
 .inventory {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(120px,1fr));
-  gap: 8px;
-  margin-top: 10px;
+  margin-top:14px;
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(150px,1fr));
+  gap:12px;
 }
+
 .item {
-  border: 1px solid #1e293b;
-  border-radius: 6px;
-  padding: 6px;
-  text-align: center;
+  background:linear-gradient(180deg,#2b145f,#1a0f3d);
+  border-radius:12px;
+  padding:8px;
+  text-align:center;
+  border:1px solid #4c1d95;
 }
-.item.zero { opacity: .35; }
-.close {
-  float: right;
-  cursor: pointer;
-  color: #f87171;
+
+.item img {
+  width:64px;
+  height:64px;
+  filter:drop-shadow(0 0 8px #9333ea);
 }
+
+.price { color:var(--gold); font-weight:bold }
+.weight { color:var(--green); font-size:12px }
+
+.other {
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(120px,1fr));
+  gap:10px;
+  margin-top:12px;
+}
+
+.other-item {
+  background:#2b145f;
+  border-radius:10px;
+  padding:10px;
+  text-align:center;
+}
+
+.quest {
+  margin-top:12px;
+  background:#1e104a;
+  padding:10px;
+  border-radius:10px;
+  border:1px solid #5b21b6;
+  cursor:pointer;
+}
+.quest.active { border-color:var(--accent) }
 </style>
 </head>
 
 <body>
 
-<h2 style="padding:12px">🎣 Fish It – Multi Account Monitor</h2>
+<h2>🎣 Fish It – Multi Account Monitor</h2>
 <div class="grid" id="grid"></div>
 
 <div class="modal" id="modal">
   <div class="panel">
-    <span class="close" onclick="closeModal()">✖</span>
-    <h3 id="detailTitle"></h3>
-
-    <div class="tabs">
-      <button onclick="showTab('inv')">Inventory</button>
-      <button onclick="showTab('quest')">Quest</button>
+    <div class="header">
+      <div id="detailTitle"></div>
+      <div class="close" onclick="closeModal()">✖</div>
     </div>
 
-    <div id="invTab"></div>
-    <div id="questTab" style="display:none"></div>
+    <div class="tabs">
+      <button id="tFish" onclick="showTab('fish')">Fish</button>
+      <button id="tOther" onclick="showTab('other')">Other</button>
+      <button id="tQuest" onclick="showTab('quest')">Quest</button>
+    </div>
+
+    <div id="content"></div>
   </div>
 </div>
 
 <script>
 /* ===== DUMMY DATA ===== */
 
-const FISH = [
-  "Blue Salmon","Golden Carp","Secret Tuna",
-  "Red Snapper","Crystal Eel","Void Koi"
+const FISHES = [
+  "Megalodon","Zombie Megalodon","Robot Kraken",
+  "Secret Tuna","Golden Carp","Lochness Monster"
 ];
 
-const QUESTS = {
-  secret_hunter: {
-    name: "Secret Hunter",
-    objectives: { "Secret Tuna": 2, "Golden Carp": 1 }
-  }
-};
+const OTHER_ITEMS = ["Enchant Stone","Totem XP","Magic Scroll"];
 
-const slots = Array.from({length:16}).map((_,i)=>({
-  id: i,
-  username: "Account_"+(i+1),
-  gold: Math.floor(Math.random()*5000),
-  ping: 40 + Math.floor(Math.random()*120),
-  status: "ONLINE",
-  inventory: Object.fromEntries(FISH.map(f=>[f, Math.floor(Math.random()*3)])),
-  pinnedQuest: "secret_hunter"
+const QUESTS = [
+  {id:1,name:"Secret Hunter", goals:["Catch Secret Fish","Catch Legendary"]},
+  {id:2,name:"Master Fisher", goals:["Catch 500 Fish","Sell 10 Fish"]},
+  {id:3,name:"Gold Grinder", goals:["Earn 5M Gold"]}
+];
+
+const slots = Array.from({length:20}).map((_,i)=>({
+  id:i,
+  user:"Account_"+(i+1),
+  gold:Math.floor(Math.random()*2_000_000),
+  ping:50+Math.floor(Math.random()*120),
+  fish:FISHES.map(f=>({
+    name:f,
+    weight:(250+Math.random()*250).toFixed(2),
+    price:(200+Math.random()*700).toFixed(2)
+  })),
+  other:Object.fromEntries(OTHER_ITEMS.map(o=>[o,Math.floor(Math.random()*8)])),
+  quest:QUESTS[Math.floor(Math.random()*3)]
 }));
 
-/* ===== UI RENDER ===== */
+/* ===== HOME ===== */
 
-const grid = document.getElementById("grid");
+const grid=document.getElementById("grid");
 
 function renderHome(){
   grid.innerHTML="";
   slots.forEach(s=>{
-    const q = QUESTS[s.pinnedQuest];
-    let questHtml = "";
-    if(q){
-      questHtml = "<div class='quest'><b>"+q.name+"</b>";
-      for(const f in q.objectives){
-        questHtml += "<div class='small'>"+f+": "+
-          Math.min(s.inventory[f]||0, q.objectives[f])+
-          " / "+q.objectives[f]+"</div>";
-      }
-      questHtml += "</div>";
-    }
-
-    const el = document.createElement("div");
-    el.className="slot";
-    el.innerHTML = \`
-      <b>\${s.username}</b>
-      <div class="small">Gold: \${s.gold}</div>
-      <div class="small">Items: \${Object.values(s.inventory).reduce((a,b)=>a+b,0)}</div>
-      <div class="small">Status: \${s.status}</div>
+    const d=document.createElement("div");
+    d.className="slot";
+    d.innerHTML=\`
+      <b>\${s.user}</b>
+      <div class="small">Gold: $\${(s.gold/1000).toFixed(1)}K</div>
+      <div class="small">Fish: \${s.fish.length}</div>
       <div class="small">Ping: \${s.ping}ms</div>
-      \${questHtml}
+      <div class="quest-box">
+        🎯 \${s.quest.name}
+      </div>
     \`;
-    el.onclick=()=>openDetail(s.id);
-    grid.appendChild(el);
+    d.onclick=()=>openDetail(s.id);
+    grid.appendChild(d);
   });
 }
 
-/* ===== DETAIL MODAL ===== */
+/* ===== DETAIL ===== */
 
-let currentSlot=null;
+let current=null;
 
 function openDetail(id){
-  currentSlot = slots[id];
-  document.getElementById("detailTitle").innerText =
-    currentSlot.username + " – Detail";
-  showTab("inv");
-  document.getElementById("modal").classList.add("active");
+  current=slots[id];
+  document.getElementById("detailTitle").innerText=current.user+" – Inventory";
+  document.getElementById("modal").classList.add("show");
+  showTab("fish");
 }
 
 function closeModal(){
-  document.getElementById("modal").classList.remove("active");
+  document.getElementById("modal").classList.remove("show");
 }
 
 function showTab(t){
-  document.getElementById("invTab").style.display =
-    t==="inv"?"block":"none";
-  document.getElementById("questTab").style.display =
-    t==="quest"?"block":"none";
+  document.querySelectorAll(".tabs button").forEach(b=>b.classList.remove("active"));
+  document.getElementById("t"+t.charAt(0).toUpperCase()+t.slice(1)).classList.add("active");
 
-  if(t==="inv") renderInventory();
+  if(t==="fish") renderFish();
+  if(t==="other") renderOther();
   if(t==="quest") renderQuest();
 }
 
-function renderInventory(){
-  const c = document.getElementById("invTab");
-  c.innerHTML = "<h4>Inventory</h4><div class='inventory'>"+
-    Object.entries(currentSlot.inventory).map(([f,v])=>
-      \`<div class="item \${v===0?"zero":""}">
-        <div>🐟</div>
-        <div>\${f}</div>
-        <div>x\${v}</div>
-      </div>\`
-    ).join("")+"</div>";
+function renderFish(){
+  document.getElementById("content").innerHTML=
+  '<div class="inventory">'+
+  current.fish.map(f=>\`
+    <div class="item">
+      <img src="https://dummyimage.com/64x64/9333ea/ffffff&text=🐟">
+      <div>\${f.name}</div>
+      <div class="price">$\${f.price}K</div>
+      <div class="weight">\${f.weight} KG</div>
+    </div>\`).join("")+'</div>';
+}
+
+function renderOther(){
+  document.getElementById("content").innerHTML=
+  '<div class="other">'+
+  Object.entries(current.other).map(([n,c])=>\`
+    <div class="other-item">
+      <div>📦</div>
+      <div>\${n}</div>
+      <b>x\${c}</b>
+    </div>\`).join("")+'</div>';
 }
 
 function renderQuest(){
-  const q = QUESTS[currentSlot.pinnedQuest];
-  let html = "<h4>"+q.name+"</h4>";
-  for(const f in q.objectives){
-    html += "<div>"+f+": "+
-      Math.min(currentSlot.inventory[f]||0, q.objectives[f])+
-      " / "+q.objectives[f]+"</div>";
-  }
-  document.getElementById("questTab").innerHTML = html;
+  document.getElementById("content").innerHTML=
+  QUESTS.map(q=>\`
+    <div class="quest \${q.id===current.quest.id?"active":""}"
+      onclick="current.quest=q;renderHome();renderQuest()">
+      <b>\${q.name}</b>
+      \${q.goals.map(g=>'<div class="small">- '+g+'</div>').join("")}
+    </div>\`).join("");
 }
 
-/* ===== SIMULASI REAL-TIME ===== */
+/* ===== SIMULASI REALTIME ===== */
 
 setInterval(()=>{
   slots.forEach(s=>{
-    const fish = FISH[Math.floor(Math.random()*FISH.length)];
-    s.inventory[fish] += Math.random()>0.5?1:-1;
-    if(s.inventory[fish]<0) s.inventory[fish]=0;
-    s.gold += Math.floor(Math.random()*20);
-    s.ping = 40 + Math.floor(Math.random()*120);
+    s.gold+=Math.random()*5000;
+    s.ping=50+Math.random()*120;
   });
   renderHome();
-}, 2000);
+},2500);
 
 renderHome();
 </script>

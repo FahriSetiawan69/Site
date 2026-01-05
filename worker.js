@@ -104,12 +104,24 @@ export default {
       });
     }
 
-    // JSON data
-    if (req.method === "GET" && url.pathname === "/data") {
-      return new Response(JSON.stringify(clients), {
-        headers: { "Content-Type": "application/json" }
-      });
-    }
+    // JSON data (DUMMY BERGERAK)
+if (req.method === "GET" && url.pathname === "/data") {
+
+  // simulasi aktivitas akun
+  Object.values(clients).forEach(acc => {
+    acc.fish += Math.floor(Math.random() * 3);     // +0–2
+    acc.money += Math.floor(Math.random() * 500); // +0–500
+
+    const statuses = ["Fishing", "Idle", "Selling", "Moving"];
+    acc.status = statuses[Math.floor(Math.random() * statuses.length)];
+
+    acc.time = Date.now();
+  });
+
+  return new Response(JSON.stringify(clients), {
+    headers: { "Content-Type": "application/json" }
+  });
+}
 
     // Endpoint update (nanti dipakai Lua)
     if (req.method === "POST" && url.pathname === "/update") {
@@ -128,4 +140,5 @@ export default {
 
     return new Response("Not Found", { status: 404 });
   }
+
 };

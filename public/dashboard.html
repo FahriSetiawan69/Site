@@ -1,75 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Fishit Monitor Dashboard</title>
-  <link rel="stylesheet" href="css/style.css" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<title>Fishit Dashboard</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="css/key.css">
 </head>
 <body>
 
-<!-- SIDEBAR -->
-<div class="sidebar">
-  <div class="logo">FISHIT</div>
-  <ul>
-    <li onclick="showTab('fish')">🐟 Fish</li>
-    <li onclick="showTab('quest')">📜 Quest</li>
-    <li onclick="showTab('mutation')">🧬 Mutation</li>
-    <li onclick="showTab('item')">🎒 Items</li>
-    <li onclick="logout()">🚪 Logout</li>
-  </ul>
-</div>
+<h2>Fishit Dashboard (Dummy)</h2>
+<button onclick="logout()">Logout</button>
 
-<!-- MAIN -->
-<div class="main">
+<div id="fishList"></div>
+<div id="itemList"></div>
+<div id="questList"></div>
 
-  <!-- HEADER -->
-  <div class="header">
-    <h1>Fishit Monitor</h1>
-    <span class="key-info">KEY: <b>VALID</b></span>
-  </div>
+<script src="./js/state.js"></script>
+<script src="./js/dashboard.js"></script>
+<script src="./js/dummyData.js"></script>
 
-  <!-- STATS -->
-  <div class="stats">
-    <div class="card">🐟 Fish<br><b>12</b></div>
-    <div class="card">🌟 Secret Fish<br><b>2</b></div>
-    <div class="card">📜 Quest<br><b>2 / 3</b></div>
-    <div class="card">🎒 Items<br><b>7</b></div>
-  </div>
-
-  <!-- CONTENT -->
-  <div class="content">
-
-    <!-- FISH -->
-    <div id="fish" class="tab active">
-      <h2>Fish Collection</h2>
-      <div class="grid" id="fishList"></div>
-    </div>
-
-    <!-- QUEST -->
-    <div id="quest" class="tab">
-      <h2>Quest Progress</h2>
-      <div id="questList"></div>
-    </div>
-
-    <!-- MUTATION -->
-    <div id="mutation" class="tab">
-      <h2>Mutation History</h2>
-      <table>
-        <tr><th>Fish A</th><th>Fish B</th><th>Result</th></tr>
-        <tr><td>Golden Carp</td><td>Rainbow Trout</td><td>Shiny Carp</td></tr>
-      </table>
-    </div>
-
-    <!-- ITEMS -->
-    <div id="item" class="tab">
-      <h2>Inventory</h2>
-      <div class="grid" id="itemList"></div>
-    </div>
-
-  </div>
-</div>
-
-<script src="js/dashboard.js"></script>
 </body>
 </html>

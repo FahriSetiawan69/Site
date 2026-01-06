@@ -2,60 +2,107 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Fishit Monitor Dashboard</title>
+  <title>Fishit Monitor</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Dashboard CSS (WAJIB) -->
+  <!-- Dashboard UI -->
   <link rel="stylesheet" href="css/dashboard.css">
 </head>
 <body>
 
-  <!-- Background futuristik -->
-  <div class="background"></div>
+<!-- Background -->
+<div class="background"></div>
 
-  <!-- Dashboard Wrapper -->
-  <div id="dashboardContainer">
+<!-- APP WRAPPER -->
+<div id="app">
 
-    <!-- Header -->
-    <div class="header">
-      <h1>Fishit Monitor Dashboard</h1>
-      <button onclick="logout()">Logout</button>
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="logo">
+      Fishit<br><span>Monitor</span>
     </div>
 
-    <!-- Panels -->
-    <div class="panels">
+    <nav>
+      <a class="active">Dashboard</a>
+      <a>Accounts</a>
+      <a>Fish</a>
+      <a>Quest</a>
+      <a>Items</a>
+      <a>Settings</a>
+    </nav>
+  </aside>
 
-      <!-- Fish Panel -->
-      <div class="panel" id="fishPanel">
-        <h3>Fish</h3>
-        <div id="fishList">
-          <!-- Dummy fish data akan dirender oleh dashboard.js -->
+  <!-- MAIN AREA -->
+  <div class="main">
+
+    <!-- TOP BAR -->
+    <header class="topbar">
+      <div class="account-info">
+        Active Account:
+        <select id="accountSelect">
+          <option>Akun 1</option>
+          <option>Akun 2</option>
+        </select>
+      </div>
+
+      <button class="logout-btn" onclick="logout()">Logout</button>
+    </header>
+
+    <!-- CONTENT -->
+    <section class="content">
+
+      <!-- STATS -->
+      <div class="stats">
+        <div class="stat-card">
+          <h4>Total Fish</h4>
+          <span id="statFish">12</span>
+        </div>
+        <div class="stat-card">
+          <h4>Secret Fish</h4>
+          <span id="statSecret">2</span>
+        </div>
+        <div class="stat-card">
+          <h4>Quest</h4>
+          <span id="statQuest">2 / 3</span>
+        </div>
+        <div class="stat-card">
+          <h4>Items</h4>
+          <span id="statItems">7</span>
         </div>
       </div>
 
-      <!-- Items Panel -->
-      <div class="panel" id="itemPanel">
-        <h3>Items</h3>
-        <div id="itemList">
-          <!-- Dummy item data -->
+      <!-- DATA PANELS -->
+      <div class="panels">
+
+        <!-- Fish -->
+        <div class="panel">
+          <h3>Fish</h3>
+          <div id="fishList"></div>
         </div>
+
+        <!-- Items -->
+        <div class="panel">
+          <h3>Items</h3>
+          <div id="itemList"></div>
+        </div>
+
+        <!-- Quest -->
+        <div class="panel">
+          <h3>Quest</h3>
+          <div id="questList"></div>
+        </div>
+
       </div>
 
-      <!-- Quest Panel -->
-      <div class="panel" id="questPanel">
-        <h3>Quest</h3>
-        <div id="questList">
-          <!-- Dummy quest data -->
-        </div>
-      </div>
+    </section>
 
-    </div>
   </div>
+</div>
 
-  <!-- JS ORDER WAJIB -->
-  <script src="js/state.js"></script>
-  <script src="js/dummyData.js"></script>
-  <script src="js/dashboard.js"></script>
+<!-- JS -->
+<script src="js/state.js"></script>
+<script src="js/dummyData.js"></script>
+<script src="js/dashboard.js"></script>
 
 </body>
 </html>

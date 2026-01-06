@@ -1,6 +1,6 @@
-// PROTEKSI KEY
-if (localStorage.getItem("fishit_key_valid") !== "true") {
-  window.location.href = "/";
+// CEK LOGIN KEY
+if (sessionStorage.getItem("fishit_key_valid") !== "true") {
+  window.location.href = "index.html";
 }
 
 // TAB SWITCH
@@ -11,11 +11,14 @@ function showTab(tab) {
 
 // LOGOUT
 function logout() {
-  localStorage.removeItem("fishit_key_valid");
-  window.location.href = "/";
+  sessionStorage.removeItem("fishit_key_valid");
+  window.location.href = "index.html";
 }
 
-// DUMMY DATA
+/* =====================
+   DUMMY DATA
+===================== */
+
 const fishData = [
   { name: "Golden Carp", weight: "2.5kg", rarity: "Rare" },
   { name: "Rainbow Trout", weight: "1.2kg", rarity: "Common" }
@@ -33,35 +36,41 @@ const questData = [
 
 // RENDER FISH
 const fishList = document.getElementById("fishList");
-fishData.forEach(f => {
-  fishList.innerHTML += `
-    <div class="item-card">
-      <h4>${f.name}</h4>
-      <p>${f.weight}</p>
-      <span>${f.rarity}</span>
-    </div>
-  `;
-});
+if (fishList) {
+  fishData.forEach(f => {
+    fishList.innerHTML += `
+      <div class="item-card">
+        <h4>${f.name}</h4>
+        <p>${f.weight}</p>
+        <span>${f.rarity}</span>
+      </div>
+    `;
+  });
+}
 
 // RENDER ITEMS
 const itemList = document.getElementById("itemList");
-itemData.forEach(i => {
-  itemList.innerHTML += `
-    <div class="item-card">
-      <h4>${i.name}</h4>
-      <p>x${i.count}</p>
-    </div>
-  `;
-});
+if (itemList) {
+  itemData.forEach(i => {
+    itemList.innerHTML += `
+      <div class="item-card">
+        <h4>${i.name}</h4>
+        <p>x${i.count}</p>
+      </div>
+    `;
+  });
+}
 
 // RENDER QUEST
 const questList = document.getElementById("questList");
-questData.forEach(q => {
-  questList.innerHTML += `
-    <div class="item-card">
-      <h4>${q.name}</h4>
-      <p>${q.progress}</p>
-      <small>${q.reward}</small>
-    </div>
-  `;
-});
+if (questList) {
+  questData.forEach(q => {
+    questList.innerHTML += `
+      <div class="item-card">
+        <h4>${q.name}</h4>
+        <p>${q.progress}</p>
+        <small>${q.reward}</small>
+      </div>
+    `;
+  });
+}

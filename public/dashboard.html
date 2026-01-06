@@ -1,45 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Fishit Dashboard</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="css/key.css">
+  <meta charset="UTF-8">
+  <title>Fishit Monitor Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Dashboard CSS (WAJIB) -->
+  <link rel="stylesheet" href="css/dashboard.css">
 </head>
 <body>
 
-<div class="background"></div>
+  <!-- Background futuristik -->
+  <div class="background"></div>
 
-<div id="dashboardContainer">
-  <div class="header">
-    <h1>Fishit Monitor Dashboard</h1>
-    <button onclick="logout()">Logout</button>
+  <!-- Dashboard Wrapper -->
+  <div id="dashboardContainer">
+
+    <!-- Header -->
+    <div class="header">
+      <h1>Fishit Monitor Dashboard</h1>
+      <button onclick="logout()">Logout</button>
+    </div>
+
+    <!-- Panels -->
+    <div class="panels">
+
+      <!-- Fish Panel -->
+      <div class="panel" id="fishPanel">
+        <h3>Fish</h3>
+        <div id="fishList">
+          <!-- Dummy fish data akan dirender oleh dashboard.js -->
+        </div>
+      </div>
+
+      <!-- Items Panel -->
+      <div class="panel" id="itemPanel">
+        <h3>Items</h3>
+        <div id="itemList">
+          <!-- Dummy item data -->
+        </div>
+      </div>
+
+      <!-- Quest Panel -->
+      <div class="panel" id="questPanel">
+        <h3>Quest</h3>
+        <div id="questList">
+          <!-- Dummy quest data -->
+        </div>
+      </div>
+
+    </div>
   </div>
 
-  <div class="panels">
-    <!-- Panel Fish -->
-    <div class="panel" id="fishPanel">
-      <h3>Fish</h3>
-      <div id="fishList"></div>
-    </div>
-
-    <!-- Panel Items -->
-    <div class="panel" id="itemPanel">
-      <h3>Items</h3>
-      <div id="itemList"></div>
-    </div>
-
-    <!-- Panel Quest -->
-    <div class="panel" id="questPanel">
-      <h3>Quest</h3>
-      <div id="questList"></div>
-    </div>
-  </div>
-</div>
-
-<script src="./js/state.js"></script>
-<script src="./js/dashboard.js"></script>
-<script src="./js/dummyData.js"></script>
+  <!-- JS ORDER WAJIB -->
+  <script src="js/state.js"></script>
+  <script src="js/dummyData.js"></script>
+  <script src="js/dashboard.js"></script>
 
 </body>
 </html>

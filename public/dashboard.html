@@ -1,49 +1,64 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Fish It – Account Monitor</title>
+  <title>Fishit Monitor Dashboard</title>
 
   <!-- Google Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&display=swap" rel="stylesheet">
 
   <!-- CSS -->
-  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/dashboard.css" />
 </head>
 <body>
 
-<header class="topbar">
-  <h1>🎣 Fish It – Account Monitor</h1>
-  <button class="logout-btn">Logout</button>
-</header>
+  <!-- Background Overlay -->
+  <div class="bg-overlay"></div>
 
-<div class="layout">
-
-  <!-- SIDEBAR -->
+  <!-- Sidebar -->
   <aside class="sidebar">
-    <div class="menu active">📊 Account Monitor</div>
-    <div class="menu">📈 Statistics</div>
-    <div class="menu">📜 Logs</div>
-    <div class="menu">⚙️ Settings</div>
+    <h2>FISHIT</h2>
+    <ul>
+      <li class="active">Accounts</li>
+      <li>Future Feature</li>
+      <li>Settings</li>
+    </ul>
   </aside>
 
-  <!-- MAIN CONTENT -->
+  <!-- Main Content -->
   <main class="main">
+    <header class="topbar">
+      <h1>Fishit Monitor Dashboard</h1>
+      <button id="logoutBtn">Logout</button>
+    </header>
 
-    <!-- GRID AKUN -->
-    <section class="account-grid" id="accountGrid">
-      <!-- diisi oleh JS -->
+    <!-- Cards Container -->
+    <section id="accountGrid" class="grid"></section>
+
+    <!-- Detail Panel -->
+    <section id="detailPanel" class="detail hidden">
+      <h2 id="detailUsername">Account Detail</h2>
+
+      <div class="detail-section">
+        <h3>Fish</h3>
+        <ul id="fishList"></ul>
+      </div>
+
+      <div class="detail-section">
+        <h3>Items</h3>
+        <ul id="itemList"></ul>
+      </div>
+
+      <div class="detail-section">
+        <h3>Quest</h3>
+        <p id="questDetail"></p>
+      </div>
     </section>
-
-    <!-- DETAIL PANEL -->
-    <section class="detail-panel" id="detailPanel">
-      <h2>Pilih akun untuk melihat detail</h2>
-    </section>
-
   </main>
-</div>
 
-<script src="js/dashboard.js"></script>
+  <!-- JS -->
+  <script src="js/dummyData.js"></script>
+  <script src="js/dashboard.js"></script>
 </body>
-  </html>
+</html>

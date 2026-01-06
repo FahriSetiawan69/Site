@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Fishit Monitor - Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- CSS LAMA (kalau ada) -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div style="padding:20px;">
+    <h1>Fishit Monitor Dashboard</h1>
+    <p>Key validated successfully.</p>
+
+    <button onclick="logout()">Logout</button>
+
+    <hr>
+
+    <h2>Dummy Data</h2>
+    <ul>
+      <li>Fish: 12</li>
+      <li>Secret Fish: 2</li>
+      <li>Quest Progress: 2 / 3</li>
+      <li>Items: 7</li>
+    </ul>
+  </div>
+
+  <!-- PROTECTION SCRIPT -->
+  <script src="js/dashboard.js"></script>
+
+  <script>
+    function logout() {
+      sessionStorage.removeItem("fishit_key_valid");
+      window.location.href = "index.html";
+    }
+  </script>
+
+</body>
+</html>

@@ -2,32 +2,20 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Fishit Monitor - Key Access</title>
+  <title>Fishit Key Login</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <link rel="stylesheet" href="css/key.css">
 </head>
 <body>
 
-  <div class="login-wrapper">
-    <div class="login-card">
-      <h1>FISHIT MONITOR</h1>
-      <p class="subtitle">Enter Access Key</p>
+<h2>Fishit Monitor Login</h2>
 
-      <input 
-        type="text" 
-        id="keyInput" 
-        placeholder="Enter your key..."
-        autocomplete="off"
-      >
+<input id="keyInput" type="text" placeholder="Enter Key">
+<button id="loginBtn">Login</button>
 
-      <button onclick="submitKey()">ACCESS PANEL</button>
+<p id="status"></p>
 
-      <p id="statusText" class="status"></p>
-    </div>
-  </div>
+<!-- SCRIPT DI PALING BAWAH -->
+<script src="./js/main.js"></script>
 
-  <script src="js/main.js"></script>
 </body>
 </html>
-

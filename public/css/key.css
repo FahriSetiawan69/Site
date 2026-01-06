@@ -1,80 +1,85 @@
-* {
+/* FULL SCREEN BACKGROUND FUTURISTIC */
+body, html {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
-  font-family: "Segoe UI", sans-serif;
+  height: 100%;
+  font-family: 'Segoe UI', sans-serif;
+  overflow: hidden;
 }
 
-body {
-  height: 100vh;
-  background: radial-gradient(circle at top, #3b176b, #0b0218);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: white;
+.background {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: url('../img/futuristic-grid.jpg') no-repeat center center/cover;
+  z-index: -1;
+  animation: moveBackground 20s linear infinite;
+  filter: brightness(0.5);
 }
 
-.login-wrapper {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+/* background animation */
+@keyframes moveBackground {
+  0% {background-position: 0 0;}
+  50% {background-position: 100px 100px;}
+  100% {background-position: 0 0;}
 }
 
-.login-card {
-  width: 320px;
-  padding: 30px;
-  border-radius: 18px;
-  background: rgba(255, 255, 255, 0.08);
+/* LOGIN PANEL */
+#loginContainer {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0,0,0,0.3);
   backdrop-filter: blur(15px);
-  border: 1px solid rgba(170, 100, 255, 0.35);
-  box-shadow: 0 0 40px rgba(170, 100, 255, 0.25);
+  border-radius: 20px;
+  padding: 40px;
   text-align: center;
+  box-shadow: 0 0 40px rgba(140,0,255,0.6);
+  animation: fadeIn 1s ease forwards;
 }
 
-.login-card h1 {
-  font-size: 22px;
-  letter-spacing: 2px;
-  margin-bottom: 6px;
+/* fade-in */
+@keyframes fadeIn {
+  from {opacity: 0; transform: translate(-50%, -60%);}
+  to {opacity: 1; transform: translate(-50%, -50%);}
 }
 
-.subtitle {
-  font-size: 12px;
-  opacity: 0.8;
-  margin-bottom: 20px;
-}
-
-.login-card input {
-  width: 100%;
+#loginContainer input {
   padding: 12px;
+  margin: 12px 0;
   border-radius: 10px;
   border: none;
-  outline: none;
-  background: rgba(0,0,0,0.4);
-  color: white;
-  margin-bottom: 15px;
+  width: 220px;
   text-align: center;
+  font-size: 16px;
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+  box-shadow: 0 0 10px rgba(140,0,255,0.5) inset;
 }
 
-.login-card button {
-  width: 100%;
-  padding: 12px;
-  border-radius: 12px;
+#loginContainer input::placeholder {
+  color: #ccc;
+}
+
+#loginContainer button {
+  padding: 12px 24px;
+  border-radius: 10px;
   border: none;
-  cursor: pointer;
-  background: linear-gradient(135deg, #9b4dff, #5f17d6);
-  color: white;
+  background: linear-gradient(90deg, #8c00ff, #ff00ff);
+  color: #fff;
   font-weight: bold;
-  letter-spacing: 1px;
-  transition: 0.3s;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 20px rgba(140,0,255,0.7);
 }
 
-.login-card button:hover {
-  box-shadow: 0 0 20px rgba(155, 77, 255, 0.8);
+#loginContainer button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 30px rgba(255,0,255,0.8);
 }
 
-.status {
-  margin-top: 12px;
-  font-size: 12px;
-  height: 14px;
+/* STATUS TEXT */
+#status {
+  margin-top: 15px;
+  font-weight: bold;
 }

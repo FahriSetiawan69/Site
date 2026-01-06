@@ -1,216 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Fish It – Account Monitor</title>
 
-<title>Fish It – Account Monitor</title>
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-<!-- Google Font -->
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-<style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Inter', sans-serif;
-}
-
-body {
-  background: radial-gradient(circle at top, #2b145f, #0b0415);
-  color: #fff;
-  min-height: 100vh;
-}
-
-/* ================= HEADER ================= */
-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 64px;
-  background: linear-gradient(90deg, #5a2dbd, #6d36d4);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 24px;
-  z-index: 100;
-}
-
-header h1 {
-  font-size: 18px;
-  font-weight: 700;
-}
-
-header span {
-  font-size: 12px;
-  opacity: 0.8;
-}
-
-/* ================= LAYOUT ================= */
-.container {
-  display: flex;
-  padding-top: 64px;
-}
-
-/* ================= SIDEBAR ================= */
-.sidebar {
-  width: 220px;
-  background: rgba(15, 8, 30, 0.9);
-  min-height: calc(100vh - 64px);
-  padding: 20px 14px;
-  position: fixed;
-}
-
-.sidebar button {
-  width: 100%;
-  background: transparent;
-  border: none;
-  color: #bbb;
-  padding: 12px 14px;
-  margin-bottom: 8px;
-  border-radius: 8px;
-  text-align: left;
-  cursor: pointer;
-  font-size: 14px;
-}
-
-.sidebar button.active,
-.sidebar button:hover {
-  background: linear-gradient(90deg, #5a2dbd, #6d36d4);
-  color: #fff;
-}
-
-/* ================= MAIN ================= */
-main {
-  margin-left: 220px;
-  padding: 24px;
-  width: 100%;
-}
-
-/* ================= GRID ================= */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 16px;
-}
-
-/* ================= CARD ================= */
-.card {
-  background: linear-gradient(180deg, #1b0f33, #120821);
-  border-radius: 14px;
-  padding: 14px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.35);
-}
-
-.card h3 {
-  font-size: 14px;
-  margin-bottom: 6px;
-}
-
-.card p {
-  font-size: 12px;
-  opacity: 0.85;
-  margin-bottom: 2px;
-}
-
-.progress {
-  margin-top: 8px;
-  height: 6px;
-  background: rgba(255,255,255,0.15);
-  border-radius: 6px;
-  overflow: hidden;
-}
-
-.progress span {
-  display: block;
-  height: 100%;
-  width: 66%;
-  background: linear-gradient(90deg, #3cff8f, #17c964);
-}
-
-/* ================= MOBILE ================= */
-@media (max-width: 768px) {
-  .sidebar {
-    width: 70px;
-    padding: 20px 8px;
-  }
-
-  .sidebar button {
-    text-align: center;
-    font-size: 12px;
-    padding: 10px;
-  }
-
-  main {
-    margin-left: 70px;
-    padding: 16px;
-  }
-
-  header h1 {
-    font-size: 14px;
-  }
-}
-</style>
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/dashboard.css">
 </head>
-
 <body>
 
-<header>
+<header class="topbar">
   <h1>🎣 Fish It – Account Monitor</h1>
-  <span>20 Slots • Realtime Monitor</span>
+  <button class="logout-btn">Logout</button>
 </header>
 
-<div class="container">
+<div class="layout">
 
   <!-- SIDEBAR -->
   <aside class="sidebar">
-    <button class="active">Fish</button>
-    <button>Items</button>
-    <button>Quest</button>
+    <div class="menu active">📊 Account Monitor</div>
+    <div class="menu">📈 Statistics</div>
+    <div class="menu">📜 Logs</div>
+    <div class="menu">⚙️ Settings</div>
   </aside>
 
-  <!-- MAIN -->
-  <main>
-    <div class="grid">
+  <!-- MAIN CONTENT -->
+  <main class="main">
 
-      <!-- 20 PLAYER CARD -->
-      <!-- DUPLIKASI SAJA JIKA MAU LEBIH -->
-      <!-- Player 1 -->
-      <div class="card">
-        <h3>Player_1</h3>
-        <p>💰 Gold: 20,028</p>
-        <p>🎒 Backpack: 18</p>
-        <p>📶 Ping: 128 ms</p>
-        <p>📜 Quest: Secret Hunter</p>
-        <div class="progress"><span></span></div>
-      </div>
+    <!-- GRID AKUN -->
+    <section class="account-grid" id="accountGrid">
+      <!-- diisi oleh JS -->
+    </section>
 
-      <!-- Player 2 -->
-      <div class="card">
-        <h3>Player_2</h3>
-        <p>💰 Gold: 41,749</p>
-        <p>🎒 Backpack: 40</p>
-        <p>📶 Ping: 139 ms</p>
-        <p>📜 Quest: Secret Hunter</p>
-        <div class="progress"><span style="width:100%"></span></div>
-      </div>
+    <!-- DETAIL PANEL -->
+    <section class="detail-panel" id="detailPanel">
+      <h2>Pilih akun untuk melihat detail</h2>
+    </section>
 
-      <!-- Player 3 -->
-      <div class="card">
-        <h3>Player_3</h3>
-        <p>💰 Gold: 12,585</p>
-        <p>🎒 Backpack: 8</p>
-        <p>📶 Ping: 152 ms</p>
-        <p>📜 Quest: Secret Hunter</p>
-        <div class="progress"><span style="width:33%"></span></div>
-      </div>
-
-      <!-- copy sampai Player_20 -->
-    </div>
   </main>
-
 </div>
+
+<script src="js/dashboard.js"></script>
 </body>
-</html>
+  </html>

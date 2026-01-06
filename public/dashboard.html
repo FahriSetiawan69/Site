@@ -1,64 +1,67 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Fishit Monitor Dashboard</title>
+  <title>Fish It – Account Monitor</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- Google Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
-  <!-- CSS -->
   <link rel="stylesheet" href="css/dashboard.css" />
 </head>
 <body>
 
-  <!-- Background Overlay -->
-  <div class="bg-overlay"></div>
+<div id="app">
 
-  <!-- Sidebar -->
-  <aside class="sidebar">
-    <h2>FISHIT</h2>
-    <ul>
-      <li class="active">Accounts</li>
-      <li>Future Feature</li>
-      <li>Settings</li>
-    </ul>
-  </aside>
+  <!-- HEADER -->
+  <header class="topbar">
+    <div class="logo">🎣 Fish It – Account Monitor</div>
+    <button id="logoutBtn" class="logout-btn">Logout</button>
+  </header>
 
-  <!-- Main Content -->
-  <main class="main">
-    <header class="topbar">
-      <h1>Fishit Monitor Dashboard</h1>
-      <button id="logoutBtn">Logout</button>
-    </header>
+  <!-- MAIN -->
+  <div class="layout">
 
-    <!-- Cards Container -->
-    <section id="accountGrid" class="grid"></section>
+    <!-- SIDEBAR (future safe) -->
+    <aside class="sidebar">
+      <div class="menu active">Accounts</div>
+      <div class="menu">Future Feature</div>
+      <div class="menu">Settings</div>
+    </aside>
 
-    <!-- Detail Panel -->
-    <section id="detailPanel" class="detail hidden">
-      <h2 id="detailUsername">Account Detail</h2>
+    <!-- CONTENT -->
+    <main class="content">
 
-      <div class="detail-section">
-        <h3>Fish</h3>
-        <ul id="fishList"></ul>
-      </div>
+      <!-- ACCOUNT CARDS -->
+      <section id="accountGrid" class="account-grid"></section>
 
-      <div class="detail-section">
-        <h3>Items</h3>
-        <ul id="itemList"></ul>
-      </div>
+      <!-- DETAIL PANEL -->
+      <section id="detailPanel" class="detail-panel hidden">
+        <div class="detail-header">
+          <div>
+            <h2 id="detailUsername">Player</h2>
+            <div id="detailGold" class="gold">Gold: 0</div>
+          </div>
+          <button id="closeDetail">✕</button>
+        </div>
 
-      <div class="detail-section">
-        <h3>Quest</h3>
-        <p id="questDetail"></p>
-      </div>
-    </section>
-  </main>
+        <div class="detail-tabs">
+          <button class="tab active" data-tab="fish">Fish</button>
+          <button class="tab" data-tab="items">Items</button>
+          <button class="tab" data-tab="quest">Quest</button>
+        </div>
 
-  <!-- JS -->
-  <script src="js/dummyData.js"></script>
-  <script src="js/dashboard.js"></script>
+        <div id="detailContent" class="detail-content"></div>
+      </section>
+
+    </main>
+  </div>
+</div>
+
+<script src="js/state.js"></script>
+<script src="js/dummyData.js"></script>
+<script src="js/dashboard.js"></script>
+
 </body>
 </html>

@@ -7,12 +7,12 @@ for (let i = 1; i <= 20; i++) {
     backpack: 5 + i,
     ping: 50 + i,
     rod: i % 2 === 0 ? "Magic Rod" : "Standard Rod",
-    quest: i % 2 === 0 ? "Catch Secret Fish" : "Collect Rare Fish",
+    quest: i % 2 === 0 ? "Catch Secret Fish" : "Collect Rare Fish", // aktif quest
     questProgress: i % 5,
     status: i % 2 === 0 ? "Fishing" : "Idle",
     fish: [
       {name:"Golden Carp", weight:2.5, mutation:"Rare", price:500},
-      {name:"Golden Carp", weight:2.5, mutation:"Rare", price:500}, // duplicate example
+      {name:"Golden Carp", weight:2.5, mutation:"Rare", price:500},
       {name:"Rainbow Trout", weight:1.2, mutation:"Normal", price:300}
     ],
     items: [
@@ -27,6 +27,9 @@ const accountCards = document.getElementById('accountCards');
 const accountDetail = document.getElementById('accountDetail');
 const logoutBtn = document.getElementById('logoutBtn');
 
+// Daftar quest yang bisa dipilih
+const availableQuests = ["Catch Secret Fish","Collect Rare Fish","Complete Daily Challenge"];
+
 // ===================== RENDER CARDS =====================
 function renderCards() {
   accountCards.innerHTML = "";
@@ -40,7 +43,7 @@ function renderCards() {
       <p>Backpack: ${acc.backpack}</p>
       <p>Status: <span class="${acc.status==="Fishing"?"green":"red"}">${acc.status}</span></p>
       <p>Rod: ${acc.rod}</p>
-      <p>Quest: ${acc.quest} (${acc.questProgress})</p>
+      <p>Quest: ${acc.quest} (${acc.questProgress}/5)</p>
       <div class="quest-bar">
         <div class="progress" style="width:${(acc.questProgress/5)*100}%"></div>
       </div>
@@ -63,7 +66,7 @@ function showAccountDetail(index) {
       <button class="tab-btn" data-tab="quest">Quest</button>
     </div>
     <div id="tabContent" class="tab-content">
-      ${renderTabContent(acc, 'fish')}
+      ${renderTabContent(acc,'fish')}
     </div>
   `;
   accountDetail.classList.remove('hidden');
@@ -71,11 +74,11 @@ function showAccountDetail(index) {
   const tabBtns = accountDetail.querySelectorAll('.tab-btn');
   const tabContent = accountDetail.querySelector('#tabContent');
 
-  tabBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      tabBtns.forEach(b => b.classList.remove('active'));
+  tabBtns.forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      tabBtns.forEach(b=>b.classList.remove('active'));
       btn.classList.add('active');
-      tabContent.innerHTML = renderTabContent(acc, btn.dataset.tab);
+      tabContent.innerHTML = renderTabContent(acc,btn.dataset.tab);
     });
   });
 }
@@ -83,7 +86,6 @@ function showAccountDetail(index) {
 // ===================== RENDER TAB CONTENT =====================
 function renderTabContent(acc, tab) {
   if(tab === 'fish') {
-    // gabungkan fish yang sama (name + weight + mutation)
     const mergedFish = mergeDuplicates(acc.fish);
     return mergedFish.map(f => `
       <div class="item-card">
@@ -103,7 +105,11 @@ function renderTabContent(acc, tab) {
       </div>
     `).join('');
   } else if(tab === 'quest') {
-    return `<p>${acc.quest} (${acc.questProgress}/5)</p>`;
+    // Render quest pilihan klikable
+    return availableQuests.map(q=>{
+      const activeClass = (acc.quest === q) ? 'active' : '';
+      return `<button class="item-card tab-btn ${activeClass}" data-quest="${q}">${q}</button>`;
+    }).join('');
   }
 }
 
@@ -127,10 +133,22 @@ function mergeItemDuplicates(itemArray) {
   return Object.values(map);
 }
 
+// ===================== LOGIC QUEST CLICK =====================
+accountDetail.addEventListener('click',(e)=>{
+  if(e.target.classList.contains('tab-btn') && e.target.dataset.quest){
+    const selectedQuest = e.target.dataset.quest;
+    const cardIndex = accountDetail.querySelector('h3').innerText.split('_')[1]-1;
+    dummyAccounts[cardIndex].quest = selectedQuest;
+    dummyAccounts[cardIndex].questProgress = 0; // reset progress
+    renderCards(); // update card utama
+    showAccountDetail(cardIndex); // refresh detail panel
+  }
+});
+
 // ===================== LOGOUT =====================
 if(logoutBtn) {
-  logoutBtn.addEventListener('click', () => {
-    window.location.href = "index.html";
+  logoutBtn.addEventListener('click',()=>{
+    window.location.href="index.html";
   });
 }
 

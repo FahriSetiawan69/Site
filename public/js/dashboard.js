@@ -1,46 +1,58 @@
 const grid = document.getElementById("accountGrid");
-const detail = document.getElementById("detailPanel");
+const detailPanel = document.getElementById("detailPanel");
+const detailContent = document.getElementById("detailContent");
+const detailUsername = document.getElementById("detailUsername");
+const detailGold = document.getElementById("detailGold");
 
-function renderCards() {
+function renderAccounts() {
   grid.innerHTML = "";
-  window.accounts.forEach(acc => {
+  dummyAccounts.slice(0,10).forEach(acc => {
     const card = document.createElement("div");
-    card.className = "card";
-
+    card.className = "account-card";
     card.innerHTML = `
       <h3>${acc.username}</h3>
-      <p>💰 Gold: ${acc.gold}</p>
-      <p>🎒 Backpack: ${acc.backpack}</p>
-      <p>📡 Ping: ${acc.ping}</p>
-      <p>🎣 Rod: ${acc.rod}</p>
-      <p>📜 Quest: ${acc.quest}</p>
-
-      <div class="progress">
-        <div class="progress-bar" style="width:${acc.questProgress}%"></div>
-      </div>
-
-      <div class="status ${acc.status === "FISHING" ? "fishing" : "idle"}">
-        ${acc.status}
-      </div>
+      <div class="stat">Gold: ${acc.gold}</div>
+      <div class="stat">Backpack: ${acc.backpack}</div>
+      <div class="stat">Ping: ${acc.ping} ms</div>
+      <div class="stat">Rod: ${acc.rod}</div>
+      <div class="stat">Quest: ${acc.quest.name}</div>
+      <div class="progress"><span style="width:${acc.quest.progress}%"></span></div>
+      <div class="status ${acc.status}">${acc.status.toUpperCase()}</div>
     `;
-
-    card.onclick = () => showDetail(acc);
+    card.onclick = () => openDetail(acc);
     grid.appendChild(card);
   });
 }
 
-function showDetail(acc) {
-  detail.classList.remove("hidden");
-  document.getElementById("detailUsername").innerText = acc.username;
-
-  document.getElementById("fishList").innerHTML =
-    acc.fish.map(f => `<li>${f}</li>`).join("");
-
-  document.getElementById("itemList").innerHTML =
-    acc.items.map(i => `<li>${i}</li>`).join("");
-
-  document.getElementById("questDetail").innerText =
-    `${acc.quest} (${acc.questProgress}%)`;
+function openDetail(acc) {
+  detailPanel.classList.remove("hidden");
+  detailUsername.textContent = acc.username;
+  detailGold.textContent = `Gold: ${acc.gold}`;
+  renderFish(acc);
 }
 
-renderCards();
+function renderFish(acc) {
+  detailContent.innerHTML = `<div class="grid">
+    ${acc.fish.map(f => `
+      <div class="item-card">
+        <img src="${f.img}" width="80"><br>
+        <b>${f.name}</b><br>
+        ${f.mutation}<br>
+        ${f.weight} kg<br>
+        $${f.price}<br>
+        x${f.count}
+      </div>
+    `).join("")}
+  </div>`;
+}
+
+document.getElementById("closeDetail").onclick = () => {
+  detailPanel.classList.add("hidden");
+};
+
+document.getElementById("logoutBtn").onclick = () => {
+  localStorage.removeItem("fishit_key");
+  window.location.href = "/";
+};
+
+renderAccounts();

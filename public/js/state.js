@@ -1,22 +1,15 @@
-export const state = {
-  accounts: [],
-  selectedAccountId: null
+console.log("state.js loaded");
+
+window.AuthState = {
+  isLoggedIn() {
+    return sessionStorage.getItem("fishit_key_valid") === "true";
+  },
+
+  login() {
+    sessionStorage.setItem("fishit_key_valid", "true");
+  },
+
+  logout() {
+    sessionStorage.removeItem("fishit_key_valid");
+  }
 };
-
-export function setAccounts(data) {
-  state.accounts = data;
-}
-
-export function updateAccount(id, newData) {
-  const acc = state.accounts.find(a => a.id === id);
-  if (!acc) return;
-  Object.assign(acc, newData);
-}
-
-export function selectAccount(id) {
-  state.selectedAccountId = id;
-}
-
-export function getSelectedAccount() {
-  return state.accounts.find(a => a.id === state.selectedAccountId);
-}

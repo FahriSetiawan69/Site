@@ -4,17 +4,18 @@
   <meta charset="UTF-8">
   <title>Fishit Key Login</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/key.css">
 </head>
 <body>
 
-<h2>Fishit Monitor Login</h2>
+<div id="loginContainer">
+  <h2>Fishit Monitor Login</h2>
+  <input id="keyInput" type="text" placeholder="Enter Key">
+  <br>
+  <button id="loginBtn">Login</button>
+  <p id="status"></p>
+</div>
 
-<input id="keyInput" type="text" placeholder="Enter Key">
-<button id="loginBtn">Login</button>
-
-<p id="status"></p>
-
-<!-- URUTAN PENTING -->
 <script src="./js/state.js"></script>
 <script src="./js/main.js"></script>
 

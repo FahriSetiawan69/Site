@@ -27,8 +27,24 @@ const accountCards = document.getElementById('accountCards');
 const accountDetail = document.getElementById('accountDetail');
 const logoutBtn = document.getElementById('logoutBtn');
 
-// Daftar quest yang bisa dipilih
-const availableQuests = ["Catch Secret Fish","Collect Rare Fish","Complete Daily Challenge"];
+// Quest definitions with requirements & rewards
+const availableQuests = [
+  {
+    name:"Catch Secret Fish",
+    requirements:["Catch 3 Secret Fish","Need Magic Rod","Min Level 5"],
+    reward:"500 Gold"
+  },
+  {
+    name:"Collect Rare Fish",
+    requirements:["Collect 5 Rare Fish","Need Lucky Charm"],
+    reward:"700 Gold + Item"
+  },
+  {
+    name:"Complete Daily Challenge",
+    requirements:["Complete 1 Daily Task"],
+    reward:"100 Gold"
+  }
+];
 
 // ===================== RENDER CARDS =====================
 function renderCards() {
@@ -105,10 +121,16 @@ function renderTabContent(acc, tab) {
       </div>
     `).join('');
   } else if(tab === 'quest') {
-    // Render quest pilihan klikable
     return availableQuests.map(q=>{
-      const activeClass = (acc.quest === q) ? 'active' : '';
-      return `<button class="item-card tab-btn ${activeClass}" data-quest="${q}">${q}</button>`;
+      const activeClass = (acc.quest === q.name) ? 'active' : '';
+      const reqs = q.requirements.map(r=>`<li>${r}</li>`).join('');
+      return `
+      <div class="quest-card ${activeClass}" data-quest="${q.name}">
+        <strong>${q.name}</strong>
+        <ul>${reqs}</ul>
+        <div class="reward">Reward: ${q.reward}</div>
+      </div>
+      `;
     }).join('');
   }
 }
@@ -135,12 +157,13 @@ function mergeItemDuplicates(itemArray) {
 
 // ===================== LOGIC QUEST CLICK =====================
 accountDetail.addEventListener('click',(e)=>{
-  if(e.target.classList.contains('tab-btn') && e.target.dataset.quest){
-    const selectedQuest = e.target.dataset.quest;
+  if(e.target.closest('.quest-card') && e.target.closest('.quest-card').dataset.quest){
+    const questCard = e.target.closest('.quest-card');
+    const selectedQuest = questCard.dataset.quest;
     const cardIndex = accountDetail.querySelector('h3').innerText.split('_')[1]-1;
     dummyAccounts[cardIndex].quest = selectedQuest;
-    dummyAccounts[cardIndex].questProgress = 0; // reset progress
-    renderCards(); // update card utama
+    dummyAccounts[cardIndex].questProgress = 0;
+    renderCards(); // update main card
     showAccountDetail(cardIndex); // refresh detail panel
   }
 });

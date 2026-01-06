@@ -1,34 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Fishit Monitor Dashboard</title>
-  <link rel="stylesheet" href="css/dashboard.css">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fishit Monitor Dashboard</title>
+<link rel="stylesheet" href="css/dashboard.css">
 </head>
 <body>
-
 <div id="app">
-
-  <!-- SIDEBAR -->
+  <!-- Sidebar -->
   <aside class="sidebar">
     <h2>Fishit Monitor</h2>
     <button id="logoutBtn">Logout</button>
   </aside>
 
-  <!-- MAIN -->
+  <!-- Main -->
   <main class="main">
+    <!-- Top Tabs -->
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="fish">Fish</button>
+      <button class="tab-btn" data-tab="items">Items</button>
+      <button class="tab-btn" data-tab="quest1">Quest 1</button>
+      <button class="tab-btn" data-tab="quest2">Quest 2</button>
+      <button class="tab-btn" data-tab="quest3">Quest 3</button>
+    </div>
 
-    <!-- CARD GRID -->
+    <!-- Account Cards -->
     <section id="accountCards" class="card-grid">
-      <!-- cards injected by JS -->
+      <!-- Cards injected by JS -->
     </section>
 
-    <!-- DETAIL PANEL -->
+    <!-- Detail Panel -->
     <section id="accountDetail" class="detail-panel hidden">
-      <!-- detail injected by JS -->
+      <h3 id="detailUsername"></h3>
+      <p id="detailGold"></p>
+      <div class="tab-content">
+        <div id="fishTab" class="tab-content-section hidden"></div>
+        <div id="itemsTab" class="tab-content-section hidden"></div>
+        <div id="questTab" class="tab-content-section hidden"></div>
+      </div>
     </section>
-
   </main>
 </div>
 

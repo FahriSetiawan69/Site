@@ -1,152 +1,162 @@
 * {
   box-sizing: border-box;
-  font-family: 'Orbitron', sans-serif;
+  font-family: 'Inter', sans-serif;
 }
 
 body {
   margin: 0;
+  min-height: 100vh;
+  background: url("../img/premium_photo-1685148902854-9b9bb49fff08.jpeg") center / cover fixed;
   color: #fff;
-  background: url("../img/premium_photo-1685148902854-9b9bb49fff08.jpeg") no-repeat center center fixed;
-  background-size: cover;
 }
 
-.bg-overlay {
+body::before {
+  content: "";
   position: fixed;
   inset: 0;
-  background: rgba(20, 0, 40, 0.85);
+  background: rgba(10, 4, 20, 0.78);
   z-index: -1;
 }
 
-/* Sidebar */
-.sidebar {
-  width: 220px;
-  background: rgba(80, 0, 140, 0.3);
-  backdrop-filter: blur(10px);
-  position: fixed;
-  height: 100vh;
-  padding: 20px;
+.topbar {
+  height: 56px;
+  background: linear-gradient(90deg, #5b1ccf, #7a2cff);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
 }
 
-.sidebar h2 {
-  color: #c77dff;
-  margin-bottom: 30px;
-}
-
-.sidebar ul {
-  list-style: none;
-  padding: 0;
-}
-
-.sidebar li {
-  padding: 12px;
-  margin-bottom: 10px;
+.logout-btn {
+  background: #ff3b6b;
+  border: none;
+  padding: 6px 12px;
   border-radius: 8px;
+  color: #fff;
+  font-weight: 600;
   cursor: pointer;
 }
 
-.sidebar li.active,
-.sidebar li:hover {
-  background: rgba(170, 90, 255, 0.4);
+.layout {
+  display: flex;
+  height: calc(100vh - 56px);
 }
 
-/* Main */
-.main {
-  margin-left: 240px;
-  padding: 20px;
+.sidebar {
+  width: 200px;
+  background: rgba(20, 10, 40, 0.9);
+  padding: 12px;
 }
 
-.topbar {
+.menu {
+  padding: 10px;
+  margin-bottom: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  opacity: .7;
+}
+
+.menu.active {
+  background: linear-gradient(90deg, #8b5cf6, #a855f7);
+  opacity: 1;
+}
+
+.content {
+  flex: 1;
+  padding: 16px;
+  overflow-y: auto;
+}
+
+.account-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+.account-card {
+  background: rgba(40, 20, 70, 0.85);
+  border-radius: 14px;
+  padding: 12px;
+  cursor: pointer;
+  border: 1px solid rgba(255,255,255,.05);
+}
+
+.account-card h3 {
+  margin: 0 0 6px;
+}
+
+.stat {
+  font-size: 13px;
+  opacity: .9;
+}
+
+.progress {
+  height: 6px;
+  background: #222;
+  border-radius: 6px;
+  overflow: hidden;
+  margin-top: 6px;
+}
+
+.progress span {
+  display: block;
+  height: 100%;
+  background: #22c55e;
+}
+
+.status {
+  margin-top: 6px;
+  font-weight: 700;
+}
+
+.status.idle { color: #ff4d4d; }
+.status.fishing { color: #22c55e; }
+
+.detail-panel {
+  position: fixed;
+  inset: 10%;
+  background: rgba(25, 10, 45, 0.96);
+  border-radius: 16px;
+  padding: 16px;
+  overflow: auto;
+}
+
+.hidden { display: none; }
+
+.detail-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.topbar button {
-  background: #ff4d6d;
-  border: none;
-  padding: 8px 16px;
+.detail-tabs {
+  display: flex;
+  gap: 8px;
+  margin: 12px 0;
+}
+
+.tab {
+  padding: 6px 12px;
   border-radius: 8px;
+  border: none;
+  background: #333;
   color: #fff;
   cursor: pointer;
 }
 
-/* Grid */
+.tab.active {
+  background: linear-gradient(90deg, #8b5cf6, #a855f7);
+}
+
 .grid {
-  margin-top: 20px;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 12px;
 }
 
-/* Card */
-.card {
-  background: rgba(120, 0, 200, 0.25);
-  border-radius: 16px;
-  padding: 16px;
-  cursor: pointer;
-  box-shadow: 0 0 20px rgba(170, 90, 255, 0.4);
-  transition: transform 0.2s;
-}
-
-.card:hover {
-  transform: translateY(-4px);
-}
-
-.card h3 {
-  margin-top: 0;
-  color: #e0aaff;
-}
-
-.progress {
-  background: rgba(255,255,255,0.1);
-  border-radius: 10px;
-  overflow: hidden;
-  height: 10px;
-  margin: 8px 0;
-}
-
-.progress-bar {
-  height: 100%;
-  background: #00ff88;
-}
-
-.status {
-  margin-top: 8px;
-  padding: 6px;
+.item-card {
+  background: rgba(50, 25, 80, .9);
+  padding: 10px;
+  border-radius: 12px;
   text-align: center;
-  border-radius: 8px;
-  font-weight: bold;
-}
-
-.status.fishing {
-  background: rgba(0,255,136,0.3);
-  color: #00ff88;
-}
-
-.status.idle {
-  background: rgba(255,60,60,0.3);
-  color: #ff3c3c;
-}
-
-/* Detail */
-.detail {
-  margin-top: 30px;
-  background: rgba(50, 0, 90, 0.5);
-  padding: 20px;
-  border-radius: 16px;
-}
-
-.hidden {
-  display: none;
-}
-
-/* Mobile */
-@media (max-width: 768px) {
-  .sidebar {
-    display: none;
-  }
-
-  .main {
-    margin-left: 0;
-  }
 }

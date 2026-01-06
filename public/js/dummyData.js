@@ -1,12 +1,22 @@
-window.accounts = Array.from({ length: 10 }).map((_, i) => ({
+window.dummyAccounts = Array.from({ length: 10 }).map((_, i) => ({
   username: `player_${i + 1}`,
-  gold: Math.floor(Math.random() * 100000),
-  backpack: Math.floor(Math.random() * 40) + "/50",
-  ping: Math.floor(Math.random() * 80) + " ms",
-  rod: ["Basic Rod", "Silver Rod", "Golden Rod"][i % 3],
-  quest: "Catch Secret Fish",
-  questProgress: Math.floor(Math.random() * 100),
-  status: Math.random() > 0.5 ? "FISHING" : "IDLE",
-  fish: ["Golden Carp", "Rainbow Trout", "Secret Fish"],
-  items: ["Magic Rod", "Golden Bait", "Lucky Charm"]
+  gold: 10000 + i * 500,
+  backpack: `${10 + i}/50`,
+  ping: 30 + i * 3,
+  rod: "Golden Rod",
+  status: i % 2 === 0 ? "fishing" : "idle",
+  quest: {
+    name: "Catch Secret Fish",
+    progress: 40 + i * 3
+  },
+  fish: [
+    {
+      name: "Golden Carp",
+      img: "img/fish.png",
+      mutation: "Golden",
+      weight: "2.4",
+      price: "12000",
+      count: 2
+    }
+  ]
 }));

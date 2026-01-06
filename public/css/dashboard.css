@@ -85,3 +85,11 @@ body, html {
   border-bottom: 1px dashed rgba(255,255,255,0.1);
 
 }
+/* SECTION VISIBILITY */
+.section {
+  display: none;
+}
+
+.section.active {
+  display: block;
+}

@@ -1,18 +1,19 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const navLinks = document.querySelectorAll(".nav-link");
-  const sections = document.querySelectorAll(".section");
+const menuButtons = document.querySelectorAll(".menu-item");
+const panels = document.querySelectorAll(".panel");
 
-  navLinks.forEach(link => {
-    link.addEventListener("click", () => {
+menuButtons.forEach(btn => {
+  btn.addEventListener("click", () => {
+    menuButtons.forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
 
-      // Remove active from all
-      navLinks.forEach(l => l.classList.remove("active"));
-      sections.forEach(s => s.classList.remove("active"));
-
-      // Activate clicked
-      link.classList.add("active");
-      const target = link.dataset.target;
-      document.getElementById(target).classList.add("active");
-    });
+    const tab = btn.dataset.tab;
+    panels.forEach(p => p.classList.remove("active"));
+    document.getElementById(`tab-${tab}`).classList.add("active");
   });
+});
+
+// Logout (dummy)
+document.getElementById("logoutBtn").addEventListener("click", () => {
+  localStorage.removeItem("fishit_key");
+  window.location.href = "/";
 });

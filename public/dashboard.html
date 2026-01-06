@@ -2,66 +2,37 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Fish It – Account Monitor</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- Google Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="css/dashboard.css" />
+  <title>Fishit Monitor Dashboard</title>
+  <link rel="stylesheet" href="css/dashboard.css">
 </head>
 <body>
 
 <div id="app">
 
-  <!-- HEADER -->
-  <header class="topbar">
-    <div class="logo">🎣 Fish It – Account Monitor</div>
-    <button id="logoutBtn" class="logout-btn">Logout</button>
-  </header>
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <h2>Fishit Monitor</h2>
+    <button id="logoutBtn">Logout</button>
+  </aside>
 
   <!-- MAIN -->
-  <div class="layout">
+  <main class="main">
 
-    <!-- SIDEBAR (future safe) -->
-    <aside class="sidebar">
-      <div class="menu active">Accounts</div>
-      <div class="menu">Future Feature</div>
-      <div class="menu">Settings</div>
-    </aside>
+    <!-- CARD GRID -->
+    <section id="accountCards" class="card-grid">
+      <!-- cards injected by JS -->
+    </section>
 
-    <!-- CONTENT -->
-    <main class="content">
+    <!-- DETAIL PANEL -->
+    <section id="accountDetail" class="detail-panel hidden">
+      <!-- detail injected by JS -->
+    </section>
 
-      <!-- ACCOUNT CARDS -->
-      <section id="accountGrid" class="account-grid"></section>
-
-      <!-- DETAIL PANEL -->
-      <section id="detailPanel" class="detail-panel hidden">
-        <div class="detail-header">
-          <div>
-            <h2 id="detailUsername">Player</h2>
-            <div id="detailGold" class="gold">Gold: 0</div>
-          </div>
-          <button id="closeDetail">✕</button>
-        </div>
-
-        <div class="detail-tabs">
-          <button class="tab active" data-tab="fish">Fish</button>
-          <button class="tab" data-tab="items">Items</button>
-          <button class="tab" data-tab="quest">Quest</button>
-        </div>
-
-        <div id="detailContent" class="detail-content"></div>
-      </section>
-
-    </main>
-  </div>
+  </main>
 </div>
 
-<script src="js/state.js"></script>
 <script src="js/dummyData.js"></script>
+<script src="js/state.js"></script>
 <script src="js/dashboard.js"></script>
-
 </body>
 </html>

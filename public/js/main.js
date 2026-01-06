@@ -1,32 +1,33 @@
-console.log("main.js loaded"); // DEBUG WAJIB ADA
+console.log("main.js loaded");
 
-document.getElementById("loginBtn").addEventListener("click", login);
-
-function login() {
-  console.log("login function triggered");
-
-  const keyInput = document.getElementById("keyInput");
+document.addEventListener("DOMContentLoaded", () => {
+  const btn = document.getElementById("loginBtn");
+  const input = document.getElementById("keyInput");
   const status = document.getElementById("status");
 
-  if (!keyInput) {
-    alert("keyInput not found");
+  if (!btn || !input) {
+    console.error("Login elements not found");
     return;
   }
 
-  const key = keyInput.value.trim();
+  btn.addEventListener("click", () => {
+    const key = input.value.trim();
 
-  if (key === "abogoboga") {
-    sessionStorage.setItem("fishit_key_valid", "true");
+    console.log("Login attempt:", key);
 
-    status.innerText = "Key validated successfully.";
-    status.style.color = "green";
+    if (key === "abogoboga") {
+      AuthState.login();
 
-    setTimeout(() => {
-      window.location.href = "dashboard.html";
-    }, 500);
+      status.innerText = "Key validated successfully.";
+      status.style.color = "green";
 
-  } else {
-    status.innerText = "Invalid key.";
-    status.style.color = "red";
-  }
-}
+      setTimeout(() => {
+        window.location.href = "dashboard.html";
+      }, 500);
+
+    } else {
+      status.innerText = "Invalid key.";
+      status.style.color = "red";
+    }
+  });
+});

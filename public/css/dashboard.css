@@ -14,7 +14,7 @@ body {
 .background {
   position: fixed;
   inset: 0;
-  background: url("/img/background.jpg") center / cover no-repeat;
+  background: url("/img/premium_photo-1685148902854-9b9bb49fff08.jpeg") center / cover no-repeat;
   z-index: -2;
 }
 
@@ -173,3 +173,4 @@ body {
     font-size: 22px;
   }
 }
+

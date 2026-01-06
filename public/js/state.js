@@ -1,5 +1,3 @@
-console.log("state.js loaded");
-
 window.AuthState = {
   isLoggedIn() {
     return sessionStorage.getItem("fishit_key_valid") === "true";

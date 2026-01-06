@@ -1,17 +1,12 @@
-const fishData = [
-  {name: "Golden Carp", weight: "2.5kg"},
-  {name: "Rainbow Trout", weight: "1.2kg"},
-  {name: "Secret Fish", weight: "0.8kg"}
-];
-
-const itemData = [
-  {name: "Magic Rod", count: 1},
-  {name: "Golden Bait", count: 3},
-  {name: "Lucky Charm", count: 2}
-];
-
-const questData = [
-  {name: "Catch Secret Fish", progress: "2 / 3"},
-  {name: "Collect Rare Fish", progress: "1 / 5"},
-  {name: "Complete Daily Challenge", progress: "0 / 1"}
-];
+window.accounts = Array.from({ length: 10 }).map((_, i) => ({
+  username: `player_${i + 1}`,
+  gold: Math.floor(Math.random() * 100000),
+  backpack: Math.floor(Math.random() * 40) + "/50",
+  ping: Math.floor(Math.random() * 80) + " ms",
+  rod: ["Basic Rod", "Silver Rod", "Golden Rod"][i % 3],
+  quest: "Catch Secret Fish",
+  questProgress: Math.floor(Math.random() * 100),
+  status: Math.random() > 0.5 ? "FISHING" : "IDLE",
+  fish: ["Golden Carp", "Rainbow Trout", "Secret Fish"],
+  items: ["Magic Rod", "Golden Bait", "Lucky Charm"]
+}));

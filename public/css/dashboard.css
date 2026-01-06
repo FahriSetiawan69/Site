@@ -6,9 +6,11 @@
 }
 
 body {
-  background: radial-gradient(circle at top, #2b145f, #0b0415);
+  background: url("../img/premium_photo-1685148902854-9b9bb49fff08.jpeg") no-repeat center center fixed;
+  background-size: cover;
   color: #fff;
   min-height: 100vh;
+  position: relative;
 }
 
 /* TOP BAR */
@@ -168,3 +170,4 @@ body {
     font-size: 12px;
   }
                    }
+

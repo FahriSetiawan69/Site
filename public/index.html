@@ -1,34 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Fish It – Multi Account Monitor</title>
+  <meta charset="UTF-8">
+  <title>Fishit Monitor - Key Access</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <!-- CSS -->
-  <link rel="stylesheet" href="./css/theme.css" />
-  <link rel="stylesheet" href="./css/layout.css" />
+  <link rel="stylesheet" href="css/key.css">
 </head>
 <body>
 
-  <header class="top-bar">
-    <h1>🎣 Fish It – Account Monitor</h1>
-    <span class="subtitle">20 Slots • Real-time Monitor</span>
-  </header>
+  <div class="login-wrapper">
+    <div class="login-card">
+      <h1>FISHIT MONITOR</h1>
+      <p class="subtitle">Enter Access Key</p>
 
-  <!-- GRID AKUN -->
-  <main id="accountGrid" class="account-grid"></main>
+      <input 
+        type="text" 
+        id="keyInput" 
+        placeholder="Enter your key..."
+        autocomplete="off"
+      >
 
-  <!-- MODAL DETAIL -->
-  <div id="detailModal" class="modal hidden">
-    <div class="modal-content">
-      <button id="closeModal">✖</button>
-      <div id="detailBody"></div>
+      <button onclick="submitKey()">ACCESS PANEL</button>
+
+      <p id="statusText" class="status"></p>
     </div>
   </div>
 
-  <!-- JS ENTRY -->
-  <script type="module" src="./js/main.js"></script>
+  <script src="js/main.js"></script>
 </body>
 </html>

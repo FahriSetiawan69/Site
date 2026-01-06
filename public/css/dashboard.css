@@ -1,162 +1,84 @@
 * {
   box-sizing: border-box;
-  font-family: 'Inter', sans-serif;
 }
 
 body {
   margin: 0;
+  font-family: 'Inter', system-ui, sans-serif;
+  background: url('../img/premium_photo-1685148902854-9b9bb49fff08.jpeg') center/cover fixed no-repeat;
+  color: #eee;
+}
+
+/* ROOT LAYOUT */
+#app {
+  display: flex;
   min-height: 100vh;
-  background: url("../img/premium_photo-1685148902854-9b9bb49fff08.jpeg") center / cover fixed;
-  color: #fff;
+  backdrop-filter: blur(6px);
 }
 
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background: rgba(10, 4, 20, 0.78);
-  z-index: -1;
-}
-
-.topbar {
-  height: 56px;
-  background: linear-gradient(90deg, #5b1ccf, #7a2cff);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 16px;
-}
-
-.logout-btn {
-  background: #ff3b6b;
-  border: none;
-  padding: 6px 12px;
-  border-radius: 8px;
-  color: #fff;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.layout {
-  display: flex;
-  height: calc(100vh - 56px);
-}
-
+/* SIDEBAR */
 .sidebar {
-  width: 200px;
-  background: rgba(20, 10, 40, 0.9);
-  padding: 12px;
+  width: 240px;
+  padding: 24px;
+  background: rgba(30, 10, 60, 0.92);
+  display: flex;
+  flex-direction: column;
 }
 
-.menu {
+.sidebar h2 {
+  margin-top: 0;
+  margin-bottom: 24px;
+  color: #cfaaff;
+}
+
+.sidebar button {
+  margin-top: auto;
   padding: 10px;
-  margin-bottom: 8px;
   border-radius: 8px;
+  border: none;
+  background: #ff4c4c;
+  color: white;
   cursor: pointer;
-  opacity: .7;
 }
 
-.menu.active {
-  background: linear-gradient(90deg, #8b5cf6, #a855f7);
-  opacity: 1;
-}
-
-.content {
+/* MAIN CONTENT */
+.main {
   flex: 1;
-  padding: 16px;
+  padding: 24px;
   overflow-y: auto;
 }
 
-.account-grid {
+/* CARD GRID */
+.card-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 16px;
 }
 
+/* CARD */
 .account-card {
-  background: rgba(40, 20, 70, 0.85);
+  background: rgba(120, 60, 220, 0.25);
   border-radius: 14px;
-  padding: 12px;
-  cursor: pointer;
-  border: 1px solid rgba(255,255,255,.05);
-}
-
-.account-card h3 {
-  margin: 0 0 6px;
-}
-
-.stat {
-  font-size: 13px;
-  opacity: .9;
-}
-
-.progress {
-  height: 6px;
-  background: #222;
-  border-radius: 6px;
-  overflow: hidden;
-  margin-top: 6px;
-}
-
-.progress span {
-  display: block;
-  height: 100%;
-  background: #22c55e;
-}
-
-.status {
-  margin-top: 6px;
-  font-weight: 700;
-}
-
-.status.idle { color: #ff4d4d; }
-.status.fishing { color: #22c55e; }
-
-.detail-panel {
-  position: fixed;
-  inset: 10%;
-  background: rgba(25, 10, 45, 0.96);
-  border-radius: 16px;
   padding: 16px;
-  overflow: auto;
-}
-
-.hidden { display: none; }
-
-.detail-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.detail-tabs {
-  display: flex;
-  gap: 8px;
-  margin: 12px 0;
-}
-
-.tab {
-  padding: 6px 12px;
-  border-radius: 8px;
-  border: none;
-  background: #333;
-  color: #fff;
   cursor: pointer;
+  transition: 0.2s;
 }
 
-.tab.active {
-  background: linear-gradient(90deg, #8b5cf6, #a855f7);
+.account-card:hover {
+  background: rgba(160, 80, 255, 0.35);
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 12px;
+/* DETAIL PANEL */
+.detail-panel {
+  margin-top: 24px;
+  padding: 20px;
+  background: rgba(20, 10, 40, 0.9);
+  border-radius: 14px;
 }
 
-.item-card {
-  background: rgba(50, 25, 80, .9);
-  padding: 10px;
-  border-radius: 12px;
-  text-align: center;
+.hidden {
+  display: none;
 }
+
+.green { color: #4cff88; }
+.red { color: #ff5c5c; }

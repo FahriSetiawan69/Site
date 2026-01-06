@@ -1,11 +1,10 @@
-
 /* RESET */
 * {
   box-sizing: border-box;
 }
 
 /* BODY KHUSUS LOGIN */
-body {
+body.login-page {
   margin: 0;
   height: 100vh;
   font-family: 'Inter', system-ui, sans-serif;

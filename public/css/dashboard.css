@@ -30,13 +30,20 @@ body, html { height: 100%; background: url('../img/premium_photo-1685148902854-9
 
 .card h4.username { color:#d6b6ff; font-size:18px; }
 
-.card .info { display:grid; grid-template-columns: 1fr 1fr; gap:6px; }
-.card .info p { font-size:14px; }
+.card .info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
 
+.card .info p { font-size:14px; margin:0; }
+
+/* STATUS */
 .card-status { font-weight:bold; text-align:center; padding:5px 10px; border-radius:6px; margin-top:5px; }
 .status-idle { background:#ff4d4d33; color:#ff4d4d; }
 .status-fishing { background:#4dff8a33; color:#4dff8a; }
 
+/* PROGRESS BAR */
 .progress-bar { height:10px; background: rgba(255,255,255,0.2); border-radius:5px; overflow:hidden; margin-top:5px; }
 .progress-fill { height:100%; background:linear-gradient(90deg,#7f3cff,#b36bff); width:0%; transition: width 0.5s ease; box-shadow:0 0 10px rgba(160,80,255,0.6); }
 

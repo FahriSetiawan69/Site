@@ -1,71 +1,63 @@
-// Inject dummy account cards
 const accountCards = document.getElementById('accountCards');
-dummyAccounts.forEach(acc => {
-  const card = document.createElement('div');
-  card.classList.add('card');
-  card.innerHTML = `<h4>${acc.username}</h4>
-                    <p>Gold: ${acc.gold}</p>
-                    <p>Backpack: ${acc.backpack}</p>
-                    <p>Ping: ${acc.ping}</p>
-                    <p>Rod: ${acc.rod}</p>
-                    <p>Quest: ${acc.quest.name}</p>
-                    <div class="progress-bar" style="background:green;width:${acc.quest.progress}%"></div>
-                    <p>Status: <span style="color:${acc.status=='Fishing'?'#7fff7f':'#ff3f3f'}">${acc.status}</span></p>`;
-  accountCards.appendChild(card);
+const accountDetail = document.getElementById('accountDetail');
+const logoutBtn = document.getElementById('logoutBtn');
 
-  // Click card
-  card.addEventListener('click', () => showDetail(acc));
+const detailUsername = document.getElementById('detailUsername');
+const detailGold = document.getElementById('detailGold');
+
+const tabButtons = document.querySelectorAll('.tab-btn');
+const tabContents = document.querySelectorAll('.tab');
+
+logoutBtn.addEventListener('click', () => {
+  window.location.href = 'index.html';
 });
 
-// Show account detail
-function showDetail(account) {
-  document.getElementById('accountDetail').classList.remove('hidden');
-  document.getElementById('detailUsername').innerText = account.username;
-  document.getElementById('detailGold').innerText = `Gold: ${account.gold}`;
+// Dummy data for cards
+const accounts = dummyAccounts; // from dummyData.js
 
-  // Reset tab content
-  document.querySelectorAll('.tab-content-section').forEach(sec => sec.classList.add('hidden'));
+// Generate cards
+accounts.forEach((acc, idx) => {
+  const card = document.createElement('div');
+  card.classList.add('card');
+  card.innerHTML = `
+    <h4>${acc.username}</h4>
+    <p>Gold: ${acc.gold}</p>
+    <p>Backpack: ${acc.backpack.length}</p>
+  `;
+  accountCards.appendChild(card);
 
-  // Fish tab
-  const fishTab = document.getElementById('fishTab');
-  fishTab.innerHTML = '';
-  account.fish.forEach(f => fishTab.innerHTML += `<p>${f.name} (${f.weight}kg)</p>`);
-
-  // Items tab
-  const itemsTab = document.getElementById('itemsTab');
-  itemsTab.innerHTML = '';
-  account.items.forEach(i => itemsTab.innerHTML += `<p>${i.name} x${i.count}</p>`);
-
-  // Quest tab
-  const questTab = document.getElementById('questTab');
-  questTab.innerHTML = '';
-  account.availableQuests.forEach(q => {
-    const div = document.createElement('div');
-    div.classList.add('quest-item');
-    div.innerHTML = `<h4>${q.name}</h4>
-                     <ul>${q.requirements.map(r=>`<li>${r}</li>`).join('')}</ul>
-                     <p class="reward">Reward: ${q.reward}</p>`;
-    div.addEventListener('click', ()=> {
-      account.quest = q; // Update selected quest
-      showDetail(account);
-    });
-    questTab.appendChild(div);
+  card.addEventListener('click', () => {
+    showDetail(acc);
   });
+});
 
-  // Show default tab (fish)
-  document.getElementById('fishTab').classList.remove('hidden');
+// Show detail panel
+function showDetail(account) {
+  accountDetail.classList.remove('hidden');
+  detailUsername.textContent = account.username;
+  detailGold.textContent = `Gold: ${account.gold}`;
+
+  // Fill tabs
+  document.querySelector('.fish-tab').innerHTML = account.fish.map(f => `<p>${f.name} (${f.weight}kg)</p>`).join('');
+  document.querySelector('.items-tab').innerHTML = account.items.map(i => `<p>${i.name} x${i.count}</p>`).join('');
+  document.querySelector('.quest-tab').innerHTML = account.quest.map(q => `<p>${q.name}: ${q.progress} / ${q.target}</p>`).join('');
+
+  // Reset active tab
+  tabButtons.forEach(btn => btn.classList.remove('active'));
+  tabButtons[0].classList.add('active');
+
+  tabContents.forEach(tab => tab.classList.add('hidden'));
+  document.querySelector('.fish-tab').classList.remove('hidden');
 }
 
-// Tab buttons
-document.querySelectorAll('.tab-btn').forEach(btn => {
+// Tab click
+tabButtons.forEach(btn => {
   btn.addEventListener('click', () => {
-    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    tabButtons.forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
 
-    document.querySelectorAll('.tab-content-section').forEach(sec=>sec.classList.add('hidden'));
-    const tab = btn.dataset.tab;
-    if(tab==='fish') document.getElementById('fishTab').classList.remove('hidden');
-    else if(tab==='items') document.getElementById('itemsTab').classList.remove('hidden');
-    else document.getElementById('questTab').classList.remove('hidden');
+    tabContents.forEach(tab => tab.classList.add('hidden'));
+    const target = btn.dataset.tab;
+    document.querySelector(`.${target}-tab`).classList.remove('hidden');
   });
 });

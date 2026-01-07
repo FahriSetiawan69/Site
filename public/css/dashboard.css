@@ -1,4 +1,4 @@
-/* RESET & LAYOUT */
+/* RESET */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -11,6 +11,7 @@ body, html {
   background: url('../img/premium_photo-1685148902854-9b9bb49fff08.jpeg') center/cover no-repeat;
 }
 
+/* LAYOUT */
 #app {
   display: flex;
   height: 100vh;
@@ -50,8 +51,6 @@ body, html {
   flex: 1;
   padding: 20px;
   overflow-y: auto;
-  display: flex;
-  flex-direction: column;
 }
 
 /* CARD GRID */
@@ -61,60 +60,75 @@ body, html {
   gap: 15px;
 }
 
-/* CARD STYLE */
+/* CARD */
 .card {
   background: rgba(30,15,60,0.85);
-  padding: 15px;
   border-radius: 12px;
+  padding: 15px;
   color: #fff;
+  box-shadow: 0 0 20px rgba(160,80,255,0.35);
+  transition: transform 0.2s, box-shadow 0.2s;
   cursor: pointer;
-  box-shadow: 0 0 15px rgba(160,80,255,0.35);
-  transition: transform 0.2s;
-  position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 .card:hover {
   transform: scale(1.03);
+  box-shadow: 0 0 30px rgba(160,120,255,0.6);
 }
 
-.card h4 {
+/* CARD HEADER */
+.card h4.username {
   color: #d6b6ff;
-  margin-bottom: 5px;
+  font-size: 18px;
+  margin-bottom: 10px;
 }
 
-.card p {
+/* INFO */
+.card .info {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.card .info p {
   font-size: 14px;
-  margin-bottom: 5px;
 }
 
-/* CARD STATUS */
+/* STATUS */
 .card-status {
-  margin-top: 10px;
   font-weight: bold;
+  text-align: center;
+  padding: 4px 8px;
+  border-radius: 6px;
+  margin-bottom: 10px;
 }
 
 .status-idle {
+  background: #ff4d4d33;
   color: #ff4d4d;
 }
 
 .status-fishing {
+  background: #4dff8a33;
   color: #4dff8a;
 }
 
 /* PROGRESS BAR */
 .progress-bar {
-  height: 6px;
+  height: 8px;
   background: rgba(255,255,255,0.2);
-  border-radius: 3px;
-  margin-top: 5px;
+  border-radius: 4px;
   overflow: hidden;
 }
 
 .progress-fill {
   height: 100%;
-  background: #4dff8a;
+  background: linear-gradient(90deg,#7f3cff,#b36bff);
   width: 0%;
-  transition: width 0.3s;
+  transition: width 0.5s ease;
+  box-shadow: 0 0 10px rgba(160,80,255,0.6);
 }
 
 /* RESPONSIVE */

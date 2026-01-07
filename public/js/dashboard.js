@@ -12,8 +12,8 @@ logoutBtn.addEventListener('click', () => {
   window.location.href = 'index.html';
 });
 
-// Dummy data for cards
-const accounts = dummyAccounts; // from dummyData.js
+// Dummy accounts data
+const accounts = dummyAccounts; // dari dummyData.js
 
 // Generate cards
 accounts.forEach((acc, idx) => {
@@ -37,7 +37,6 @@ function showDetail(account) {
   detailUsername.textContent = account.username;
   detailGold.textContent = `Gold: ${account.gold}`;
 
-  // Fill tabs
   document.querySelector('.fish-tab').innerHTML = account.fish.map(f => `<p>${f.name} (${f.weight}kg)</p>`).join('');
   document.querySelector('.items-tab').innerHTML = account.items.map(i => `<p>${i.name} x${i.count}</p>`).join('');
   document.querySelector('.quest-tab').innerHTML = account.quest.map(q => `<p>${q.name}: ${q.progress} / ${q.target}</p>`).join('');

@@ -23,6 +23,10 @@ accounts.forEach((acc, idx) => {
     <h4>${acc.username}</h4>
     <p>Gold: ${acc.gold}</p>
     <p>Backpack: ${acc.backpack.length}</p>
+    <div class="card-status ${acc.status === 'Fishing' ? 'status-fishing' : 'status-idle'}">
+      ${acc.status}
+    </div>
+    <div class="progress-bar"><div class="progress-fill" style="width:${acc.questProgress}%"></div></div>
   `;
   accountCards.appendChild(card);
 
@@ -37,7 +41,7 @@ function showDetail(account) {
   detailUsername.textContent = account.username;
   detailGold.textContent = `Gold: ${account.gold}`;
 
-  document.querySelector('.fish-tab').innerHTML = account.fish.map(f => `<p>${f.name} (${f.weight}kg)</p>`).join('');
+  document.querySelector('.fish-tab').innerHTML = account.fish.map(f => `<p>${f.name} (${f.weight}kg) Mut: ${f.mutation}</p>`).join('');
   document.querySelector('.items-tab').innerHTML = account.items.map(i => `<p>${i.name} x${i.count}</p>`).join('');
   document.querySelector('.quest-tab').innerHTML = account.quest.map(q => `<p>${q.name}: ${q.progress} / ${q.target}</p>`).join('');
 

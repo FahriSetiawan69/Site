@@ -12,11 +12,18 @@ logoutBtn.addEventListener('click', () => {
   window.location.href = 'index.html';
 });
 
-// Dummy accounts data
-const accounts = dummyAccounts; // dari dummyData.js
+// Dummy accounts
+const accounts = dummyAccounts;
+
+// Default quests
+const defaultQuests = [
+  { name: "Catch Secret Fish", target: 3 },
+  { name: "Collect Rare Fish", target: 5 },
+  { name: "Complete Daily Challenge", target: 1 }
+];
 
 // Generate cards
-accounts.forEach((acc, idx) => {
+accounts.forEach(acc => {
   const card = document.createElement('div');
   card.classList.add('card');
   card.innerHTML = `
@@ -30,9 +37,7 @@ accounts.forEach((acc, idx) => {
   `;
   accountCards.appendChild(card);
 
-  card.addEventListener('click', () => {
-    showDetail(acc);
-  });
+  card.addEventListener('click', () => showDetail(acc));
 });
 
 // Show detail panel
@@ -43,24 +48,35 @@ function showDetail(account) {
 
   document.querySelector('.fish-tab').innerHTML = account.fish.map(f => `<p>${f.name} (${f.weight}kg) Mut: ${f.mutation}</p>`).join('');
   document.querySelector('.items-tab').innerHTML = account.items.map(i => `<p>${i.name} x${i.count}</p>`).join('');
-  document.querySelector('.quest-tab').innerHTML = account.quest.map(q => `<p>${q.name}: ${q.progress} / ${q.target}</p>`).join('');
 
-  // Reset active tab
+  // QUEST TAB
+  const questContainer = document.querySelector('.quest-tab');
+  questContainer.innerHTML = '';
+  defaultQuests.forEach(q => {
+    const progress = account.questProgress; // gunakan progress account
+    const p = document.createElement('p');
+    p.textContent = `${q.name}: ${progress} / ${q.target}`;
+    p.addEventListener('click', () => {
+      account.questProgress = Math.min(progress + 1, q.target); // update progress
+      document.querySelector('.progress-fill').style.width = (account.questProgress/q.target*100) + '%';
+      p.textContent = `${q.name}: ${account.questProgress} / ${q.target}`;
+    });
+    questContainer.appendChild(p);
+  });
+
+  // Reset tabs
   tabButtons.forEach(btn => btn.classList.remove('active'));
   tabButtons[0].classList.add('active');
-
   tabContents.forEach(tab => tab.classList.add('hidden'));
   document.querySelector('.fish-tab').classList.remove('hidden');
 }
 
-// Tab click
+// TAB SWITCH
 tabButtons.forEach(btn => {
   btn.addEventListener('click', () => {
     tabButtons.forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-
     tabContents.forEach(tab => tab.classList.add('hidden'));
-    const target = btn.dataset.tab;
-    document.querySelector(`.${target}-tab`).classList.remove('hidden');
+    document.querySelector(`.${btn.dataset.tab}-tab`).classList.remove('hidden');
   });
 });

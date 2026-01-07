@@ -1,45 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fishit Monitor Dashboard</title>
-<link rel="stylesheet" href="css/dashboard.css">
+  <meta charset="UTF-8">
+  <title>Fishit Monitor Dashboard</title>
+  <link rel="stylesheet" href="css/dashboard.css">
 </head>
 <body>
+
 <div id="app">
-  <!-- Sidebar -->
+
+  <!-- SIDEBAR -->
   <aside class="sidebar">
     <h2>Fishit Monitor</h2>
     <button id="logoutBtn">Logout</button>
   </aside>
 
-  <!-- Main -->
+  <!-- MAIN -->
   <main class="main">
-    <!-- Top Tabs -->
-    <div class="tabs">
-      <button class="tab-btn active" data-tab="fish">Fish</button>
-      <button class="tab-btn" data-tab="items">Items</button>
-      <button class="tab-btn" data-tab="quest1">Quest 1</button>
-      <button class="tab-btn" data-tab="quest2">Quest 2</button>
-      <button class="tab-btn" data-tab="quest3">Quest 3</button>
-    </div>
 
-    <!-- Account Cards -->
+    <!-- CARD GRID -->
     <section id="accountCards" class="card-grid">
-      <!-- Cards injected by JS -->
+      <!-- cards injected by JS -->
     </section>
 
-    <!-- Detail Panel -->
+    <!-- DETAIL PANEL -->
     <section id="accountDetail" class="detail-panel hidden">
       <h3 id="detailUsername"></h3>
       <p id="detailGold"></p>
+
+      <!-- Tabs -->
+      <div class="tab-panel">
+        <button class="tab-btn active" data-tab="fish">Fish</button>
+        <button class="tab-btn" data-tab="items">Items</button>
+        <button class="tab-btn" data-tab="quest">Quest</button>
+      </div>
+
+      <!-- Tab Content -->
       <div class="tab-content">
-        <div id="fishTab" class="tab-content-section hidden"></div>
-        <div id="itemsTab" class="tab-content-section hidden"></div>
-        <div id="questTab" class="tab-content-section hidden"></div>
+        <div class="tab fish-tab"></div>
+        <div class="tab items-tab hidden"></div>
+        <div class="tab quest-tab hidden"></div>
       </div>
     </section>
+
   </main>
 </div>
 

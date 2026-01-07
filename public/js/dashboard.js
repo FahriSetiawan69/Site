@@ -37,11 +37,11 @@ accounts.forEach(acc => {
   `;
   accountCards.appendChild(card);
 
-  card.addEventListener('click', () => showDetail(acc));
+  card.addEventListener('click', () => showDetail(acc, card));
 });
 
 // Show detail panel
-function showDetail(account) {
+function showDetail(account, cardEl) {
   accountDetail.classList.remove('hidden');
   detailUsername.textContent = account.username;
   detailGold.textContent = `Gold: ${account.gold}`;
@@ -53,12 +53,12 @@ function showDetail(account) {
   const questContainer = document.querySelector('.quest-tab');
   questContainer.innerHTML = '';
   defaultQuests.forEach(q => {
-    const progress = account.questProgress; // gunakan progress account
+    const progress = account.questProgress; 
     const p = document.createElement('p');
     p.textContent = `${q.name}: ${progress} / ${q.target}`;
     p.addEventListener('click', () => {
-      account.questProgress = Math.min(progress + 1, q.target); // update progress
-      document.querySelector('.progress-fill').style.width = (account.questProgress/q.target*100) + '%';
+      account.questProgress = Math.min(progress + 1, q.target); 
+      cardEl.querySelector('.progress-fill').style.width = (account.questProgress/q.target*100) + '%';
       p.textContent = `${q.name}: ${account.questProgress} / ${q.target}`;
     });
     questContainer.appendChild(p);

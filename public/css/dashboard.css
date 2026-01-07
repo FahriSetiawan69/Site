@@ -1,4 +1,4 @@
-/* GENERAL RESET */
+/* RESET & LAYOUT */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -6,7 +6,6 @@
   font-family: 'Inter', sans-serif;
 }
 
-/* LAYOUT */
 body, html {
   height: 100%;
   background: url('../img/premium_photo-1685148902854-9b9bb49fff08.jpeg') center/cover no-repeat;
@@ -62,7 +61,6 @@ body, html {
   gap: 15px;
 }
 
-/* CARD STYLE */
 .card {
   background: rgba(30,15,60,0.85);
   padding: 15px;
@@ -91,7 +89,7 @@ body, html {
   color: #d6b6ff;
 }
 
-/* TABS */
+/* TAB PANEL */
 .tab-panel {
   display: flex;
   margin-top: 10px;

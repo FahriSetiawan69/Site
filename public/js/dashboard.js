@@ -1,3 +1,4 @@
+
 const accountCards = document.getElementById('accountCards');
 const logoutBtn = document.getElementById('logoutBtn');
 const accountDetail = document.getElementById('accountDetail');

@@ -1,223 +1,71 @@
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  font-family: 'Inter', system-ui, sans-serif;
-  background: url('../img/premium_photo-1685148902854-9b9bb49fff08.jpeg') center / cover no-repeat fixed;
-  color: #fff;
-}
-
-#app {
+/* =========================
+   QUEST CONTAINER
+========================= */
+#questList {
   display: flex;
-  min-height: 100vh;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 12px;
 }
 
-/* SIDEBAR */
-.sidebar {
-  width: 220px;
-  background: rgba(20, 10, 40, 0.95);
-  padding: 20px;
-}
-
-.sidebar h2 {
-  color: #caa6ff;
-  margin-bottom: 20px;
-}
-
-.sidebar button {
-  width: 100%;
-  padding: 10px;
-  border-radius: 8px;
-  border: none;
+/* =========================
+   QUEST CARD
+========================= */
+.quest-card {
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  padding: 12px;
   cursor: pointer;
-  background: linear-gradient(135deg,#7f3cff,#b36bff);
-  color: #fff;
+  transition: all 0.25s ease;
 }
 
-/* MAIN */
-.main {
-  flex: 1;
-  padding: 20px;
+.quest-card:hover {
+  background: rgba(255, 255, 255, 0.12);
 }
 
-/* CARD GRID */
-.card-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 16px;
+/* =========================
+   QUEST TITLE
+========================= */
+.quest-title {
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #cfcfcf;
 }
 
-/* CARD */
-.account-card {
-  background: rgba(30, 10, 60, 0.85);
-  border-radius: 14px;
-  padding: 14px;
-  cursor: pointer;
-  box-shadow: 0 0 20px rgba(127,60,255,0.25);
+.quest-title.active {
+  color: #8b5cf6;
 }
 
-.account-card h3 {
-  margin-bottom: 8px;
-  color: #e0caff;
+/* =========================
+   QUEST REQUIREMENT
+========================= */
+.quest-req {
+  padding-left: 18px;
+  font-size: 13px;
+  opacity: 0.85;
 }
 
-/* CARD LINE → 1 BARIS KE BAWAH */
-.card-line {
-  font-size: 14px;
+.quest-req li {
   margin-bottom: 4px;
 }
 
-/* STATUS */
-.status {
-  margin-top: 10px;
-  padding: 6px;
-  text-align: center;
-  border-radius: 8px;
-  font-weight: bold;
-}
-
-.status.fishing {
-  background: #2ecc71;
-  color: #000;
-}
-
-.status.idle {
-  background: #ff4d4d;
-  color: #000;
-}
-
-/* PROGRESS */
-.progress-bar {
-  height: 8px;
-  background: rgba(255,255,255,0.2);
-  border-radius: 6px;
+/* =========================
+   QUEST REWARD (MENONJOL)
+========================= */
+.quest-reward {
   margin-top: 8px;
-  overflow: hidden;
-}
-
-.progress {
-  height: 100%;
-  background: linear-gradient(90deg,#7f3cff,#b36bff);
-  width: 0%;
-  transition: width .5s;
-}
-
-/* DETAIL PANEL */
-.detail-panel {
-  position: fixed;
-  right: -100%;
-  top: 0;
-  width: 360px;
-  height: 100%;
-  background: rgba(20,10,40,0.98);
-  padding: 20px;
-  transition: .3s;
-  z-index: 1001;
-}
-
-.detail-panel.active {
-  right: 0;
-}
-
-/* OVERLAY */
-#detailOverlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,.6);
-  display: none;
-  z-index: 1000;
-}
-
-#detailOverlay.active {
-  display: block;
-}
-
-/* TABS */
-.tab-buttons {
-  display: flex;
-  gap: 8px;
-  margin: 14px 0;
-}
-
-.tab-btn {
-  flex: 1;
-  padding: 8px;
+  padding: 6px 10px;
+  background: linear-gradient(135deg, #7c3aed, #9333ea);
   border-radius: 8px;
-  border: none;
-  cursor: pointer;
-  background: rgba(255,255,255,0.1);
-  color: #fff;
-}
-
-.tab-btn.active {
-  background: linear-gradient(135deg,#7f3cff,#b36bff);
-}
-
-.tab-content {
-  display: none;
-}
-
-.tab-content.active {
-  display: block;
-}
-
-/* QUEST POPUP */
-.quest-select {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,.7);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 2000;
-}
-
-.quest-select.active {
-  display: flex;
-}
-
-.quest-box {
-  background: rgba(30,10,60,.95);
-  padding: 18px;
-  width: 380px;
-  border-radius: 14px;
-}
-
-.quest-option {
-  border: 1px solid rgba(255,255,255,.2);
-  border-radius: 10px;
-  padding: 10px;
-  margin-bottom: 10px;
-  cursor: pointer;
-}
-
-.quest-option:hover {
-  background: rgba(127,60,255,.25);
-}
-
-.reward {
-  color: #ffd966;
+  font-size: 13px;
   font-weight: bold;
-  margin-top: 6px;
-  display: block;
+  color: white;
+  text-align: center;
 }
 
-.quest-cancel {
-  width: 100%;
-  margin-top: 10px;
-  padding: 8px;
-  border-radius: 8px;
-  border: none;
-  background: #555;
-  color: #fff;
+/* =========================
+   HILANGKAN TOMBOL CHANGE QUEST
+========================= */
+#changeQuestBtn {
+  display: none !important;
 }
-
-/* MOBILE */
-@media(max-width:768px){
-  .sidebar {
-    display: none;
-  }
-  }

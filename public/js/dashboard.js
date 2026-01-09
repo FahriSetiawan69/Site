@@ -1,17 +1,24 @@
-const players = [
-  {
-    id: 1,
-    username: "player_7",
-    gold: 13000,
-    status: "Fishing",
+const players = [];
+
+// GENERATE 10 PLAYER
+for (let i = 1; i <= 10; i++) {
+  players.push({
+    id: i,
+    username: `player_${i}`,
+    gold: 8000 + i * 500,
+    backpack: Math.floor(Math.random() * 10) + 1,
+    ping: Math.floor(Math.random() * 40) + 40,
+    rod: "Basic Rod",
+    status: i % 2 === 0 ? "Fishing" : "Idle",
+    questProgress: Math.floor(Math.random() * 100),
     activeQuest: 1,
 
     fishes: [
       {
         name: "Tuna",
-        mutation: "Golden",
-        weight: "3.2 kg",
-        price: 1250,
+        mutation: "Normal",
+        weight: "2.1 kg",
+        price: 1200,
         img: "img/fish.png"
       }
     ],
@@ -27,10 +34,10 @@ const players = [
     quests: [
       { id: 1, name: "Catch 10 Fish", requirement: "Tangkap 10 ikan" },
       { id: 2, name: "Earn 5000 Gold", requirement: "Kumpulkan 5000 gold" },
-      { id: 3, name: "Backpack Lv 2", requirement: "Upgrade backpack" }
+      { id: 3, name: "Upgrade Backpack", requirement: "Upgrade backpack" }
     ]
-  }
-];
+  });
+}
 
 let selectedPlayer = null;
 let activeTab = "fish";
@@ -38,19 +45,32 @@ let activeTab = "fish";
 /* INIT */
 renderPlayers();
 
-/* PLAYER CARD */
+/* RENDER PLAYER CARD */
 function renderPlayers() {
   const el = document.getElementById("playerList");
   el.innerHTML = "";
 
   players.forEach(p => {
-    const q = p.quests.find(q => q.id === p.activeQuest);
+    const quest = p.quests.find(q => q.id === p.activeQuest);
+
     el.innerHTML += `
       <div class="player-card" onclick="openDetail(${p.id})">
-        <b>${p.username}</b><br>
-        Gold: ${p.gold}<br>
-        Status: ${p.status}<br>
-        Quest: ${q ? q.name : "-"}
+        <div class="card-username">${p.username}</div>
+
+        <div class="card-info">Gold: ${p.gold}</div>
+        <div class="card-info">Backpack: ${p.backpack}</div>
+        <div class="card-info">Ping: ${p.ping} ms</div>
+        <div class="card-info">Rod: ${p.rod}</div>
+
+        <div class="card-quest">${quest ? quest.name : "-"}</div>
+
+        <div class="progress-bar">
+          <div class="progress-fill" style="width:${p.questProgress}%"></div>
+        </div>
+
+        <div class="card-status ${p.status === "Fishing" ? "fishing" : "idle"}">
+          ${p.status}
+        </div>
       </div>
     `;
   });
@@ -116,10 +136,11 @@ function renderTab() {
 
 function selectQuest(id) {
   selectedPlayer.activeQuest = id;
+  selectedPlayer.questProgress = 0;
   renderPlayers();
   renderDetail();
 }
 
 function logout() {
   location.href = "/";
-            }
+}

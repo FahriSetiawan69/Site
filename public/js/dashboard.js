@@ -1,27 +1,37 @@
 // ===============================
-// DUMMY DATA (AMAN)
+// SAFE INIT
 // ===============================
-const accounts = Array.from({ length: 10 }).map((_, i) => ({
+document.addEventListener("DOMContentLoaded", () => {
+  initDashboard();
+});
+
+// ===============================
+// DUMMY DATA (AMAN DIGANTI LUA)
+// ===============================
+const accounts = Array.from({ length: 8 }).map((_, i) => ({
   username: `player_${i + 1}`,
-  gold: 8000 + i * 1000,
-  backpack: 1 + (i % 4),
-  ping: 20 + i * 5,
-  rod: ["Standard Rod", "Magic Rod", "Golden Rod"][i % 3],
+  gold: 5000 + i * 750,
+  backpack: 1 + (i % 3),
+  ping: 25 + i * 4,
+  rod: ["Basic Rod", "Magic Rod", "Golden Rod"][i % 3],
   status: i % 2 === 0 ? "Fishing" : "Idle",
-  progress: Math.floor(Math.random() * 100)
+  progress: Math.floor(Math.random() * 100),
+  quests: [
+    { name: "Catch 20 Fish", progress: Math.floor(Math.random() * 100) },
+    { name: "Earn 5.000 Gold", progress: Math.floor(Math.random() * 100) }
+  ]
 }));
 
-const grid = document.getElementById("accountCards");
-const detail = document.getElementById("accountDetail");
+// ===============================
+// INIT DASHBOARD
+// ===============================
+function initDashboard() {
+  const grid = document.getElementById("accountCards");
+  const detail = document.getElementById("accountDetail");
 
-// ===============================
-// RENDER CARD
-// ===============================
-function renderCards() {
-  if (!grid) return;
+  if (!grid) return; // ANTI WHITE SCREEN
 
   grid.innerHTML = "";
-
   accounts.forEach(acc => {
     const card = document.createElement("div");
     card.className = "account-card";
@@ -42,31 +52,49 @@ function renderCards() {
       </div>
     `;
 
-    card.addEventListener("click", () => {
-      if (!detail) return;
-      detail.classList.remove("hidden");
-      detail.innerHTML = `
-        <h3>${acc.username}</h3>
-        <p>Detail panel aman (akan dikembangkan)</p>
-      `;
-    });
-
+    card.addEventListener("click", () => showDetail(acc, detail));
     grid.appendChild(card);
   });
 }
 
 // ===============================
-// LOGOUT FIX
+// DETAIL + QUEST
+// ===============================
+function showDetail(acc, detail) {
+  if (!detail) return;
+
+  detail.classList.remove("hidden");
+
+  const questHTML = acc.quests.map(q => `
+    <div class="quest">
+      <h4>${q.name}</h4>
+      <div class="quest-progress">
+        <span style="width:${q.progress}%"></span>
+      </div>
+      <small>${q.progress}%</small>
+    </div>
+  `).join("");
+
+  detail.innerHTML = `
+    <h2>${acc.username}</h2>
+    <p><b>Status:</b> ${acc.status}</p>
+    <p><b>Gold:</b> ${acc.gold}</p>
+    <p><b>Rod:</b> ${acc.rod}</p>
+
+    <h3>Quest</h3>
+    <div class="quest-list">
+      ${questHTML}
+    </div>
+  `;
+}
+
+// ===============================
+// LOGOUT (SAFE)
 // ===============================
 const logoutBtn = document.getElementById("logoutBtn");
 if (logoutBtn) {
   logoutBtn.onclick = () => {
     localStorage.clear();
-    window.location.href = "/";
+    location.href = "/";
   };
-}
-
-// ===============================
-// INIT
-// ===============================
-document.addEventListener("DOMContentLoaded", renderCards);
+    }

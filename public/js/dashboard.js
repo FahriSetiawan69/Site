@@ -1,74 +1,125 @@
-const cardsEl = document.getElementById("accountCards");
-const detailEl = document.getElementById("accountDetail");
+const players = [
+  {
+    id: 1,
+    username: "player_7",
+    gold: 13000,
+    status: "Fishing",
+    activeQuest: 1,
 
-/* DUMMY DATA */
-const accounts = Array.from({ length: 10 }).map((_, i) => ({
-  username: `player_${i + 1}`,
-  gold: 5000 + i * 750,
-  backpack: (i % 3) + 1,
-  ping: 25 + i * 4,
-  rod: ["Basic Rod", "Magic Rod", "Golden Rod"][i % 3],
-  status: i % 2 === 0 ? "Fishing" : "Idle",
-  progress: Math.floor(Math.random() * 100),
-  quest: {
-    name: "Catch 20 Fish",
-    progress: Math.floor(Math.random() * 100)
+    fishes: [
+      {
+        name: "Tuna",
+        mutation: "Golden",
+        weight: "3.2 kg",
+        price: 1250,
+        img: "img/fish.png"
+      }
+    ],
+
+    items: [
+      {
+        name: "Fishing Rod",
+        price: 5000,
+        img: "img/rod.png"
+      }
+    ],
+
+    quests: [
+      { id: 1, name: "Catch 10 Fish", requirement: "Tangkap 10 ikan" },
+      { id: 2, name: "Earn 5000 Gold", requirement: "Kumpulkan 5000 gold" },
+      { id: 3, name: "Backpack Lv 2", requirement: "Upgrade backpack" }
+    ]
   }
-}));
+];
 
-/* RENDER CARDS */
-function renderCards() {
-  cardsEl.innerHTML = "";
+let selectedPlayer = null;
+let activeTab = "fish";
 
-  accounts.forEach(acc => {
-    const card = document.createElement("div");
-    card.className = "card";
+/* INIT */
+renderPlayers();
 
-    card.innerHTML = `
-      <h3>${acc.username}</h3>
-      <div>Gold: ${acc.gold}</div>
-      <div>Backpack: ${acc.backpack}</div>
-      <div>Ping: ${acc.ping} ms</div>
-      <div>Rod: ${acc.rod}</div>
+/* PLAYER CARD */
+function renderPlayers() {
+  const el = document.getElementById("playerList");
+  el.innerHTML = "";
 
-      <span class="status ${acc.status.toLowerCase()}">${acc.status}</span>
-
-      <div class="progress">
-        <div style="width:${acc.progress}%"></div>
+  players.forEach(p => {
+    const q = p.quests.find(q => q.id === p.activeQuest);
+    el.innerHTML += `
+      <div class="player-card" onclick="openDetail(${p.id})">
+        <b>${p.username}</b><br>
+        Gold: ${p.gold}<br>
+        Status: ${p.status}<br>
+        Quest: ${q ? q.name : "-"}
       </div>
-
-      <div>Quest: ${acc.quest.name}</div>
     `;
-
-    card.onclick = () => showDetail(acc);
-    cardsEl.appendChild(card);
   });
 }
 
 /* DETAIL */
-function showDetail(acc) {
-  detailEl.classList.remove("hidden");
+function openDetail(id) {
+  selectedPlayer = players.find(p => p.id === id);
+  activeTab = "fish";
+  renderDetail();
+}
 
-  detailEl.innerHTML = `
-    <h2>${acc.username}</h2>
+function renderDetail() {
+  if (!selectedPlayer) return;
 
-    <p>Status: <b>${acc.status}</b></p>
-    <p>Gold: ${acc.gold}</p>
-    <p>Rod: ${acc.rod}</p>
-
-    <h3>Quest</h3>
-    <p>${acc.quest.name}</p>
-
-    <div class="progress">
-      <div style="width:${acc.quest.progress}%"></div>
+  document.getElementById("detailPanel").innerHTML = `
+    <div class="detail-tabs">
+      <div class="detail-tab ${activeTab==="fish"?"active":""}" onclick="switchTab('fish')">Fish</div>
+      <div class="detail-tab ${activeTab==="item"?"active":""}" onclick="switchTab('item')">Item</div>
+      <div class="detail-tab ${activeTab==="quest"?"active":""}" onclick="switchTab('quest')">Quest</div>
     </div>
+    ${renderTab()}
   `;
 }
 
-/* LOGOUT */
-document.getElementById("logoutBtn").onclick = () => {
-  localStorage.clear();
-  location.href = "/";
-};
+function switchTab(tab) {
+  activeTab = tab;
+  renderDetail();
+}
 
-renderCards();
+function renderTab() {
+  if (activeTab === "fish") {
+    return `<div class="grid-content">
+      ${selectedPlayer.fishes.map(f => `
+        <div class="grid-card">
+          <img src="${f.img}">
+          ${f.name}<br>${f.mutation}<br>${f.weight}<br>${f.price} Gold
+        </div>
+      `).join("")}
+    </div>`;
+  }
+
+  if (activeTab === "item") {
+    return `<div class="grid-content">
+      ${selectedPlayer.items.map(i => `
+        <div class="grid-card">
+          <img src="${i.img}">
+          ${i.name}<br>${i.price} Gold
+        </div>
+      `).join("")}
+    </div>`;
+  }
+
+  if (activeTab === "quest") {
+    return selectedPlayer.quests.map(q => `
+      <div class="quest-card ${q.id===selectedPlayer.activeQuest?"active":""}"
+           onclick="selectQuest(${q.id})">
+        <b>${q.name}</b><br>${q.requirement}
+      </div>
+    `).join("");
+  }
+}
+
+function selectQuest(id) {
+  selectedPlayer.activeQuest = id;
+  renderPlayers();
+  renderDetail();
+}
+
+function logout() {
+  location.href = "/";
+            }

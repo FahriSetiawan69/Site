@@ -1,151 +1,223 @@
 * {
   box-sizing: border-box;
-  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-  margin: 0;
-  background: #0b0616;
+  font-family: 'Inter', system-ui, sans-serif;
+  background: url('../img/premium_photo-1685148902854-9b9bb49fff08.jpeg') center / cover no-repeat fixed;
   color: #fff;
 }
 
-.app {
+#app {
   display: flex;
   min-height: 100vh;
 }
 
+/* SIDEBAR */
 .sidebar {
   width: 220px;
+  background: rgba(20, 10, 40, 0.95);
   padding: 20px;
-  background: linear-gradient(180deg,#2b1055,#12002f);
 }
 
-.content {
+.sidebar h2 {
+  color: #caa6ff;
+  margin-bottom: 20px;
+}
+
+.sidebar button {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  background: linear-gradient(135deg,#7f3cff,#b36bff);
+  color: #fff;
+}
+
+/* MAIN */
+.main {
   flex: 1;
   padding: 20px;
 }
 
-.cards {
+/* CARD GRID */
+.card-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill,minmax(260px,1fr));
-  gap: 15px;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
 }
 
-.card {
-  background: rgba(255,255,255,0.08);
-  border-radius: 12px;
-  padding: 15px;
+/* CARD */
+.account-card {
+  background: rgba(30, 10, 60, 0.85);
+  border-radius: 14px;
+  padding: 14px;
   cursor: pointer;
+  box-shadow: 0 0 20px rgba(127,60,255,0.25);
 }
 
-.card h3 {
-  margin: 0 0 10px;
+.account-card h3 {
+  margin-bottom: 8px;
+  color: #e0caff;
 }
 
+/* CARD LINE → 1 BARIS KE BAWAH */
+.card-line {
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+/* STATUS */
 .status {
-  background: #1e7f4f;
-  text-align: center;
+  margin-top: 10px;
   padding: 6px;
+  text-align: center;
   border-radius: 8px;
-  margin: 10px 0;
   font-weight: bold;
 }
 
-.progress {
+.status.fishing {
+  background: #2ecc71;
+  color: #000;
+}
+
+.status.idle {
+  background: #ff4d4d;
+  color: #000;
+}
+
+/* PROGRESS */
+.progress-bar {
   height: 8px;
-  background: #333;
-  border-radius: 5px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 6px;
+  margin-top: 8px;
   overflow: hidden;
 }
 
-.progress span {
-  display: block;
+.progress {
   height: 100%;
-  width: 50%;
-  background: linear-gradient(90deg,#a855f7,#7c3aed);
+  background: linear-gradient(90deg,#7f3cff,#b36bff);
+  width: 0%;
+  transition: width .5s;
+}
+
+/* DETAIL PANEL */
+.detail-panel {
+  position: fixed;
+  right: -100%;
+  top: 0;
+  width: 360px;
+  height: 100%;
+  background: rgba(20,10,40,0.98);
+  padding: 20px;
+  transition: .3s;
+  z-index: 1001;
+}
+
+.detail-panel.active {
+  right: 0;
 }
 
 /* OVERLAY */
-.overlay {
+#detailOverlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.6);
+  background: rgba(0,0,0,.6);
+  display: none;
+  z-index: 1000;
+}
+
+#detailOverlay.active {
+  display: block;
+}
+
+/* TABS */
+.tab-buttons {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  gap: 8px;
+  margin: 14px 0;
 }
 
-.hidden { display: none; }
-
-.detail-card {
-  width: 90%;
-  max-width: 400px;
-  background: linear-gradient(180deg,#2b1055,#12002f);
-  padding: 20px;
-  border-radius: 15px;
-}
-
-.tabs {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 15px;
-}
-
-.tab {
+.tab-btn {
   flex: 1;
   padding: 8px;
-  background: #3b2a5a;
-  border: none;
-  color: #fff;
   border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  background: rgba(255,255,255,0.1);
+  color: #fff;
 }
 
-.tab.active {
-  background: linear-gradient(90deg,#a855f7,#7c3aed);
+.tab-btn.active {
+  background: linear-gradient(135deg,#7f3cff,#b36bff);
 }
 
-.tab-content { display: none; }
-.tab-content.active { display: block; }
+.tab-content {
+  display: none;
+}
 
-/* QUEST LIST */
-.quest-list {
+.tab-content.active {
+  display: block;
+}
+
+/* QUEST POPUP */
+.quest-select {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.7);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.quest-select.active {
   display: flex;
-  flex-direction: column;
-  gap: 12px;
 }
 
-.quest {
-  background: rgba(255,255,255,0.08);
-  padding: 10px;
+.quest-box {
+  background: rgba(30,10,60,.95);
+  padding: 18px;
+  width: 380px;
+  border-radius: 14px;
+}
+
+.quest-option {
+  border: 1px solid rgba(255,255,255,.2);
   border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 10px;
   cursor: pointer;
 }
 
-.quest h4 { margin: 0 0 5px; }
-
-.quest ul {
-  padding-left: 18px;
-  margin: 5px 0;
-  font-size: 13px;
+.quest-option:hover {
+  background: rgba(127,60,255,.25);
 }
 
 .reward {
-  background: #1e7f4f;
-  padding: 6px;
-  border-radius: 6px;
+  color: #ffd966;
   font-weight: bold;
   margin-top: 6px;
-  text-align: center;
+  display: block;
 }
 
-.quest.active {
-  outline: 2px solid #a855f7;
-}
-
-.close {
-  margin-top: 15px;
+.quest-cancel {
   width: 100%;
+  margin-top: 10px;
   padding: 8px;
   border-radius: 8px;
   border: none;
+  background: #555;
+  color: #fff;
+}
+
+/* MOBILE */
+@media(max-width:768px){
+  .sidebar {
+    display: none;
+  }
   }

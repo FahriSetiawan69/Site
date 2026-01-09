@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
+  <title>Fishit Monitor Dashboard</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LUXX Monitor Dashboard</title>
+
   <link rel="stylesheet" href="css/dashboard.css">
 </head>
 <body>
+
 <div id="app">
 
   <!-- SIDEBAR -->
@@ -17,21 +19,17 @@
 
   <!-- MAIN -->
   <main class="main">
-
-    <!-- CARD GRID -->
-    <section id="accountCards" class="card-grid">
-      <!-- cards injected by JS -->
-    </section>
-
-    <!-- DETAIL PANEL -->
-    <section id="accountDetail" class="detail-panel">
-      <!-- detail injected by JS -->
-    </section>
-
+    <section id="accountCards" class="card-grid"></section>
   </main>
+
 </div>
 
-<script src="js/dummyData.js"></script>
+<!-- DETAIL OVERLAY -->
+<div id="detailOverlay" class="detail-overlay"></div>
+
+<!-- DETAIL PANEL -->
+<section id="accountDetail" class="detail-panel"></section>
+
 <script src="js/dashboard.js"></script>
 </body>
 </html>

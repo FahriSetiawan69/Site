@@ -1,19 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Fishit Key Login</title>
-  <link rel="stylesheet" href="css/key.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fishit Monitor</title>
+<link rel="stylesheet" href="css/dashboard.css">
 </head>
-<body class="login-page">
+<body>
 
-<div class="login-container">
-  <h1>Fishit Monitor</h1>
-  <input id="keyInput" type="text" placeholder="Enter your key">
-  <button id="loginBtn">Login</button>
-  <p id="loginMsg"></p>
+<div class="app">
+
+  <aside class="sidebar">
+    <h2>Fishit Monitor</h2>
+  </aside>
+
+  <main class="content">
+    <div class="cards" id="cards"></div>
+  </main>
+
 </div>
 
-<script src="js/main.js"></script>
+<!-- DETAIL PANEL -->
+<div class="overlay hidden" id="overlay">
+  <div class="detail-card">
+    <h3 id="detailName">player</h3>
+
+    <div class="tabs">
+      <button class="tab active" data-tab="quest">Quest</button>
+      <button class="tab" data-tab="info">Info</button>
+    </div>
+
+    <!-- QUEST TAB -->
+    <div class="tab-content active" id="tab-quest">
+      <p><b>Current Quest:</b> <span id="currentQuest">None</span></p>
+
+      <!-- QUEST LIST (INI AREA YANG KAMU MAU) -->
+      <div class="quest-list">
+        <div class="quest" data-quest="Daily Fishing">
+          <h4>Daily Fishing</h4>
+          <ul>
+            <li>Catch 10 fish</li>
+            <li>No disconnect</li>
+          </ul>
+          <div class="reward">Reward: +500 Gold</div>
+        </div>
+
+        <div class="quest" data-quest="Rare Hunter">
+          <h4>Rare Hunter</h4>
+          <ul>
+            <li>Catch 1 rare fish</li>
+          </ul>
+          <div class="reward">Reward: +1200 Gold</div>
+        </div>
+
+        <div class="quest" data-quest="Backpack Full">
+          <h4>Backpack Full</h4>
+          <ul>
+            <li>Fill backpack to max</li>
+          </ul>
+          <div class="reward">Reward: +800 Gold</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- INFO TAB -->
+    <div class="tab-content" id="tab-info">
+      <p>Info coming soon</p>
+    </div>
+
+    <button class="close" onclick="closeDetail()">Close</button>
+  </div>
+</div>
+
+<script src="js/dashboard.js"></script>
 </body>
 </html>

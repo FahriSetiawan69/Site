@@ -32,11 +32,10 @@ body, html { height: 100%; background: url('../img/premium_photo-1685148902854-9
 
 .card .info {
   display: flex;
-  flex-direction: column;
+  flex-direction: column; /* semua info kebawah */
   gap: 6px;
 }
-
-.card .info p { font-size:14px; margin:0; }
+.card .info p { font-size:14px; }
 
 /* STATUS */
 .card-status { font-weight:bold; text-align:center; padding:5px 10px; border-radius:6px; margin-top:5px; }
@@ -48,11 +47,30 @@ body, html { height: 100%; background: url('../img/premium_photo-1685148902854-9
 .progress-fill { height:100%; background:linear-gradient(90deg,#7f3cff,#b36bff); width:0%; transition: width 0.5s ease; box-shadow:0 0 10px rgba(160,80,255,0.6); }
 
 /* DETAIL PANEL */
-.detail-panel { position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); width:400px; max-width:90%; background:rgba(25,10,50,0.95); color:#fff; border-radius:12px; padding:20px; display:none; flex-direction:column; gap:10px; z-index:1000; }
+.detail-panel { position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); width:450px; max-width:90%; background:rgba(25,10,50,0.95); color:#fff; border-radius:12px; padding:20px; display:none; flex-direction:column; gap:10px; z-index:1000; }
 .detail-panel.active { display:flex; }
+
+/* TABS */
+.tab-buttons { display:flex; gap:10px; margin-bottom:10px; }
+.tab-buttons button { flex:1; padding:8px; border-radius:8px; border:none; cursor:pointer; background: rgba(160,80,255,0.2); color:#fff; font-weight:bold; }
+.tab-buttons button.active { background: linear-gradient(135deg,#7f3cff,#b36bff); color:#fff; }
+
+.tab-content { display:none; flex-direction:column; gap:6px; }
+.tab-content.active { display:flex; }
+
+/* GRID ITEM */
+.grid-item { display:flex; align-items:center; gap:10px; padding:6px; background: rgba(255,255,255,0.05); border-radius:6px; }
+.grid-item img { width:30px; height:30px; object-fit:cover; border-radius:4px; }
+.grid-item p { margin:0; font-size:14px; }
+
+/* QUEST ITEM */
+.quest-item { padding:6px; border-radius:6px; background: rgba(160,80,255,0.2); cursor:pointer; }
+.quest-item:hover { background: linear-gradient(135deg,#7f3cff,#b36bff); }
+.quest-item.active { background: linear-gradient(135deg,#7f3cff,#b36bff); color:#fff; font-weight:bold; }
 
 /* RESPONSIVE */
 @media(max-width:768px) {
   .main { padding:10px; }
   .card-grid { grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); }
+  .detail-panel { width:90%; }
 }

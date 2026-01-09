@@ -1,126 +1,66 @@
-// =========================
-// GLOBAL STATE
-// =========================
-let currentAccount = null;
+// ===============================
+// DASHBOARD SAFE VERSION
+// ===============================
 
-// Dummy quest data (SUDAH ADA POLANYA DI SCRIPT KAMU)
-const QUEST_LIST = [
-  {
-    id: 1,
-    name: "Fishing Novice",
-    requirements: [
-      "Catch 10 fish",
-      "Use any rod"
-    ],
-    reward: "500 Gold"
-  },
-  {
-    id: 2,
-    name: "Deep Sea Hunter",
-    requirements: [
-      "Catch 25 fish",
-      "Use Magic Rod"
-    ],
-    reward: "1500 Gold"
-  },
-  {
-    id: 3,
-    name: "Legendary Angler",
-    requirements: [
-      "Catch 50 fish",
-      "Use Golden Rod"
-    ],
-    reward: "5000 Gold"
-  }
-];
+let selectedAccount = null;
 
-// =========================
-// CARD CLICK
-// =========================
-function openAccountDetail(account) {
-  currentAccount = account;
+// ===============================
+// RENDER CARD LIST
+// ===============================
+function renderCards() {
+  const container = document.getElementById("accountCards");
+  if (!container) return;
 
-  renderAccountInfo(account);
+  container.innerHTML = "";
 
-  // 🔥 QUEST LANGSUNG MUNCUL (PENGGANTI CHANGE QUEST)
-  renderQuestList(account);
+  dummyAccounts.forEach((acc) => {
+    const card = document.createElement("div");
+    card.className = "account-card";
+    card.dataset.player = acc.name;
 
-  openDetailModal();
-}
-
-// =========================
-// RENDER ACCOUNT INFO
-// =========================
-function renderAccountInfo(account) {
-  document.getElementById("detailPlayerName").innerText = account.name;
-  document.getElementById("detailGold").innerText = account.gold;
-  document.getElementById("detailBackpack").innerText = account.backpack;
-  document.getElementById("detailPing").innerText = account.ping + "ms";
-  document.getElementById("detailRod").innerText = account.rod;
-  document.getElementById("detailStatus").innerText = account.status;
-}
-
-// =========================
-// QUEST RENDER (INTI FIX)
-// =========================
-function renderQuestList(account) {
-  const questContainer = document.getElementById("questList");
-  if (!questContainer) return;
-
-  questContainer.innerHTML = "";
-
-  QUEST_LIST.forEach((quest) => {
-    const questCard = document.createElement("div");
-    questCard.className = "quest-card";
-
-    const isActive = account.quest && account.quest.id === quest.id;
-
-    questCard.innerHTML = `
-      <div class="quest-title ${isActive ? "active" : ""}">
-        ${quest.name}
+    card.innerHTML = `
+      <div class="card-header">
+        <strong>${acc.name}</strong>
       </div>
 
-      <ul class="quest-req">
-        ${quest.requirements.map(req => `<li>${req}</li>`).join("")}
-      </ul>
+      <div class="card-info">
+        <div>Gold: ${acc.gold}</div>
+        <div>Backpack: ${acc.backpack}</div>
+        <div>Ping: ${acc.ping}ms</div>
+        <div>Rod: ${acc.rod}</div>
+      </div>
 
-      <div class="quest-reward">
-        Reward: ${quest.reward}
+      <div class="card-quest">
+        Quest: ${acc.quest ? acc.quest.name : "None"}
+      </div>
+
+      <div class="card-status ${acc.status === "Fishing" ? "fishing" : "idle"}">
+        ${acc.status}
       </div>
     `;
 
-    questCard.addEventListener("click", () => {
-      account.quest = quest;
-      renderQuestList(account);
-      updateCardQuest(account);
+    card.addEventListener("click", () => {
+      selectedAccount = acc;
+      highlightCard(acc.name);
+      // DETAIL PANEL BELUM AKTIF (BIAR TIDAK PUTIH)
     });
 
-    questContainer.appendChild(questCard);
+    container.appendChild(card);
   });
 }
 
-// =========================
-// UPDATE QUEST DI CARD
-// =========================
-function updateCardQuest(account) {
-  const card = document.querySelector(`[data-player="${account.name}"]`);
-  if (!card) return;
-
-  const questText = card.querySelector(".card-quest");
-  if (questText) {
-    questText.innerText = account.quest
-      ? account.quest.name
-      : "No Quest";
-  }
+// ===============================
+// CARD HIGHLIGHT
+// ===============================
+function highlightCard(name) {
+  document.querySelectorAll(".account-card").forEach((c) => {
+    c.classList.toggle("active", c.dataset.player === name);
+  });
 }
 
-// =========================
-// MODAL CONTROL
-// =========================
-function openDetailModal() {
-  document.getElementById("detailModal").classList.add("show");
-}
-
-function closeDetailModal() {
-  document.getElementById("detailModal").classList.remove("show");
-}
+// ===============================
+// INIT
+// ===============================
+document.addEventListener("DOMContentLoaded", () => {
+  renderCards();
+});

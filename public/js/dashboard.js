@@ -1,178 +1,113 @@
-// =========================
-// GLOBAL REF
-// =========================
-const accountCards = document.getElementById("accountCards");
-const detailPanel = document.getElementById("accountDetail");
-const overlay = document.createElement("div");
-overlay.id = "detailOverlay";
-document.body.appendChild(overlay);
+document.addEventListener("DOMContentLoaded", () => {
+  const cardContainer = document.getElementById("accountCards");
+  const detailPanel = document.getElementById("detailPanel");
 
-// =========================
-// DATA DUMMY
-// =========================
-const accounts = Array.from({ length: 10 }, (_, i) => ({
-  id: i,
-  username: `player_${i + 1}`,
-  gold: 8000 + i * 1500,
-  backpack: Math.floor(Math.random() * 10),
-  ping: Math.floor(Math.random() * 50) + 20,
-  rod: ["Standard Rod", "Magic Rod", "Golden Rod"][i % 3],
-  status: i % 2 === 0 ? "Fishing" : "Idle",
-  progress: Math.floor(Math.random() * 100),
-  quests: [
-    { id: 1, name: "Catch Secret Fish", req: ["Find Secret Spot", "Use Magic Rod"], reward: "500 Gold" },
-    { id: 2, name: "Rare Fish Hunt", req: ["Catch 5 Rare Fish"], reward: "Rare Bait" },
-    { id: 3, name: "Daily Fishing", req: ["Catch Any Fish"], reward: "Lucky Charm" }
-  ],
-  activeQuest: 0
-}));
+  if (!cardContainer) {
+    console.error("❌ accountCards element tidak ditemukan");
+    return;
+  }
 
-// =========================
-// RENDER CARD GRID
-// =========================
-function renderCards() {
-  accountCards.innerHTML = "";
+  // ===== DATA DUMMY (AMAN) =====
+  const accounts = Array.from({ length: 10 }, (_, i) => ({
+    id: i + 1,
+    name: `Player ${i + 1}`,
+    ping: Math.floor(Math.random() * 100) + " ms",
+    backpack: Math.floor(Math.random() * 50),
+    questProgress: Math.floor(Math.random() * 100)
+  }));
 
-  accounts.forEach(acc => {
-    const q = acc.quests[acc.activeQuest] || { name: "None" };
+  // ===== RENDER CARD =====
+  function renderCards() {
+    cardContainer.innerHTML = "";
 
-    const card = document.createElement("div");
-    card.className = "account-card";
+    accounts.forEach(acc => {
+      const card = document.createElement("div");
+      card.className = "account-card";
+      card.innerHTML = `
+        <h3>${acc.name}</h3>
 
-    card.innerHTML = `
-      <h3>${acc.username}</h3>
+        <div class="card-info">
+          <span>📶 ${acc.ping}</span>
+          <span>🎒 ${acc.backpack}</span>
+        </div>
 
-      <div class="card-line">Gold: ${acc.gold}</div>
-      <div class="card-line">Backpack: ${acc.backpack}</div>
-      <div class="card-line">Ping: ${acc.ping}ms</div>
-      <div class="card-line">Rod: ${acc.rod}</div>
+        <div class="progress-wrapper">
+          <div class="progress-bar">
+            <div class="progress-fill" style="width:${acc.questProgress}%"></div>
+          </div>
+          <small>${acc.questProgress}% Quest</small>
+        </div>
+      `;
 
-      <div class="card-line"><b>Quest:</b> ${q.name}</div>
-
-      <div class="status ${acc.status.toLowerCase()}">${acc.status}</div>
-
-      <div class="progress-bar">
-        <div class="progress" style="width:${acc.progress}%;"></div>
-      </div>
-    `;
-
-    card.onclick = () => openDetail(acc);
-    accountCards.appendChild(card);
-  });
-}
-
-// =========================
-// OPEN DETAIL PANEL
-// =========================
-function openDetail(acc) {
-  detailPanel.classList.add("active");
-  overlay.classList.add("active");
-
-  detailPanel.innerHTML = `
-    <h3>${acc.username}</h3>
-
-    <div class="tab-buttons">
-      <button class="tab-btn active" data-tab="fishTab">Fish</button>
-      <button class="tab-btn" data-tab="itemTab">Item</button>
-      <button class="tab-btn" data-tab="questTab">Quest</button>
-    </div>
-
-    <div id="fishTab" class="tab-content active"></div>
-    <div id="itemTab" class="tab-content"></div>
-    <div id="questTab" class="tab-content"></div>
-
-    <button id="closeDetail">Close</button>
-  `;
-
-  renderFishTab(acc);
-  renderItemTab(acc);
-  renderQuestTab(acc);
-
-  // TAB BUTTON LOGIC
-  detailPanel.querySelectorAll(".tab-btn").forEach(btn => {
-    btn.addEventListener("click", () => {
-      // deactivate all
-      detailPanel.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
-      detailPanel.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
-
-      // activate this
-      btn.classList.add("active");
-      document.getElementById(btn.dataset.tab).classList.add("active");
+      card.addEventListener("click", () => openDetail(acc));
+      cardContainer.appendChild(card);
     });
-  });
+  }
 
-  // CLOSE PANEL
-  document.getElementById("closeDetail").onclick = closeDetail;
-  overlay.onclick = closeDetail;
-}
+  // ===== DETAIL PANEL =====
+  function openDetail(acc) {
+    if (!detailPanel) return;
 
-// =========================
-// RENDER TAB CONTENT
-// =========================
-function renderFishTab(acc) {
-  const el = document.getElementById("fishTab");
-  el.innerHTML = "";
-  // example fish items (dummy)
-  acc.fishes?.forEach(f => {
-    el.innerHTML += `
-      <div class="tab-item">
-        <div><strong>${f.name}</strong></div>
-        <div>${f.mutation}</div>
-        <div>${f.weight}</div>
-        <div>${f.price} Gold</div>
+    detailPanel.innerHTML = `
+      <div class="detail-header">${acc.name}</div>
+
+      <div class="tab-bar">
+        <button class="tab-btn active" data-tab="fish">Fish</button>
+        <button class="tab-btn" data-tab="item">Item</button>
+        <button class="tab-btn" data-tab="quest">Quest</button>
       </div>
+
+      <div class="tab-content" id="tabContent"></div>
     `;
-  });
-}
 
-function renderItemTab(acc) {
-  const el = document.getElementById("itemTab");
-  el.innerHTML = "";
-  // example items (dummy)
-  acc.items?.forEach(i => {
-    el.innerHTML += `
-      <div class="tab-item">
-        <div><strong>${i.name}</strong></div>
-        <div>${i.price} Gold</div>
-      </div>
-    `;
-  });
-}
+    setupTabs(acc);
+    renderFish();
+  }
 
-function renderQuestTab(acc) {
-  const el = document.getElementById("questTab");
-  el.innerHTML = "";
+  // ===== TAB SYSTEM =====
+  function setupTabs(acc) {
+    const buttons = detailPanel.querySelectorAll(".tab-btn");
+    const content = detailPanel.querySelector("#tabContent");
 
-  acc.quests.forEach((q, index) => {
-    el.innerHTML += `
-      <div class="quest-option" data-index="${index}">
-        <strong>${q.name}</strong><br>
-        ${q.req.map(r => `<div>* ${r}</div>`).join("")}
-        <div class="reward">${q.reward}</div>
-      </div>
-    `;
-  });
+    buttons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        buttons.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
 
-  // make quests clickable
-  el.querySelectorAll(".quest-option").forEach(opt => {
-    opt.onclick = () => {
-      const idx = parseInt(opt.dataset.index);
-      acc.activeQuest = idx;
-      closeDetail();
-      renderCards(); // update card display
-    };
-  });
-}
+        const tab = btn.dataset.tab;
+        if (tab === "fish") renderFish();
+        if (tab === "item") renderItem();
+        if (tab === "quest") renderQuest();
+      });
+    });
 
-// =========================
-// CLOSE DETAIL
-// =========================
-function closeDetail() {
-  detailPanel.classList.remove("active");
-  overlay.classList.remove("active");
-}
+    function renderFish() {
+      content.innerHTML = `
+        <div class="grid">
+          <div class="grid-card">🐟 Tuna<br>Mutasi A<br>2.3kg<br>$120</div>
+          <div class="grid-card">🐠 Salmon<br>Mutasi B<br>1.8kg<br>$90</div>
+        </div>
+      `;
+    }
 
-// =========================
-// INIT
-// =========================
-renderCards();
+    function renderItem() {
+      content.innerHTML = `
+        <div class="grid">
+          <div class="grid-card">🎣 Rod<br>$50</div>
+          <div class="grid-card">🧰 Box<br>$30</div>
+        </div>
+      `;
+    }
+
+    function renderQuest() {
+      content.innerHTML = `
+        <div class="grid">
+          <div class="grid-card quest">Catch 5 Fish<br><small>Klik untuk start</small></div>
+          <div class="grid-card quest">Sell 3 Fish<br><small>Klik untuk start</small></div>
+        </div>
+      `;
+    }
+  }
+
+  renderCards();
+});

@@ -1,79 +1,110 @@
 const accountCards = document.getElementById('accountCards');
-const logoutBtn = document.getElementById('logoutBtn');
-const accountDetail = document.getElementById('accountDetail');
+const detailPanel = document.getElementById('accountDetail');
+const overlay = document.getElementById('detailOverlay');
 
-logoutBtn.addEventListener('click', ()=>window.location.href='index.html');
+/* DUMMY DATA */
+const accounts = Array.from({ length: 10 }, (_, i) => ({
+  username: `player_${i + 1}`,
+  gold: 5000 + i * 3000,
+  backpack: 1 + (i % 3),
+  ping: 20 + i * 5,
+  rod: ['Standard Rod', 'Magic Rod', 'Golden Rod'][i % 3],
+  status: i % 2 === 0 ? 'Fishing' : 'Idle',
+  progress: Math.floor(Math.random() * 100),
+  quests: [
+    {
+      name: 'Catch Secret Fish',
+      req: ['Find Secret Spot', 'Use Magic Rod'],
+      reward: '500 Gold'
+    },
+    {
+      name: 'Collect Rare Fish',
+      req: ['Catch 5 Rare Fish'],
+      reward: 'Rare Bait'
+    },
+    {
+      name: 'Daily Challenge',
+      req: ['Catch Any Fish'],
+      reward: 'Lucky Charm'
+    }
+  ]
+}));
 
-dummyAccounts.forEach(acc=>{
+/* RENDER CARDS */
+accounts.forEach(acc => {
   const card = document.createElement('div');
-  card.classList.add('card');
+  card.className = 'account-card';
 
-  card.innerHTML=`
-    <h4 class="username">${acc.username}</h4>
-    <div class="info">
-      <p>Gold: ${acc.gold}</p>
-      <p>Backpack: ${acc.backpack.length}</p>
-      <p>Ping: ${acc.ping}ms</p>
-      <p>Rod: ${acc.rod}</p>
-    </div>
-    <div class="card-status ${acc.status==="Fishing"?"status-fishing":"status-idle"}">
-      ${acc.status}
-    </div>
+  card.innerHTML = `
+    <h3>${acc.username}</h3>
+    <div class="card-line">Gold: ${acc.gold}</div>
+    <div class="card-line">Backpack: ${acc.backpack}</div>
+    <div class="card-line">Ping: ${acc.ping}ms</div>
+    <div class="card-line">Rod: ${acc.rod}</div>
+
+    <div class="status ${acc.status.toLowerCase()}">${acc.status}</div>
+
     <div class="progress-bar">
-      <div class="progress-fill" style="width:${acc.questProgress}%"></div>
+      <div class="progress" style="width:${acc.progress}%"></div>
     </div>
   `;
 
+  card.onclick = () => openDetail(acc);
   accountCards.appendChild(card);
-
-  card.addEventListener('click',()=>{
-    accountDetail.classList.add('active');
-
-    accountDetail.innerHTML=`
-      <h3>${acc.username}</h3>
-      <div class="tab-buttons">
-        <button class="tab-btn active" data-tab="fish">Fish</button>
-        <button class="tab-btn" data-tab="items">Items</button>
-        <button class="tab-btn" data-tab="quest">Quest</button>
-      </div>
-      <div class="tab-content active" id="fishTab">
-        ${acc.fish.map(f=>`<div class="grid-item">${f.name} (${f.weight}kg, ${f.mutasi}) x${f.qty}</div>`).join('')}
-      </div>
-      <div class="tab-content" id="itemsTab">
-        ${acc.items.map(i=>`<div class="grid-item">${i.name} x${i.qty}</div>`).join('')}
-      </div>
-      <div class="tab-content" id="questTab">
-        ${acc.quests.map((q,idx)=>`<div class="quest-item" data-index="${idx}">${q.name} - Reward: ${q.reward}</div>`).join('')}
-      </div>
-      <button id="closeDetail">Close</button>
-    `;
-
-    const tabs = accountDetail.querySelectorAll('.tab-btn');
-    const contents = accountDetail.querySelectorAll('.tab-content');
-    tabs.forEach(tab=>{
-      tab.addEventListener('click',()=>{
-        tabs.forEach(t=>t.classList.remove('active'));
-        tab.classList.add('active');
-        contents.forEach(c=>c.classList.remove('active'));
-        document.getElementById(tab.dataset.tab+"Tab").classList.add('active');
-      });
-    });
-
-    const questItems = accountDetail.querySelectorAll('.quest-item');
-    questItems.forEach(qi=>{
-      qi.addEventListener('click',()=>{
-        const idx = qi.dataset.index;
-        acc.questProgress += 10; // contoh update progress
-        if(acc.questProgress>100) acc.questProgress=100;
-        card.querySelector('.progress-fill').style.width=acc.questProgress+"%";
-        // aktifkan highlight
-        questItems.forEach(q=>q.classList.remove('active'));
-        qi.classList.add('active');
-      });
-    });
-
-    document.getElementById('closeDetail').addEventListener('click',()=>{
-      accountDetail.classList.remove('active');
-    });
-  });
 });
+
+/* OPEN DETAIL */
+function openDetail(acc) {
+  detailPanel.innerHTML = `
+    <h3>${acc.username}</h3>
+
+    <div class="tab-buttons">
+      <button class="tab-btn active" data-tab="quest">Quest</button>
+      <button class="tab-btn" data-tab="info">Info</button>
+    </div>
+
+    <div id="questTab" class="tab-content active">
+      ${acc.quests.map(q => `
+        <div class="quest-item">
+          <strong>${q.name}</strong>
+          <ul>${q.req.map(r => `<li>${r}</li>`).join('')}</ul>
+          <span class="reward">🎁 ${q.reward}</span>
+        </div>
+      `).join('')}
+    </div>
+
+    <div id="infoTab" class="tab-content">
+      <p>Gold: ${acc.gold}</p>
+      <p>Backpack: ${acc.backpack}</p>
+      <p>Ping: ${acc.ping}ms</p>
+      <p>Rod: ${acc.rod}</p>
+    </div>
+
+    <button id="closeDetail">Close</button>
+  `;
+
+  detailPanel.classList.add('active');
+  overlay.classList.add('active');
+
+  const tabs = detailPanel.querySelectorAll('.tab-btn');
+  const contents = detailPanel.querySelectorAll('.tab-content');
+
+  tabs.forEach(btn => {
+    btn.onclick = () => {
+      tabs.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      contents.forEach(c => c.classList.remove('active'));
+      document.getElementById(btn.dataset.tab + 'Tab').classList.add('active');
+    };
+  });
+
+  document.getElementById('closeDetail').onclick = closeDetail;
+  overlay.onclick = closeDetail;
+}
+
+/* CLOSE DETAIL */
+function closeDetail() {
+  detailPanel.classList.remove('active');
+  overlay.classList.remove('active');
+}

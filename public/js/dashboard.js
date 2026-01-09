@@ -148,4 +148,4 @@ function openQuestPopup(acc) {
 function closeDetail() {
   detailPanel.classList.remove('active');
   overlay.classList.remove('active');
-                    }
+      }

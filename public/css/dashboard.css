@@ -1,93 +1,98 @@
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-  margin: 0;
-  font-family: Inter, system-ui, sans-serif;
-  background: radial-gradient(circle at top, #1b0b3a, #05010d);
+  font-family: 'Inter', system-ui, sans-serif;
+  background: url('../img/premium_photo-1685148902854-9b9bb49fff08.jpeg') center / cover no-repeat fixed;
   color: #fff;
 }
 
-/* ===== LAYOUT ===== */
 #app {
   display: flex;
   min-height: 100vh;
 }
 
-/* ===== SIDEBAR ===== */
+/* SIDEBAR */
 .sidebar {
   width: 220px;
-  background: linear-gradient(180deg, #2a0b5a, #12002e);
+  background: rgba(20, 10, 40, 0.95);
   padding: 20px;
 }
 
 .sidebar h2 {
-  margin-top: 0;
+  color: #caa6ff;
+  margin-bottom: 20px;
 }
 
 .sidebar button {
-  margin-top: 20px;
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  background: linear-gradient(135deg,#7f3cff,#b36bff);
+  color: #fff;
 }
 
-/* ===== MAIN ===== */
+/* MAIN */
 .main {
   flex: 1;
-  min-width: 0;
   padding: 20px;
 }
 
-/* ===== GRID ===== */
+/* CARD GRID */
 .card-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 16px;
-  width: 100%;
 }
 
-/* ===== CARD ===== */
+/* CARD */
 .account-card {
   background: rgba(30, 10, 60, 0.85);
   border-radius: 14px;
   padding: 14px;
   cursor: pointer;
-  box-shadow: 0 0 25px rgba(160, 80, 255, 0.25);
+  box-shadow: 0 0 20px rgba(127,60,255,0.25);
 }
 
 .account-card h3 {
-  margin-top: 0;
+  margin-bottom: 8px;
+  color: #e0caff;
 }
 
-.card-info {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+/* CARD LINE → 1 BARIS KE BAWAH */
+.card-line {
   font-size: 14px;
+  margin-bottom: 4px;
 }
 
-/* ===== STATUS ===== */
+/* STATUS */
 .status {
   margin-top: 10px;
   padding: 6px;
-  border-radius: 8px;
   text-align: center;
+  border-radius: 8px;
   font-weight: bold;
 }
 
 .status.fishing {
-  background: #1e7f3b;
-  color: #7cffb2;
+  background: #2ecc71;
+  color: #000;
 }
 
 .status.idle {
-  background: #7f1e1e;
-  color: #ff9c9c;
+  background: #ff4d4d;
+  color: #000;
 }
 
-/* ===== PROGRESS ===== */
+/* PROGRESS */
 .progress-bar {
   height: 8px;
-  background: #2a1a40;
+  background: rgba(255,255,255,0.2);
   border-radius: 6px;
   margin-top: 8px;
   overflow: hidden;
@@ -95,33 +100,124 @@ body {
 
 .progress {
   height: 100%;
-  background: linear-gradient(90deg, #8a4dff, #c77dff);
+  background: linear-gradient(90deg,#7f3cff,#b36bff);
+  width: 0%;
+  transition: width .5s;
 }
 
-/* ===== DETAIL ===== */
+/* DETAIL PANEL */
 .detail-panel {
   position: fixed;
+  right: -100%;
   top: 0;
-  right: 0;
-  width: 320px;
+  width: 360px;
   height: 100%;
-  background: rgba(20, 5, 40, 0.95);
+  background: rgba(20,10,40,0.98);
   padding: 20px;
-  box-shadow: -10px 0 30px rgba(0,0,0,0.6);
-  overflow-y: auto;
+  transition: .3s;
+  z-index: 1001;
 }
 
-.hidden {
+.detail-panel.active {
+  right: 0;
+}
+
+/* OVERLAY */
+#detailOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.6);
+  display: none;
+  z-index: 1000;
+}
+
+#detailOverlay.active {
+  display: block;
+}
+
+/* TABS */
+.tab-buttons {
+  display: flex;
+  gap: 8px;
+  margin: 14px 0;
+}
+
+.tab-btn {
+  flex: 1;
+  padding: 8px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+}
+
+.tab-btn.active {
+  background: linear-gradient(135deg,#7f3cff,#b36bff);
+}
+
+.tab-content {
   display: none;
 }
 
-/* ===== MOBILE ===== */
-@media (max-width: 768px) {
-  .sidebar {
-    width: 160px;
-  }
+.tab-content.active {
+  display: block;
+}
 
-  .detail-panel {
-    width: 100%;
+/* QUEST POPUP */
+.quest-select {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.7);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.quest-select.active {
+  display: flex;
+}
+
+.quest-box {
+  background: rgba(30,10,60,.95);
+  padding: 18px;
+  width: 380px;
+  border-radius: 14px;
+}
+
+.quest-option {
+  border: 1px solid rgba(255,255,255,.2);
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.quest-option:hover {
+  background: rgba(127,60,255,.25);
+}
+
+.reward {
+  color: #ffd966;
+  font-weight: bold;
+  margin-top: 6px;
+  display: block;
+}
+
+.quest-cancel {
+  width: 100%;
+  margin-top: 10px;
+  padding: 8px;
+  border-radius: 8px;
+  border: none;
+  background: #555;
+  color: #fff;
+}
+
+/* MOBILE */
+@media(max-width:768px){
+  .sidebar {
+    display: none;
   }
-                   }
+  }

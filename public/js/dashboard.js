@@ -1,151 +1,126 @@
-const accountCards = document.getElementById('accountCards');
-const detailPanel = document.getElementById('accountDetail');
+// =========================
+// GLOBAL STATE
+// =========================
+let currentAccount = null;
 
-const overlay = document.createElement('div');
-overlay.id = 'detailOverlay';
-document.body.appendChild(overlay);
+// Dummy quest data (SUDAH ADA POLANYA DI SCRIPT KAMU)
+const QUEST_LIST = [
+  {
+    id: 1,
+    name: "Fishing Novice",
+    requirements: [
+      "Catch 10 fish",
+      "Use any rod"
+    ],
+    reward: "500 Gold"
+  },
+  {
+    id: 2,
+    name: "Deep Sea Hunter",
+    requirements: [
+      "Catch 25 fish",
+      "Use Magic Rod"
+    ],
+    reward: "1500 Gold"
+  },
+  {
+    id: 3,
+    name: "Legendary Angler",
+    requirements: [
+      "Catch 50 fish",
+      "Use Golden Rod"
+    ],
+    reward: "5000 Gold"
+  }
+];
 
-/* QUEST POPUP */
-const questPopup = document.createElement('div');
-questPopup.className = 'quest-select';
-document.body.appendChild(questPopup);
+// =========================
+// CARD CLICK
+// =========================
+function openAccountDetail(account) {
+  currentAccount = account;
 
-/* DATA */
-const accounts = Array.from({ length: 10 }, (_, i) => ({
-  id: i,
-  username: `player_${i + 1}`,
-  gold: 8000 + i * 2000,
-  backpack: 1 + (i % 4),
-  ping: 20 + i * 6,
-  rod: ['Standard Rod','Magic Rod','Golden Rod'][i % 3],
-  status: i % 2 === 0 ? 'Fishing' : 'Idle',
-  progress: Math.floor(Math.random() * 100),
-  quest: 'None',
-  quests: [
-    {
-      name: 'Catch Secret Fish',
-      req: ['Find Secret Spot','Use Magic Rod'],
-      reward: '500 Gold'
-    },
-    {
-      name: 'Rare Fish Hunt',
-      req: ['Catch 5 Rare Fish'],
-      reward: 'Rare Bait'
-    },
-    {
-      name: 'Daily Fishing',
-      req: ['Catch Any Fish'],
-      reward: 'Lucky Charm'
-    }
-  ]
-}));
+  renderAccountInfo(account);
 
-/* RENDER CARD */
-function renderCards() {
-  accountCards.innerHTML = '';
+  // 🔥 QUEST LANGSUNG MUNCUL (PENGGANTI CHANGE QUEST)
+  renderQuestList(account);
 
-  accounts.forEach(acc => {
-    const card = document.createElement('div');
-    card.className = 'account-card';
+  openDetailModal();
+}
 
-    card.innerHTML = `
-      <h3>${acc.username}</h3>
-      <div class="card-line">Gold: ${acc.gold}</div>
-      <div class="card-line">Backpack: ${acc.backpack}</div>
-      <div class="card-line">Ping: ${acc.ping}ms</div>
-      <div class="card-line">Rod: ${acc.rod}</div>
-      <div class="card-line">Quest: ${acc.quest}</div>
+// =========================
+// RENDER ACCOUNT INFO
+// =========================
+function renderAccountInfo(account) {
+  document.getElementById("detailPlayerName").innerText = account.name;
+  document.getElementById("detailGold").innerText = account.gold;
+  document.getElementById("detailBackpack").innerText = account.backpack;
+  document.getElementById("detailPing").innerText = account.ping + "ms";
+  document.getElementById("detailRod").innerText = account.rod;
+  document.getElementById("detailStatus").innerText = account.status;
+}
 
-      <div class="status ${acc.status.toLowerCase()}">${acc.status}</div>
+// =========================
+// QUEST RENDER (INTI FIX)
+// =========================
+function renderQuestList(account) {
+  const questContainer = document.getElementById("questList");
+  if (!questContainer) return;
 
-      <div class="progress-bar">
-        <div class="progress" style="width:${acc.progress}%"></div>
+  questContainer.innerHTML = "";
+
+  QUEST_LIST.forEach((quest) => {
+    const questCard = document.createElement("div");
+    questCard.className = "quest-card";
+
+    const isActive = account.quest && account.quest.id === quest.id;
+
+    questCard.innerHTML = `
+      <div class="quest-title ${isActive ? "active" : ""}">
+        ${quest.name}
+      </div>
+
+      <ul class="quest-req">
+        ${quest.requirements.map(req => `<li>${req}</li>`).join("")}
+      </ul>
+
+      <div class="quest-reward">
+        Reward: ${quest.reward}
       </div>
     `;
 
-    card.onclick = () => openDetail(acc);
-    accountCards.appendChild(card);
+    questCard.addEventListener("click", () => {
+      account.quest = quest;
+      renderQuestList(account);
+      updateCardQuest(account);
+    });
+
+    questContainer.appendChild(questCard);
   });
 }
 
-renderCards();
+// =========================
+// UPDATE QUEST DI CARD
+// =========================
+function updateCardQuest(account) {
+  const card = document.querySelector(`[data-player="${account.name}"]`);
+  if (!card) return;
 
-/* DETAIL */
-function openDetail(acc) {
-  detailPanel.innerHTML = `
-    <h3>${acc.username}</h3>
-
-    <div class="tab-buttons">
-      <button class="tab-btn active" data-tab="quest">Quest</button>
-      <button class="tab-btn" data-tab="info">Info</button>
-    </div>
-
-    <div id="questTab" class="tab-content active">
-      <p><strong>Current Quest:</strong> ${acc.quest}</p>
-      <button id="changeQuest">Change Quest</button>
-    </div>
-
-    <div id="infoTab" class="tab-content">
-      <p>Gold: ${acc.gold}</p>
-      <p>Backpack: ${acc.backpack}</p>
-      <p>Ping: ${acc.ping}ms</p>
-      <p>Rod: ${acc.rod}</p>
-    </div>
-
-    <button id="closeDetail">Close</button>
-  `;
-
-  detailPanel.classList.add('active');
-  overlay.classList.add('active');
-
-  document.querySelectorAll('.tab-btn').forEach(btn => {
-    btn.onclick = () => {
-      document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
-      document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
-      btn.classList.add('active');
-      document.getElementById(btn.dataset.tab+'Tab').classList.add('active');
-    };
-  });
-
-  document.getElementById('changeQuest').onclick = () => openQuestPopup(acc);
-  document.getElementById('closeDetail').onclick = closeDetail;
-  overlay.onclick = closeDetail;
+  const questText = card.querySelector(".card-quest");
+  if (questText) {
+    questText.innerText = account.quest
+      ? account.quest.name
+      : "No Quest";
+  }
 }
 
-/* QUEST POPUP */
-function openQuestPopup(acc) {
-  questPopup.innerHTML = `
-    <div class="quest-box">
-      <h3>Select Quest</h3>
-      ${acc.quests.map(q => `
-        <div class="quest-option" data-name="${q.name}">
-          <strong>${q.name}</strong>
-          <ul>${q.req.map(r=>`<li>${r}</li>`).join('')}</ul>
-          <span class="reward">🎁 ${q.reward}</span>
-        </div>
-      `).join('')}
-      <button class="quest-cancel">Cancel</button>
-    </div>
-  `;
-
-  questPopup.classList.add('active');
-
-  questPopup.querySelectorAll('.quest-option').forEach(opt=>{
-    opt.onclick = ()=>{
-      acc.quest = opt.dataset.name;
-      questPopup.classList.remove('active');
-      closeDetail();
-      renderCards();
-    };
-  });
-
-  questPopup.querySelector('.quest-cancel').onclick = ()=>{
-    questPopup.classList.remove('active');
-  };
+// =========================
+// MODAL CONTROL
+// =========================
+function openDetailModal() {
+  document.getElementById("detailModal").classList.add("show");
 }
 
-/* CLOSE DETAIL */
-function closeDetail() {
-  detailPanel.classList.remove('active');
-  overlay.classList.remove('active');
-      }
+function closeDetailModal() {
+  document.getElementById("detailModal").classList.remove("show");
+}

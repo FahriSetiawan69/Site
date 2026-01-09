@@ -1,146 +1,169 @@
-const players = [];
+// ===============================
+// DASHBOARD MAIN SCRIPT (SAFE)
+// ===============================
 
-// GENERATE 10 PLAYER
-for (let i = 1; i <= 10; i++) {
-  players.push({
-    id: i,
-    username: `player_${i}`,
-    gold: 8000 + i * 500,
-    backpack: Math.floor(Math.random() * 10) + 1,
-    ping: Math.floor(Math.random() * 40) + 40,
-    rod: "Basic Rod",
-    status: i % 2 === 0 ? "Fishing" : "Idle",
-    questProgress: Math.floor(Math.random() * 100),
-    activeQuest: 1,
+const cardContainer = document.getElementById("accountCards");
+const detailPanel = document.getElementById("accountDetail");
+const logoutBtn = document.getElementById("logoutBtn");
 
-    fishes: [
-      {
-        name: "Tuna",
-        mutation: "Normal",
-        weight: "2.1 kg",
-        price: 1200,
-        img: "img/fish.png"
-      }
-    ],
+// ===============================
+// DUMMY PLAYER DATA (10 CARD)
+// ===============================
+const players = Array.from({ length: 10 }, (_, i) => ({
+  id: i,
+  username: `player_${i + 1}`,
+  gold: 10000 + i * 300,
+  backpack: Math.floor(Math.random() * 10) + 1,
+  ping: Math.floor(Math.random() * 50) + 20,
+  rod: "Basic Rod",
+  status: Math.random() > 0.5 ? "fishing" : "idle",
+  quest: {
+    name: "Catch Secret Fish",
+    progress: Math.floor(Math.random() * 100)
+  },
+  fish: [
+    { name: "Golden Carp", mutation: "Shiny", weight: "2.5kg", price: 1200 },
+    { name: "Rainbow Trout", mutation: "-", weight: "1.2kg", price: 600 }
+  ],
+  items: [
+    { name: "Magic Rod", price: 3000 },
+    { name: "Golden Bait", price: 500 }
+  ],
+  quests: [
+    { name: "Catch Secret Fish", desc: "Catch 3 Secret Fish" },
+    { name: "Earn Gold", desc: "Earn 5.000 Gold" },
+    { name: "Daily Fishing", desc: "Fish 20 times" }
+  ]
+}));
 
-    items: [
-      {
-        name: "Fishing Rod",
-        price: 5000,
-        img: "img/rod.png"
-      }
-    ],
+// ===============================
+// RENDER ALL PLAYER CARDS
+// ===============================
+function renderCards() {
+  cardContainer.innerHTML = "";
 
-    quests: [
-      { id: 1, name: "Catch 10 Fish", requirement: "Tangkap 10 ikan" },
-      { id: 2, name: "Earn 5000 Gold", requirement: "Kumpulkan 5000 gold" },
-      { id: 3, name: "Upgrade Backpack", requirement: "Upgrade backpack" }
-    ]
+  players.forEach(player => {
+    const card = document.createElement("div");
+    card.className = "player-card";
+
+    card.innerHTML = `
+      <div class="player-name">${player.username}</div>
+
+      <div class="card-info">
+        <span>Gold: ${player.gold}</span>
+        <span>Backpack: ${player.backpack}</span>
+        <span>Ping: ${player.ping} ms</span>
+        <span>Rod: ${player.rod}</span>
+        <span>Quest: ${player.quest.name}</span>
+      </div>
+
+      <div class="status ${player.status}">
+        ${player.status.toUpperCase()}
+      </div>
+
+      <div class="progress-container">
+        <div class="progress-bar" style="width:${player.quest.progress}%"></div>
+      </div>
+    `;
+
+    card.addEventListener("click", () => showDetail(player));
+    cardContainer.appendChild(card);
   });
 }
 
-let selectedPlayer = null;
-let activeTab = "fish";
+// ===============================
+// SHOW DETAIL PANEL (CLICK CARD)
+// ===============================
+function showDetail(player) {
+  detailPanel.classList.remove("hidden");
 
-/* INIT */
-renderPlayers();
+  detailPanel.innerHTML = `
+    <div class="detail-header">
+      <h3>${player.username}</h3>
+      <p>Gold: ${player.gold}</p>
+      <p>Status: ${player.status.toUpperCase()}</p>
+    </div>
 
-/* RENDER PLAYER CARD */
-function renderPlayers() {
-  const el = document.getElementById("playerList");
-  el.innerHTML = "";
+    <div class="detail-tabs">
+      <div class="detail-tab active" data-tab="fish">Fish</div>
+      <div class="detail-tab" data-tab="item">Item</div>
+      <div class="detail-tab" data-tab="quest">Quest</div>
+    </div>
 
-  players.forEach(p => {
-    const quest = p.quests.find(q => q.id === p.activeQuest);
+    <div id="detailContent" class="tab-content"></div>
+  `;
 
-    el.innerHTML += `
-      <div class="player-card" onclick="openDetail(${p.id})">
-        <div class="card-username">${p.username}</div>
+  renderFish(player);
 
-        <div class="card-info">Gold: ${p.gold}</div>
-        <div class="card-info">Backpack: ${p.backpack}</div>
-        <div class="card-info">Ping: ${p.ping} ms</div>
-        <div class="card-info">Rod: ${p.rod}</div>
+  document.querySelectorAll(".detail-tab").forEach(tab => {
+    tab.addEventListener("click", () => {
+      document.querySelectorAll(".detail-tab").forEach(t => t.classList.remove("active"));
+      tab.classList.add("active");
 
-        <div class="card-quest">${quest ? quest.name : "-"}</div>
+      const type = tab.dataset.tab;
+      if (type === "fish") renderFish(player);
+      if (type === "item") renderItem(player);
+      if (type === "quest") renderQuest(player);
+    });
+  });
+}
 
-        <div class="progress-bar">
-          <div class="progress-fill" style="width:${p.questProgress}%"></div>
-        </div>
+// ===============================
+// TAB RENDERERS
+// ===============================
+function renderFish(player) {
+  const container = document.getElementById("detailContent");
+  container.innerHTML = "";
 
-        <div class="card-status ${p.status === "Fishing" ? "fishing" : "idle"}">
-          ${p.status}
-        </div>
+  player.fish.forEach(f => {
+    container.innerHTML += `
+      <div class="tab-item">
+        <strong>${f.name}</strong>
+        <div>Mutation: ${f.mutation}</div>
+        <div>Weight: ${f.weight}</div>
+        <div>Price: ${f.price}</div>
       </div>
     `;
   });
 }
 
-/* DETAIL */
-function openDetail(id) {
-  selectedPlayer = players.find(p => p.id === id);
-  activeTab = "fish";
-  renderDetail();
-}
+function renderItem(player) {
+  const container = document.getElementById("detailContent");
+  container.innerHTML = "";
 
-function renderDetail() {
-  if (!selectedPlayer) return;
-
-  document.getElementById("detailPanel").innerHTML = `
-    <div class="detail-tabs">
-      <div class="detail-tab ${activeTab==="fish"?"active":""}" onclick="switchTab('fish')">Fish</div>
-      <div class="detail-tab ${activeTab==="item"?"active":""}" onclick="switchTab('item')">Item</div>
-      <div class="detail-tab ${activeTab==="quest"?"active":""}" onclick="switchTab('quest')">Quest</div>
-    </div>
-    ${renderTab()}
-  `;
-}
-
-function switchTab(tab) {
-  activeTab = tab;
-  renderDetail();
-}
-
-function renderTab() {
-  if (activeTab === "fish") {
-    return `<div class="grid-content">
-      ${selectedPlayer.fishes.map(f => `
-        <div class="grid-card">
-          <img src="${f.img}">
-          ${f.name}<br>${f.mutation}<br>${f.weight}<br>${f.price} Gold
-        </div>
-      `).join("")}
-    </div>`;
-  }
-
-  if (activeTab === "item") {
-    return `<div class="grid-content">
-      ${selectedPlayer.items.map(i => `
-        <div class="grid-card">
-          <img src="${i.img}">
-          ${i.name}<br>${i.price} Gold
-        </div>
-      `).join("")}
-    </div>`;
-  }
-
-  if (activeTab === "quest") {
-    return selectedPlayer.quests.map(q => `
-      <div class="quest-card ${q.id===selectedPlayer.activeQuest?"active":""}"
-           onclick="selectQuest(${q.id})">
-        <b>${q.name}</b><br>${q.requirement}
+  player.items.forEach(i => {
+    container.innerHTML += `
+      <div class="tab-item">
+        <strong>${i.name}</strong>
+        <div>Price: ${i.price}</div>
       </div>
-    `).join("");
-  }
+    `;
+  });
 }
 
-function selectQuest(id) {
-  selectedPlayer.activeQuest = id;
-  selectedPlayer.questProgress = 0;
-  renderPlayers();
-  renderDetail();
+function renderQuest(player) {
+  const container = document.getElementById("detailContent");
+  container.innerHTML = "";
+
+  player.quests.forEach(q => {
+    container.innerHTML += `
+      <div class="tab-item">
+        <strong>${q.name}</strong>
+        <div>${q.desc}</div>
+      </div>
+    `;
+  });
 }
 
-function logout() {
-  location.href = "/";
-}
+// ===============================
+// LOGOUT
+// ===============================
+logoutBtn.addEventListener("click", () => {
+  localStorage.removeItem("fishit_key");
+  window.location.href = "index.html";
+});
+
+// ===============================
+// INIT
+// ===============================
+renderCards();

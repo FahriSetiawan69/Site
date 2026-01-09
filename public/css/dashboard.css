@@ -1,71 +1,94 @@
-/* =========================
-   QUEST CONTAINER
-========================= */
-#questList {
+/* ===============================
+   MAIN LAYOUT FIX
+=============================== */
+#app {
   display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin-top: 12px;
+  height: 100vh;
+  overflow: hidden;
 }
 
-/* =========================
-   QUEST CARD
-========================= */
-.quest-card {
+.sidebar {
+  width: 220px;
+  background: rgba(30, 10, 60, 0.95);
+  color: white;
+  padding: 16px;
+}
+
+.main {
+  flex: 1;
+  padding: 16px;
+  overflow-y: auto;
+}
+
+/* ===============================
+   CARD GRID
+=============================== */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+/* ===============================
+   ACCOUNT CARD
+=============================== */
+.account-card {
   background: rgba(255, 255, 255, 0.06);
-  border-radius: 12px;
-  padding: 12px;
+  border-radius: 14px;
+  padding: 14px;
+  color: #fff;
   cursor: pointer;
-  transition: all 0.25s ease;
+  transition: 0.2s;
 }
 
-.quest-card:hover {
+.account-card:hover {
   background: rgba(255, 255, 255, 0.12);
 }
 
-/* =========================
-   QUEST TITLE
-========================= */
-.quest-title {
-  font-weight: 600;
-  margin-bottom: 6px;
-  color: #cfcfcf;
+.account-card.active {
+  outline: 2px solid #8b5cf6;
 }
 
-.quest-title.active {
-  color: #8b5cf6;
+.card-header {
+  font-size: 16px;
+  margin-bottom: 8px;
 }
 
-/* =========================
-   QUEST REQUIREMENT
-========================= */
-.quest-req {
-  padding-left: 18px;
+.card-info {
   font-size: 13px;
-  opacity: 0.85;
+  line-height: 1.5;
 }
 
-.quest-req li {
-  margin-bottom: 4px;
-}
-
-/* =========================
-   QUEST REWARD (MENONJOL)
-========================= */
-.quest-reward {
+.card-quest {
   margin-top: 8px;
-  padding: 6px 10px;
-  background: linear-gradient(135deg, #7c3aed, #9333ea);
-  border-radius: 8px;
   font-size: 13px;
-  font-weight: bold;
-  color: white;
+  opacity: 0.9;
+}
+
+/* ===============================
+   STATUS
+=============================== */
+.card-status {
+  margin-top: 8px;
+  padding: 4px 8px;
+  border-radius: 8px;
+  font-size: 12px;
   text-align: center;
 }
 
-/* =========================
-   HILANGKAN TOMBOL CHANGE QUEST
-========================= */
-#changeQuestBtn {
-  display: none !important;
+.card-status.idle {
+  background: #7f1d1d;
+}
+
+.card-status.fishing {
+  background: #14532d;
+}
+
+/* ===============================
+   MOBILE FIX
+=============================== */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 180px;
+  }
 }

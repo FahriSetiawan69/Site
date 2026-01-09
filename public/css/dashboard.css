@@ -1,115 +1,59 @@
-* {
-  box-sizing: border-box;
-  font-family: Inter, system-ui, sans-serif;
-}
-
-body {
-  margin: 0;
-  background: #0e061b;
-  color: #fff;
-}
-
-.app {
-  display: flex;
-  height: 100vh;
-}
-
-/* SIDEBAR */
-.sidebar {
-  width: 220px;
-  background: #120824;
-  padding: 20px;
-}
-
-.sidebar h2 {
-  margin-bottom: 20px;
-}
-
-/* MAIN */
-.main {
-  flex: 1;
-  padding: 16px;
-  overflow-y: auto;
-}
-
-/* PLAYER CARD */
-.card-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill,minmax(220px,1fr));
-  gap: 12px;
-}
-
 .player-card {
   background: #1b0f33;
   padding: 12px;
-  border-radius: 12px;
-  cursor: pointer;
-}
-
-.player-card:hover {
-  outline: 2px solid #7f5cff;
-}
-
-/* DETAIL */
-.detail-panel {
-  margin-top: 16px;
-  background: #160b2e;
-  padding: 12px;
   border-radius: 14px;
-}
-
-/* TABS */
-.detail-tabs {
-  display: grid;
-  grid-template-columns: repeat(3,1fr);
-  gap: 8px;
-  margin-bottom: 10px;
-}
-
-.detail-tab {
-  text-align: center;
-  padding: 8px;
-  background: #2a1a4a;
-  border-radius: 8px;
   cursor: pointer;
-  opacity: .6;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
-.detail-tab.active {
-  opacity: 1;
-  background: linear-gradient(135deg,#7f5cff,#1ecb87);
-}
-
-/* GRID CONTENT */
-.grid-content {
-  display: grid;
-  grid-template-columns: repeat(2,1fr);
-  gap: 8px;
-}
-
-.grid-card {
-  background: #1f1238;
-  padding: 8px;
-  border-radius: 10px;
-  text-align: center;
-  font-size: 12px;
-}
-
-.grid-card img {
-  width: 48px;
-  height: 48px;
+.card-username {
+  font-weight: bold;
+  font-size: 15px;
   margin-bottom: 4px;
 }
 
-/* QUEST */
-.quest-card {
-  background: #1f1238;
-  padding: 8px;
-  border-radius: 8px;
-  margin-bottom: 8px;
-  cursor: pointer;
+.card-info {
+  font-size: 12px;
+  opacity: 0.9;
 }
 
-.quest-card.active {
-  outline: 2px solid #1ecb87;
+.card-quest {
+  font-size: 12px;
+  margin-top: 4px;
+  color: #9effff;
+}
+
+/* PROGRESS BAR */
+.progress-bar {
+  height: 8px;
+  background: #2a1a4a;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg,#1ecb87,#7f5cff);
+  transition: width .4s ease;
+}
+
+/* STATUS */
+.card-status {
+  margin-top: 6px;
+  padding: 4px;
+  border-radius: 6px;
+  font-size: 12px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.card-status.idle {
+  background: #b12c2c;
+}
+
+.card-status.fishing {
+  background: #1ecb87;
+  color: #000;
 }

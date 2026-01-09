@@ -1,47 +1,105 @@
 /* =========================
-   GLOBAL
+   RESET & BASE
 ========================= */
+* {
+  box-sizing: border-box;
+}
+
 body {
+  margin: 0;
   background: #0b1020;
   color: #e5e7eb;
   font-family: Arial, sans-serif;
 }
 
 /* =========================
-   PLAYER CARD
+   MAIN LAYOUT
+========================= */
+.dashboard-wrapper {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* =========================
+   SIDEBAR (FIX MUNCUL)
+========================= */
+.sidebar {
+  width: 220px;
+  background: #020617;
+  padding: 16px;
+  border-right: 2px solid rgba(255,255,255,0.1);
+}
+
+.sidebar h2 {
+  margin-bottom: 16px;
+  font-size: 18px;
+}
+
+.sidebar button {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 8px;
+  border-radius: 8px;
+  background: #111827;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+/* =========================
+   CONTENT AREA
+========================= */
+.dashboard-content {
+  flex: 1;
+  padding: 16px;
+  overflow-y: auto;
+}
+
+/* =========================
+   PLAYER GRID (INI KUNCI)
+========================= */
+#playerList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 14px;
+}
+
+/* =========================
+   PLAYER CARD (KOTAK)
 ========================= */
 .player-card {
   background: #111827;
-  border-radius: 12px;
+  border-radius: 14px;
   padding: 12px;
-  margin-bottom: 12px;
   border: 2px solid rgba(255,255,255,0.08);
   cursor: pointer;
   transition: all .25s ease;
+  height: 180px; /* ⬅️ BIKIN PERSEGI */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .player-card:hover {
   border-color: #7c3aed;
-  box-shadow: 0 0 15px rgba(124,58,237,.5);
+  box-shadow: 0 0 16px rgba(124,58,237,.6);
 }
 
 .player-header {
   font-weight: bold;
-  margin-bottom: 6px;
+  font-size: 15px;
 }
 
 .player-info {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
   font-size: 13px;
+  line-height: 1.4;
 }
 
 /* =========================
    QUEST INFO ON CARD
 ========================= */
 .quest-name {
-  margin-top: 6px;
   font-size: 13px;
   color: #a5b4fc;
 }
@@ -52,7 +110,6 @@ body {
   background: rgba(255,255,255,0.15);
   border-radius: 6px;
   overflow: hidden;
-  margin-top: 4px;
 }
 
 .quest-progress-bar {
@@ -65,25 +122,26 @@ body {
 /* =========================
    DETAIL PANEL
 ========================= */
-.detail-panel {
+#detailPanel {
+  margin-top: 18px;
   background: #020617;
-  border-radius: 12px;
-  padding: 12px;
+  border-radius: 14px;
+  padding: 14px;
 }
 
 /* =========================
-   GRID TAB
+   TAB HEADER
 ========================= */
 .tab-header {
   display: flex;
   gap: 8px;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
 .tab-btn {
-  padding: 6px 12px;
+  padding: 6px 14px;
   background: #111827;
-  border-radius: 8px;
+  border-radius: 10px;
   cursor: pointer;
   border: 1px solid rgba(255,255,255,0.15);
 }
@@ -93,7 +151,7 @@ body {
 }
 
 /* =========================
-   GRID CONTENT
+   TAB CONTENT GRID
 ========================= */
 .tab-content {
   display: grid;
@@ -102,33 +160,41 @@ body {
 }
 
 /* =========================
-   ITEM / FISH
+   FISH / ITEM
 ========================= */
 .tab-item {
   background: #111827;
-  border-radius: 10px;
+  border-radius: 12px;
   padding: 8px;
   text-align: center;
   font-size: 12px;
 }
 
 /* =========================
-   QUEST TAB
+   QUEST
 ========================= */
 .quest-item {
   background: #111827;
-  border-radius: 10px;
+  border-radius: 12px;
   padding: 10px;
   cursor: pointer;
   border: 2px solid transparent;
-  transition: all .25s ease;
-}
-
-.quest-item:hover {
-  border-color: #a855f7;
 }
 
 .quest-item.active {
   border-color: #22c55e;
   box-shadow: 0 0 12px rgba(34,197,94,.6);
+}
+
+/* =========================
+   MOBILE RESPONSIVE
+========================= */
+@media (max-width: 768px) {
+  .sidebar {
+    display: none;
+  }
+
+  #playerList {
+    grid-template-columns: repeat(2, 1fr);
+  }
    }

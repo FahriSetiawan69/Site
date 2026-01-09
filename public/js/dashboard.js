@@ -1,114 +1,98 @@
-const QUEST_LIST = [
-  {
-    id: "q1",
-    name: "Fishing Beginner",
-    requirements: ["Catch 10 fish", "Stay fishing 5 minutes"],
-    reward: "+500 Gold"
-  },
-  {
-    id: "q2",
-    name: "Deep Sea Hunter",
-    requirements: ["Catch rare fish", "Use Magic Rod"],
-    reward: "+1500 Gold"
-  },
-  {
-    id: "q3",
-    name: "Idle Farmer",
-    requirements: ["Stay idle 10 minutes"],
-    reward: "+300 Gold"
+document.addEventListener("DOMContentLoaded", () => {
+
+  const cardsContainer = document.getElementById("accountCards");
+  const detailPanel = document.getElementById("accountDetail");
+
+  if (!cardsContainer) {
+    console.error("accountCards NOT FOUND");
+    return;
   }
-];
 
-const cardsContainer = document.getElementById("accountCards");
-const detailPanel = document.getElementById("accountDetail");
+  // ====== DUMMY DATA FALLBACK ======
+  const accounts = window.accountsData || [
+    {
+      id: 1,
+      username: "player_1",
+      gold: 12000,
+      backpack: 3,
+      ping: 35,
+      rod: "Magic Rod",
+      quest: "Secret Hunter",
+      progress: 60,
+      status: "Fishing"
+    },
+    {
+      id: 2,
+      username: "player_2",
+      gold: 8000,
+      backpack: 2,
+      ping: 50,
+      rod: "Standard Rod",
+      quest: "None",
+      progress: 20,
+      status: "Idle"
+    }
+  ];
 
-function renderCards() {
-  cardsContainer.innerHTML = "";
-
-  state.players.forEach(player => {
+  // ====== RENDER CARD ======
+  function createCard(acc) {
     const card = document.createElement("div");
     card.className = "account-card";
-    card.onclick = () => openDetail(player.id);
 
     card.innerHTML = `
-      <h3>${player.username}</h3>
+      <h3>${acc.username}</h3>
 
-      <div class="card-info">Gold: ${player.gold}</div>
-      <div class="card-info">Backpack: ${player.backpack}</div>
-      <div class="card-info">Ping: ${player.ping}ms</div>
-      <div class="card-info">Rod: ${player.rod}</div>
-      <div class="card-info">Quest: ${player.quest ? player.quest.name : "None"}</div>
+      <div class="card-info">
+        <div>Gold: ${acc.gold}</div>
+        <div>Backpack: ${acc.backpack}</div>
+        <div>Ping: ${acc.ping}ms</div>
+        <div>Rod: ${acc.rod}</div>
+        <div>Quest: ${acc.quest}</div>
+      </div>
 
-      <div class="status ${player.status === "Fishing" ? "fishing" : "idle"}">
-        ${player.status}
+      <div class="status ${acc.status === "Fishing" ? "fishing" : "idle"}">
+        ${acc.status}
       </div>
 
       <div class="progress-bar">
-        <div class="progress" style="width:${player.progress}%"></div>
+        <div class="progress" style="width:${acc.progress}%"></div>
       </div>
     `;
 
-    cardsContainer.appendChild(card);
-  });
-}
+    card.addEventListener("click", () => showDetail(acc));
 
-function openDetail(playerId) {
-  const player = state.players.find(p => p.id === playerId);
-  if (!player) return;
+    return card;
+  }
 
-  state.selectedPlayer = player;
+  // ====== RENDER ALL ======
+  function renderCards() {
+    cardsContainer.innerHTML = "";
+    accounts.forEach(acc => {
+      cardsContainer.appendChild(createCard(acc));
+    });
+  }
 
-  detailPanel.classList.remove("hidden");
-  detailPanel.innerHTML = `
-    <div class="detail-box">
-      <h2>${player.username}</h2>
+  // ====== DETAIL PANEL ======
+  function showDetail(acc) {
+    if (!detailPanel) return;
 
-      <div class="tab-header">
-        <button class="active">Quest</button>
-      </div>
+    detailPanel.classList.remove("hidden");
+    detailPanel.innerHTML = `
+      <h2>${acc.username}</h2>
 
-      <div class="quest-area">
-        <p><b>Current Quest:</b> ${player.quest ? player.quest.name : "None"}</p>
-        ${renderQuestList(player)}
-      </div>
+      <p>Gold: ${acc.gold}</p>
+      <p>Backpack: ${acc.backpack}</p>
+      <p>Ping: ${acc.ping}ms</p>
+      <p>Rod: ${acc.rod}</p>
+      <p>Quest: ${acc.quest}</p>
 
-      <button class="close-btn" onclick="closeDetail()">Close</button>
-    </div>
-  `;
-}
+      <button onclick="document.getElementById('accountDetail').classList.add('hidden')">
+        Close
+      </button>
+    `;
+  }
 
-function renderQuestList(player) {
-  return `
-    <div class="quest-list">
-      ${QUEST_LIST.map(q => `
-        <div class="quest-box ${player.quest?.id === q.id ? "active" : ""}"
-             onclick="selectQuest('${player.id}','${q.id}')">
-          <h4>${q.name}</h4>
-          <ul>
-            ${q.requirements.map(r => `<li>${r}</li>`).join("")}
-          </ul>
-          <div class="quest-reward">${q.reward}</div>
-        </div>
-      `).join("")}
-    </div>
-  `;
-}
-
-function selectQuest(playerId, questId) {
-  const player = state.players.find(p => p.id === playerId);
-  const quest = QUEST_LIST.find(q => q.id === questId);
-  if (!player || !quest) return;
-
-  player.quest = quest;
-  player.progress = 0;
-
+  // ====== INIT ======
   renderCards();
-  openDetail(playerId);
-}
 
-function closeDetail() {
-  detailPanel.classList.add("hidden");
-  detailPanel.innerHTML = "";
-}
-
-renderCards();
+});

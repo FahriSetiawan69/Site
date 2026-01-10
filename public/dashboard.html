@@ -1,32 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Fishit Monitor</title>
-  <link rel="stylesheet" href="css/dashboard.css">
+  <meta charset="UTF-8" />
+  <title>Fishit Monitor Dashboard</title>
+
+  <!-- WAJIB PAKAI PATH ABSOLUTE -->
+  <link rel="stylesheet" href="/css/dashboard.css">
 </head>
 <body>
 
-<div class="app">
+<div class="dashboard-wrapper">
 
   <!-- SIDEBAR -->
   <aside class="sidebar">
     <h2>Fishit Monitor</h2>
-    <button onclick="logout()">Logout</button>
+    <button id="logoutBtn">Logout</button>
   </aside>
 
   <!-- MAIN -->
-  <main class="main">
+  <main class="dashboard-main">
 
-    <!-- CARD LIST -->
-    <div id="playerList" class="card-grid"></div>
+    <!-- CARD GRID -->
+    <section id="accountCards" class="card-grid"></section>
 
     <!-- DETAIL PANEL -->
-    <div id="detailPanel" class="detail-panel"></div>
+    <section id="accountDetail" class="detail-panel hidden"></section>
 
   </main>
+
 </div>
 
-<script src="js/dashboard.js"></script>
+<!-- JS -->
+<script src="/js/dashboard.js"></script>
 </body>
 </html>

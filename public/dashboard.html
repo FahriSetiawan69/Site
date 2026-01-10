@@ -1,49 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Fishit Monitor</title>
+
+  <!-- ✅ CSS WAJIB RELATIVE -->
+  <link rel="stylesheet" href="./css/dashboard.css">
+</head>
 <body>
 
 <div id="app">
-
   <!-- SIDEBAR -->
   <aside class="sidebar">
     <h2>Fishit Monitor</h2>
 
-    <button class="sidebar-btn" data-page="page-profile">Profile</button>
-    <button class="sidebar-btn" data-page="page-accounts">Accounts Monitor</button>
-    <button class="sidebar-btn" data-page="page-settings">Settings</button>
-    <button class="sidebar-btn" data-page="page-about">About</button>
+    <button data-page="profile" class="active">Profile</button>
+    <button data-page="accounts">Accounts Monitor</button>
+    <button data-page="settings">Settings</button>
+    <button data-page="about">About</button>
 
-    <button id="logoutBtn" class="logout-btn">Logout</button>
+    <button class="logout-btn">Logout</button>
   </aside>
 
-  <!-- MAIN CONTENT -->
+  <!-- MAIN -->
   <main class="main">
 
-    <section id="page-profile" class="page-section">
+    <!-- PROFILE -->
+    <section id="profile" class="page-section active">
       <h2>User Profile</h2>
-      <p><b>Username:</b> Fahri</p>
-      <p><b>Role:</b> Developer</p>
-      <p><b>Status:</b> Premium</p>
+      <p>Username: Fahri</p>
+      <p>Role: Developer</p>
+      <p>Status: Premium</p>
     </section>
 
-    <section id="page-accounts" class="page-section" style="display:none">
+    <!-- ACCOUNTS -->
+    <section id="accounts" class="page-section">
       <h2>Accounts Monitor</h2>
-      <div id="accounts-grid"></div>
+      <div class="card-grid" id="accountsGrid"></div>
+      <div id="detailPanel" class="detail-panel hidden"></div>
     </section>
 
-    <section id="page-settings" class="page-section" style="display:none">
+    <!-- SETTINGS -->
+    <section id="settings" class="page-section">
       <h2>Settings</h2>
       <p>Future configuration will be placed here.</p>
     </section>
 
-    <section id="page-about" class="page-section" style="display:none">
+    <!-- ABOUT -->
+    <section id="about" class="page-section">
       <h2>About</h2>
       <p>Fishit Monitor Dashboard</p>
       <p>Internal / Personal Use</p>
     </section>
 
   </main>
-
 </div>
 
-<script src="js/sidebar.js"></script>
-<script src="js/dashboard.js"></script>
+<!-- ✅ JS WAJIB DI BAWAH & RELATIVE -->
+<script src="./js/dashboard.js"></script>
 </body>
+</html>

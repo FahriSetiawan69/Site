@@ -1,70 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Fishit Monitor</title>
+<!-- MAIN CONTENT -->
+<main id="main-content">
 
-  <!-- CSS -->
-  <link rel="stylesheet" href="css/sidebar.css">
-  <link rel="stylesheet" href="css/dashboard.css">
-</head>
-<body>
+  <!-- PROFILE -->
+  <section id="page-profile" class="page-section">
+    <h2>User Profile</h2>
+    <p><b>Username:</b> Fahri</p>
+    <p><b>Role:</b> Developer</p>
+    <p><b>Status:</b> Premium</p>
+  </section>
 
-<div class="app">
+  <!-- ACCOUNTS MONITOR -->
+  <section id="page-accounts" class="page-section" style="display:none">
+    <h2>Accounts Monitor</h2>
+    <div id="accounts-grid"></div>
+  </section>
 
-  <!-- SIDEBAR -->
-  <aside class="sidebar">
-    <h2>Fishit Monitor</h2>
+  <!-- SETTINGS -->
+  <section id="page-settings" class="page-section" style="display:none">
+    <h2>Settings</h2>
+    <p>Future configuration will be placed here.</p>
+  </section>
 
-    <button class="nav-btn active" data-page="profile">Profile</button>
-    <button class="nav-btn" data-page="accounts">Accounts Monitor</button>
-    <button class="nav-btn" data-page="settings">Settings</button>
-    <button class="nav-btn" data-page="about">About</button>
+  <!-- ABOUT -->
+  <section id="page-about" class="page-section" style="display:none">
+    <h2>About</h2>
+    <p>Fishit Monitor Dashboard</p>
+    <p>Internal / Personal Use</p>
+  </section>
 
-    <button id="logoutBtn">Logout</button>
-  </aside>
-
-  <!-- MAIN CONTENT -->
-  <main class="main-content">
-
-    <!-- PROFILE -->
-    <section id="profilePage" class="page-section">
-      <h2>User Profile</h2>
-      <p><b>Username:</b> Fahri</p>
-      <p><b>Role:</b> Developer</p>
-      <p><b>Active Key:</b> abogoboga</p>
-      <p><b>Status:</b> Premium</p>
-    </section>
-
-    <!-- ACCOUNTS MONITOR -->
-    <section id="accountsPage" class="page-section" style="display:none;">
-      <h2>Accounts Monitor</h2>
-
-      <div id="cardsGrid" class="cards-grid"></div>
-
-      <!-- detail panel muncul di bawah grid -->
-      <div id="detailPanel"></div>
-    </section>
-
-    <!-- SETTINGS -->
-    <section id="settingsPage" class="page-section" style="display:none;">
-      <h2>Settings</h2>
-      <p>Future configuration will be placed here.</p>
-    </section>
-
-    <!-- ABOUT -->
-    <section id="aboutPage" class="page-section" style="display:none;">
-      <h2>About</h2>
-      <p>Fishit Monitor Dashboard</p>
-      <p>Internal / Personal Use</p>
-    </section>
-
-  </main>
-
-</div>
-
-<script src="js/sidebar.js"></script>
-<script src="js/dashboard.js"></script>
-
-</body>
-</html>
+</main>

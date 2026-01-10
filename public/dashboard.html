@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <title>Fishit Monitor</title>
 
-  <!-- GLOBAL -->
+  <!-- GLOBAL CSS -->
   <link rel="stylesheet" href="css/dashboard.css">
   <link rel="stylesheet" href="css/sidebar.css">
 </head>
@@ -16,10 +16,10 @@
   <aside class="sidebar">
     <h2>Fishit Monitor</h2>
 
-    <button class="menu-btn active" data-view="profile">Profile</button>
-    <button class="menu-btn" data-view="accounts">Accounts Monitor</button>
-    <button class="menu-btn" data-view="settings">Settings</button>
-    <button class="menu-btn" data-view="about">About</button>
+    <button class="nav-btn active" data-view="profile-view">Profile</button>
+    <button class="nav-btn" data-view="accounts-view">Accounts Monitor</button>
+    <button class="nav-btn" data-view="settings-view">Settings</button>
+    <button class="nav-btn" data-view="about-view">About</button>
 
     <button id="logoutBtn" class="logout">Logout</button>
   </aside>
@@ -28,28 +28,26 @@
   <main class="main">
 
     <!-- PROFILE -->
-    <section id="profileView" class="view active">
+    <section id="profile-view" class="view active">
       <h2>User Profile</h2>
-      <p><b>Username:</b> Fahri</p>
-      <p><b>Role:</b> Developer</p>
-      <p><b>Active Key:</b> abogoboga</p>
-      <p><b>Status:</b> Premium</p>
+      <p>Username: Fahri</p>
+      <p>Role: Developer</p>
+      <p>Status: Premium</p>
     </section>
 
     <!-- ACCOUNTS MONITOR -->
-    <section id="accountsView" class="view">
-      <div id="accountCards" class="card-grid"></div>
-      <div id="accountDetail" class="detail-panel hidden"></div>
+    <section id="accounts-view" class="view">
+      <div class="accounts-grid" id="accountsGrid"></div>
     </section>
 
     <!-- SETTINGS -->
-    <section id="settingsView" class="view">
+    <section id="settings-view" class="view">
       <h2>Settings</h2>
       <p>Future configuration will be placed here.</p>
     </section>
 
     <!-- ABOUT -->
-    <section id="aboutView" class="view">
+    <section id="about-view" class="view">
       <h2>About</h2>
       <p>Fishit Monitor Dashboard</p>
       <p>Internal / Personal Use</p>
@@ -58,9 +56,6 @@
   </main>
 </div>
 
-<!-- CORE -->
 <script src="js/dashboard.js"></script>
-<script src="js/sidebar.js"></script>
-
 </body>
 </html>

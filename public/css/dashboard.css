@@ -1,107 +1,90 @@
-/* ===== MAIN LAYOUT ===== */
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  background: url("../img/premium_photo-1685148902854-9b9bb49fff08.jpeg")
+              center / cover no-repeat fixed;
+}
+
+/* ROOT */
 .dashboard {
   display: flex;
   min-height: 100vh;
 }
 
-/* ===== GRID ===== */
-#accountsGrid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(260px, 1fr));
-  gap: 16px;
+/* MAIN */
+.main-content {
+  flex: 1;
   padding: 20px;
-  width: 100%;
-  box-sizing: border-box;
+  overflow-y: auto;
 }
 
-/* ===== CARD ===== */
+/* PAGE SYSTEM */
+.page {
+  display: none;
+}
+
+.page.active {
+  display: block;
+}
+
+/* GRID */
+.accounts-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+/* CARD */
 .account-card {
-  background: rgba(80, 40, 140, 0.85);
+  background: rgba(80, 30, 140, 0.85);
   border-radius: 14px;
   padding: 14px;
-  color: #fff;
+  color: white;
   cursor: pointer;
-  transition: transform 0.15s ease;
+  box-shadow: 0 0 18px rgba(160, 90, 255, 0.4);
 }
 
-.account-card:hover {
-  transform: translateY(-4px);
+.account-card h3 {
+  margin: 0 0 6px;
 }
 
-/* ===== STATUS ===== */
 .status {
-  margin-top: 10px;
+  margin-top: 8px;
   padding: 6px;
-  border-radius: 8px;
+  border-radius: 10px;
   text-align: center;
   font-weight: bold;
 }
 
-.status-fishing {
-  background: linear-gradient(90deg, #28d96f, #20b85c);
+.status.fishing {
+  background: #2ecc71;
+  color: #0b3d22;
 }
 
-.status-idle {
-  background: linear-gradient(90deg, #ff5b5b, #e04848);
+.status.idle {
+  background: #e74c3c;
+  color: #3d0b0b;
 }
 
-/* ===== QUEST PROGRESS ===== */
-.quest-progress {
-  width: 100%;
-  height: 8px;
-  background: rgba(255, 255, 255, 0.2);
+/* PROGRESS */
+.progress {
+  margin-top: 8px;
+  height: 6px;
+  background: rgba(255,255,255,0.2);
   border-radius: 6px;
   overflow: hidden;
-  margin-top: 6px;
 }
 
-.quest-progress-bar {
+.progress-bar {
   height: 100%;
-  background: linear-gradient(90deg, #00f2ff, #a855ff);
-  transition: width 0.4s ease;
+  background: linear-gradient(90deg,#7f3cff,#b36bff);
 }
 
-/* ===== DETAIL PANEL ===== */
-#accountDetail {
+/* DETAIL */
+.account-detail {
+  margin-top: 20px;
+  background: rgba(40, 15, 80, 0.95);
+  border-radius: 16px;
   padding: 16px;
-  background: rgba(60, 20, 120, 0.85);
-  border-radius: 14px;
-  margin: 20px;
-  color: #fff;
-}
-
-/* ===== TABS ===== */
-.detail-tabs {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 12px;
-}
-
-.tab-btn {
-  flex: 1;
-  padding: 8px;
-  border-radius: 8px;
-  background: rgba(255,255,255,0.15);
-  border: none;
-  color: #fff;
-  cursor: pointer;
-}
-
-.tab-btn.active {
-  background: linear-gradient(90deg, #8f5bff, #b07cff);
-}
-
-/* ===== QUEST CARD ===== */
-.quest-card {
-  background: rgba(0,0,0,0.25);
-  padding: 10px;
-  border-radius: 10px;
-  margin-bottom: 10px;
-}
-
-/* ===== RESPONSIVE ===== */
-@media (max-width: 900px) {
-  #accountsGrid {
-    grid-template-columns: repeat(1, 1fr);
-  }
+  color: white;
 }

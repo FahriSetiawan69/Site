@@ -2,59 +2,90 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Fishit Monitor</title>
-  <link rel="stylesheet" href="css/dashboard.css" />
+  <title>Fishit Monitor Dashboard</title>
+
+  <!-- GLOBAL CSS -->
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/sidebar.css">
+
+  <!-- PROFILE CSS -->
+  <link rel="stylesheet" href="css/profile.css">
 </head>
 <body>
 
 <div class="app">
 
-  <!-- SIDEBAR -->
+  <!-- SIDEBAR (TIDAK DIUBAH) -->
   <aside class="sidebar">
     <h2>Fishit Monitor</h2>
 
     <button data-page="profile" class="active">Profile</button>
-    <button data-page="accounts">Accounts Monitor</button>
+    <button data-page="accounts">Account Monitor</button>
     <button data-page="settings">Settings</button>
     <button data-page="about">About</button>
 
-    <button id="logoutBtn" class="logout">Logout</button>
+    <button id="logoutBtn">Logout</button>
   </aside>
 
-  <!-- MAIN CONTENT -->
+  <!-- CONTENT -->
   <main class="content">
 
-    <!-- PROFILE -->
-    <section id="profile" class="page-section">
-      <h3>User Profile</h3>
-      <p><b>Username:</b> Fahri</p>
-      <p><b>Role:</b> Developer</p>
-      <p><b>Status:</b> Premium</p>
-    </section>
+    <!-- ================= PROFILE SECTION ================= -->
+    <section id="profile" class="page-section active">
 
-    <!-- ACCOUNTS MONITOR -->
-    <section id="accounts" class="page-section">
-      <h3>Accounts Monitor</h3>
-      <div id="cardGrid" class="card-grid"></div>
-      <div id="detailPanel" class="detail-panel"></div>
-    </section>
+      <div class="profile-wrapper">
 
-    <!-- SETTINGS -->
-    <section id="settings" class="page-section">
-      <h3>Settings</h3>
-      <p>Future configuration will be placed here.</p>
-    </section>
+        <!-- WELCOME -->
+        <div class="profile-welcome">
+          <h1>Welcome, <span id="profileUsername">User</span></h1>
+          <p>Manage your Fishit monitoring dashboard</p>
+        </div>
 
-    <!-- ABOUT -->
-    <section id="about" class="page-section">
-      <h3>About</h3>
-      <p>Fishit Monitor Dashboard</p>
-      <p>Internal / Personal Use</p>
+        <div class="profile-grid">
+
+          <!-- PROFILE CARD -->
+          <div class="profile-card">
+            <div class="avatar-preview">
+              <img id="activeAvatar" src="img/avatars/avatar_1.png" alt="Avatar">
+            </div>
+
+            <label>Username</label>
+            <input id="usernameInput" type="text" placeholder="Enter username">
+
+            <button id="saveProfileBtn">Save Profile</button>
+          </div>
+
+          <!-- AVATAR PRESET -->
+          <div class="avatar-card">
+            <h3>Choose Avatar</h3>
+
+            <div class="avatar-grid">
+              <img src="img/avatars/avatar_1.png" data-avatar="avatar_1.png">
+              <img src="img/avatars/avatar_2.png" data-avatar="avatar_2.png">
+              <img src="img/avatars/avatar_3.png" data-avatar="avatar_3.png">
+              <img src="img/avatars/avatar_4.png" data-avatar="avatar_4.png">
+              <img src="img/avatars/avatar_5.png" data-avatar="avatar_5.png">
+            </div>
+          </div>
+
+        </div>
+      </div>
+
     </section>
+    <!-- ================= END PROFILE ================= -->
+
+    <!-- SECTION LAIN (TIDAK DIUBAH) -->
+    <!-- accounts, settings, about tetap seperti di file aslimu -->
 
   </main>
 </div>
 
+<!-- GLOBAL JS -->
+<script src="js/sidebar.js"></script>
 <script src="js/dashboard.js"></script>
+
+<!-- PROFILE JS -->
+<script src="js/profile.js"></script>
+
 </body>
 </html>

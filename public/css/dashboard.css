@@ -6,48 +6,38 @@
 body {
   margin: 0;
   height: 100vh;
-  background: url("../img/premium_photo-1685148902854-9b9bb49fff08.jpeg")
-    center / cover no-repeat;
+  background: linear-gradient(rgba(10,5,25,.85), rgba(10,5,25,.9)),
+    url("../img/premium_photo-1685148902854-9b9bb49fff08.jpeg")
+    center / cover no-repeat fixed;
   color: #fff;
 }
 
+/* LAYOUT */
 .app {
   display: flex;
   height: 100vh;
-  backdrop-filter: blur(4px);
 }
 
 /* SIDEBAR */
 .sidebar {
   width: 240px;
-  background: rgba(40, 15, 80, 0.9);
+  background: rgba(40,15,80,.9);
   padding: 16px;
-  display: flex;
-  flex-direction: column;
-}
-
-.sidebar h2 {
-  margin-bottom: 20px;
 }
 
 .sidebar button {
+  width: 100%;
   margin-bottom: 10px;
   padding: 10px;
   border-radius: 10px;
   border: none;
-  cursor: pointer;
-  background: rgba(255,255,255,0.08);
+  background: rgba(255,255,255,.08);
   color: #fff;
+  cursor: pointer;
 }
 
 .sidebar button.active {
-  background: linear-gradient(135deg, #7f3cff, #b36bff);
-}
-
-.sidebar .logout {
-  margin-top: auto;
-  background: #fff;
-  color: #000;
+  background: linear-gradient(135deg,#7f3cff,#b36bff);
 }
 
 /* CONTENT */
@@ -57,7 +47,7 @@ body {
   overflow-y: auto;
 }
 
-/* PAGE SYSTEM */
+/* PAGE */
 .page-section {
   display: none;
 }
@@ -69,33 +59,91 @@ body {
 /* CARD GRID */
 .card-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3,1fr);
   gap: 14px;
   margin-top: 14px;
 }
 
 .card {
-  background: rgba(90, 40, 150, 0.75);
+  background: rgba(90,40,150,.75);
   border-radius: 14px;
   padding: 14px;
   cursor: pointer;
+  box-shadow: 0 0 20px rgba(160,80,255,.25);
 }
 
-.status {
+/* QUEST MINI */
+.quest-mini {
   margin-top: 8px;
+}
+
+.quest-mini small {
+  font-size: 12px;
+  opacity: .85;
+}
+
+/* STATUS */
+.status {
+  margin-top: 10px;
   padding: 6px;
   border-radius: 8px;
   text-align: center;
   font-weight: bold;
 }
 
-.status.fishing { background: #3ad47a; }
-.status.idle { background: #e74c3c; }
+.status.fishing { background: #3ad47a; color:#000; }
+.status.idle { background: #e74c3c; color:#000; }
+
+/* QUEST BAR */
+.quest-bar {
+  height: 8px;
+  background: #2b1744;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.quest-bar span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg,#35d07f,#8affc1);
+}
+
+.quest-bar.big {
+  height: 12px;
+  margin: 10px 0;
+}
 
 /* DETAIL */
 .detail-panel {
   margin-top: 20px;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0,0,0,.45);
   padding: 16px;
   border-radius: 14px;
+}
+
+.detail-tabs {
+  display: flex;
+  gap: 10px;
+  margin: 10px 0;
+}
+
+.detail-tabs button {
+  flex: 1;
+  padding: 8px;
+  border-radius: 8px;
+  border: none;
+  background: rgba(255,255,255,.15);
+  color: #fff;
+  cursor: pointer;
+}
+
+.detail-tabs button.active {
+  background: linear-gradient(135deg,#7f3cff,#b36bff);
+}
+
+.grid-item {
+  background: rgba(255,255,255,.08);
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 8px;
 }

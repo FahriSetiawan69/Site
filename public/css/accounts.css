@@ -1,0 +1,35 @@
+.card {
+  background: linear-gradient(135deg,#2a145f,#120826);
+  padding: 14px;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: .2s;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+}
+
+.status {
+  margin-top: 8px;
+  padding: 6px;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.status.fishing { background:#22c55e; color:#062; }
+.status.idle { background:#ef4444; }
+
+.progress {
+  height: 8px;
+  border-radius: 6px;
+  background: rgba(255,255,255,.2);
+  overflow: hidden;
+  margin-top: 8px;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg,#7c3aed,#22d3ee);
+}

@@ -11,15 +11,15 @@ const players = Array.from({ length: 10 }, (_, i) => ({
   ping: 45,
   rod: i % 2 === 0 ? "Magic Rod" : "Basic Rod",
   status: i % 3 === 0 ? "Idle" : "Fishing",
-  progress: Math.floor(Math.random() * 100),
+
+  questActive: null,
+  questProgress: 0,
 
   fish: [
-    { name: "Golden Carp", mutation: "Shiny", weight: "2.5kg", price: 500 },
-    { name: "Blue Tuna", mutation: "Normal", weight: "1.8kg", price: 300 }
+    { name: "Golden Carp", mutation: "Shiny", weight: "2.5kg", price: 500 }
   ],
   items: [
-    { name: "Magic Bait", price: 200 },
-    { name: "Lucky Charm", price: 450 }
+    { name: "Magic Bait", price: 200 }
   ],
   quests: [
     { name: "Catch Rare Fish", req: ["Catch 3 rare fish"] },
@@ -43,27 +43,30 @@ function renderCards() {
       <div class="card-info">Ping: ${p.ping} ms</div>
       <div class="card-info">Rod: ${p.rod}</div>
       <div class="card-status ${p.status.toLowerCase()}">${p.status}</div>
+      ${
+        p.questActive
+          ? `<div class="card-quest">Quest: ${p.questActive}</div>`
+          : `<div class="card-quest">Quest: None</div>`
+      }
       <div class="progress-wrapper">
-        <div class="progress-bar" style="width:${p.progress}%"></div>
+        <div class="progress-bar" style="width:${p.questProgress}%"></div>
       </div>
     `;
 
     card.onclick = () => {
       activeIndex = index;
       renderCards();
-      renderDetail(p);
+      renderDetail(p, index);
     };
 
     grid.appendChild(card);
   });
 }
 
-function renderDetail(p) {
+function renderDetail(p, index) {
   detail.innerHTML = `
-    <div class="detail-header">
-      <h3>${p.name}</h3>
-      <p>Gold: ${p.gold}</p>
-    </div>
+    <h3>${p.name}</h3>
+    <p>Gold: ${p.gold}</p>
 
     <div class="detail-tabs">
       <div class="detail-tab active" data-tab="fish">Fish</div>
@@ -74,11 +77,11 @@ function renderDetail(p) {
     <div class="detail-grid" id="detailGrid"></div>
   `;
 
-  bindTabs(p);
+  bindTabs(p, index);
   renderFish(p);
 }
 
-function bindTabs(p) {
+function bindTabs(p, index) {
   const tabs = detail.querySelectorAll(".detail-tab");
   tabs.forEach(tab => {
     tab.onclick = () => {
@@ -87,7 +90,7 @@ function bindTabs(p) {
 
       if (tab.dataset.tab === "fish") renderFish(p);
       if (tab.dataset.tab === "item") renderItem(p);
-      if (tab.dataset.tab === "quest") renderQuest(p);
+      if (tab.dataset.tab === "quest") renderQuest(p, index);
     };
   });
 }
@@ -98,7 +101,7 @@ function renderFish(p) {
   p.fish.forEach(f => {
     box.innerHTML += `
       <div class="grid-item">
-        <b>${f.name}</b>
+        <b>${f.name}</b><br>
         ${f.mutation}<br>
         ${f.weight}<br>
         💰 ${f.price}
@@ -113,24 +116,38 @@ function renderItem(p) {
   p.items.forEach(i => {
     box.innerHTML += `
       <div class="grid-item">
-        <b>${i.name}</b>
+        <b>${i.name}</b><br>
         💰 ${i.price}
       </div>
     `;
   });
 }
 
-function renderQuest(p) {
+function renderQuest(p, index) {
   const box = document.getElementById("detailGrid");
   box.innerHTML = "";
+
   p.quests.forEach(q => {
+    const active = p.questActive === q.name;
     box.innerHTML += `
-      <div class="grid-item">
-        <b>${q.name}</b>
+      <div class="grid-item quest ${active ? "active" : ""}"
+        onclick="selectQuest(${index}, '${q.name}')">
+        <b>${q.name}</b><br>
         ${q.req.join("<br>")}
       </div>
     `;
   });
 }
 
+/* QUEST SELECT */
+function selectQuest(playerIndex, questName) {
+  const p = players[playerIndex];
+  p.questActive = questName;
+  p.questProgress = Math.floor(Math.random() * 100);
+
+  renderCards();
+  renderDetail(p, playerIndex);
+}
+
+/* INIT */
 renderCards();

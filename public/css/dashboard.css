@@ -15,20 +15,18 @@ body {
   overflow: hidden;
 }
 
-/* APP LAYOUT */
+/* APP */
 #app {
   display: flex;
   height: 100vh;
   width: 100vw;
 }
 
-/* =========================
-   SIDEBAR (FIXED & AMAN)
-========================= */
+/* SIDEBAR */
 .sidebar {
   width: 240px;
   min-width: 240px;
-  background: rgba(45, 10, 80, 0.95);
+  background: rgba(40, 10, 70, 0.95);
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -36,25 +34,23 @@ body {
   z-index: 10;
 }
 
-/* Sidebar title */
 .sidebar h2 {
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
-/* Sidebar buttons */
 .sidebar button {
   width: 100%;
   padding: 10px;
   border-radius: 10px;
   border: none;
-  cursor: pointer;
   background: rgba(255,255,255,0.08);
   color: #fff;
+  cursor: pointer;
   text-align: left;
 }
 
 .sidebar button.active {
-  background: linear-gradient(135deg, #8f4cff, #b36bff);
+  background: linear-gradient(135deg, #8f4cff, #c084ff);
 }
 
 .sidebar .logout {
@@ -64,18 +60,14 @@ body {
   font-weight: bold;
 }
 
-/* =========================
-   MAIN CONTENT
-========================= */
+/* MAIN */
 .main {
   flex: 1;
   padding: 24px;
   overflow-y: auto;
 }
 
-/* =========================
-   VIEW SYSTEM
-========================= */
+/* VIEW */
 .view {
   display: none;
 }
@@ -84,30 +76,27 @@ body {
   display: block;
 }
 
-/* =========================
-   ACCOUNTS GRID (3 KOLOM)
-========================= */
+/* GRID AKUN */
 .accounts-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 16px;
 }
 
-/* =========================
-   ACCOUNT CARD
-========================= */
+/* CARD AKUN */
 .account-card {
   background: rgba(70, 20, 120, 0.9);
   border-radius: 16px;
   padding: 14px;
   box-shadow: 0 0 20px rgba(180, 100, 255, 0.3);
+  cursor: pointer;
 }
 
 .account-card h3 {
   margin-bottom: 6px;
 }
 
-/* Status badge */
+/* STATUS */
 .status {
   margin-top: 10px;
   padding: 8px;
@@ -126,61 +115,47 @@ body {
   color: #000;
 }
 
-/* =========================
-   RESPONSIVE (MOBILE)
-========================= */
-@media (max-width: 900px) {
-  .accounts-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 600px) {
-  .sidebar {
-    width: 200px;
-    min-width: 200px;
-  }
-
-  .accounts-grid {
-    grid-template-columns: 1fr;
-  }
-  
-/* =========================
-   DETAIL PANEL
-========================= */
+/* DETAIL PANEL */
 .detail-panel {
   margin-top: 24px;
-  background: rgba(50, 15, 90, 0.95);
-  border-radius: 16px;
-  padding: 16px;
+  padding: 18px;
+  border-radius: 18px;
+  background: rgba(40, 10, 70, 0.96);
+  box-shadow: 0 0 30px rgba(170, 90, 255, 0.35);
 }
 
+/* GRID TAB BAR */
 .detail-tabs {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 12px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 16px;
 }
 
 .detail-tabs button {
-  padding: 8px 14px;
-  border-radius: 10px;
+  padding: 12px 0;
+  font-size: 15px;
+  font-weight: bold;
+  border-radius: 14px;
   border: none;
-  background: rgba(255,255,255,0.1);
-  color: #fff;
   cursor: pointer;
+  background: rgba(255,255,255,0.12);
+  color: #fff;
 }
 
 .detail-tabs button.active {
-  background: linear-gradient(135deg, #8f4cff, #b36bff);
+  background: linear-gradient(135deg, #8f4cff, #c084ff);
+  box-shadow: 0 0 15px rgba(200, 130, 255, 0.6);
 }
 
+/* CONTENT GRID */
 .detail-content {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 14px;
 }
 
-/* ITEM / FISH CARD */
+/* ITEM / FISH */
 .item-card {
   background: rgba(80, 30, 140, 0.9);
   border-radius: 12px;
@@ -194,7 +169,7 @@ body {
   background: rgba(80, 30, 140, 0.9);
   border-radius: 12px;
   padding: 12px;
-  margin-bottom: 10px;
+  cursor: pointer;
 }
 
 .quest-bar {
@@ -211,3 +186,15 @@ body {
   background: linear-gradient(90deg, #2ecc71, #9bffcb);
 }
 
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .accounts-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .accounts-grid {
+    grid-template-columns: 1fr;
+  }
+}

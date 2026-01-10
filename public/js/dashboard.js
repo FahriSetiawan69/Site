@@ -1,19 +1,15 @@
-// ================= VIEW SWITCH =================
-const navButtons = document.querySelectorAll(".nav-btn");
-const views = document.querySelectorAll(".view");
-
-navButtons.forEach(btn => {
-  btn.addEventListener("click", () => {
-    navButtons.forEach(b => b.classList.remove("active"));
+/* ================= VIEW SWITCH ================= */
+document.querySelectorAll(".nav-btn").forEach(btn => {
+  btn.onclick = () => {
+    document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
     btn.classList.add("active");
 
-    const viewId = btn.dataset.view;
-    views.forEach(v => v.classList.remove("active"));
-    document.getElementById(viewId).classList.add("active");
-  });
+    document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
+    document.getElementById(btn.dataset.view).classList.add("active");
+  };
 });
 
-// ================= DATA =================
+/* ================= DATA ================= */
 const accounts = Array.from({ length: 10 }).map((_, i) => ({
   name: `player_${i + 1}`,
   gold: 10000 + i * 1000,
@@ -21,6 +17,7 @@ const accounts = Array.from({ length: 10 }).map((_, i) => ({
   ping: 30 + Math.floor(Math.random() * 40),
   rod: ["Basic Rod", "Magic Rod", "Golden Rod"][i % 3],
   status: Math.random() > 0.5 ? "Fishing" : "Idle",
+  currentQuest: "None",
 
   fish: [
     { name: "Golden Carp", mut: "Shiny", weight: "2.5kg", price: 500 },
@@ -33,19 +30,18 @@ const accounts = Array.from({ length: 10 }).map((_, i) => ({
   ],
 
   quests: [
-    { name: "Catch 20 Fish", progress: 0.4 },
-    { name: "Earn 5000 Gold", progress: 0.7 },
-    { name: "Big Catch > 3kg", progress: 0.2 }
+    { name: "Catch 20 Fish", progress: 0.3 },
+    { name: "Earn 5000 Gold", progress: 0.6 },
+    { name: "Big Catch > 3kg", progress: 0.1 }
   ]
 }));
 
-// ================= GRID =================
+/* ================= GRID ================= */
 const grid = document.getElementById("accountsGrid");
 let selectedAccount = null;
 
 function renderAccounts() {
   grid.innerHTML = "";
-
   accounts.forEach(acc => {
     const card = document.createElement("div");
     card.className = "account-card";
@@ -56,6 +52,7 @@ function renderAccounts() {
       <p>Backpack: ${acc.backpack}</p>
       <p>Ping: ${acc.ping} ms</p>
       <p>Rod: ${acc.rod}</p>
+      <p>Quest: ${acc.currentQuest}</p>
       <div class="status ${acc.status.toLowerCase()}">${acc.status}</div>
     `;
 
@@ -64,7 +61,7 @@ function renderAccounts() {
   });
 }
 
-// ================= DETAIL =================
+/* ================= DETAIL ================= */
 function showDetail(acc) {
   selectedAccount = acc;
 
@@ -90,11 +87,11 @@ function showDetail(acc) {
   const tabs = panel.querySelectorAll(".tab");
   const content = panel.querySelector(".detail-content");
 
-  tabs.forEach(t => {
-    t.onclick = () => {
-      tabs.forEach(x => x.classList.remove("active"));
-      t.classList.add("active");
-      renderTab(t.dataset.tab, content);
+  tabs.forEach(tab => {
+    tab.onclick = () => {
+      tabs.forEach(t => t.classList.remove("active"));
+      tab.classList.add("active");
+      renderTab(tab.dataset.tab, content);
     };
   });
 
@@ -112,7 +109,8 @@ function renderTab(type, container) {
           ${f.mut}<br>
           ${f.weight}<br>
           💰 ${f.price}
-        </div>`;
+        </div>
+      `;
     });
   }
 
@@ -122,37 +120,45 @@ function renderTab(type, container) {
         <div class="item-card">
           <strong>${i.name}</strong><br>
           💰 ${i.price}
-        </div>`;
+        </div>
+      `;
     });
   }
 
   if (type === "quest") {
     selectedAccount.quests.forEach(q => {
-      container.innerHTML += `
-        <div class="quest-item">
-          <strong>${q.name}</strong>
-          <div class="quest-bar">
-            <span style="width:${q.progress * 100}%"></span>
-          </div>
-        </div>`;
+      const div = document.createElement("div");
+      div.className = "quest-item";
+
+      div.innerHTML = `
+        <strong>${q.name}</strong>
+        <div class="quest-bar">
+          <span style="width:${q.progress * 100}%"></span>
+        </div>
+      `;
+
+      div.onclick = () => {
+        selectedAccount.currentQuest = q.name;
+        renderAccounts();
+      };
+
+      container.appendChild(div);
     });
   }
 }
 
-// ================= REALTIME =================
+/* ================= REALTIME ================= */
 setInterval(() => {
   accounts.forEach(a => {
     a.gold += Math.random() > 0.7 ? 10 : 0;
     a.ping = 30 + Math.floor(Math.random() * 40);
     a.status = Math.random() > 0.5 ? "Fishing" : "Idle";
-
     a.quests.forEach(q => {
       q.progress = Math.min(1, q.progress + Math.random() * 0.02);
     });
   });
-
   renderAccounts();
 }, 2000);
 
-// INIT
+/* INIT */
 renderAccounts();

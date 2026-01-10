@@ -3,22 +3,38 @@ document.addEventListener("DOMContentLoaded", () => {
   const pages = document.querySelectorAll(".page-section");
 
   function showPage(pageId) {
-    pages.forEach(p => p.classList.remove("active"));
-    navButtons.forEach(b => b.classList.remove("active"));
+    // sembunyikan semua page
+    pages.forEach(page => {
+      page.style.display = "none";
+      page.classList.remove("active");
+    });
 
-    const page = document.getElementById(pageId);
-    const btn = document.querySelector(`.sidebar button[data-page="${pageId}"]`);
+    // matikan semua button
+    navButtons.forEach(btn => btn.classList.remove("active"));
 
-    if (page) page.classList.add("active");
-    if (btn) btn.classList.add("active");
+    // tampilkan target
+    const targetPage = document.getElementById(pageId);
+    const targetBtn = document.querySelector(
+      `.sidebar button[data-page="${pageId}"]`
+    );
+
+    if (!targetPage) {
+      console.error("PAGE NOT FOUND:", pageId);
+      return;
+    }
+
+    targetPage.style.display = "block";
+    targetPage.classList.add("active");
+    if (targetBtn) targetBtn.classList.add("active");
   }
 
+  // event sidebar
   navButtons.forEach(btn => {
     btn.addEventListener("click", () => {
       showPage(btn.dataset.page);
     });
   });
 
-  /* DEFAULT PAGE */
+  // ✅ DEFAULT PAGE = PROFILE
   showPage("profile");
 });

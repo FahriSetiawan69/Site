@@ -6,19 +6,18 @@ const players = Array.from({ length: 10 }, (_, i) => ({
     ping: Math.floor(Math.random() * 40) + 30,
     rod: ["Basic Rod", "Magic Rod", "Golden Rod"][i % 3],
     status: i % 2 === 0 ? "Fishing" : "Idle",
-    quest: i === 9 ? {
-        name: "Earn 5000 Gold",
-        progress: 70
-    } : null
+    quest: i === 9 ? { name: "Earn 5000 Gold", progress: 70 } : null
 }));
 
 let activePlayer = null;
-let activeDetailTab = "fish";
+let activeTab = "fish";
 
-const grid = document.getElementById("cardsGrid");
-const detail = document.getElementById("detailPanel");
+function renderAccountsMonitor() {
+    const grid = document.getElementById("cardsGrid");
+    const detail = document.getElementById("detailPanel");
 
-function renderCards() {
+    if (!grid || !detail) return;
+
     grid.innerHTML = "";
 
     players.forEach(p => {
@@ -44,7 +43,7 @@ function renderCards() {
 
         card.onclick = () => {
             activePlayer = p;
-            activeDetailTab = "fish";
+            activeTab = "fish";
             renderDetail();
         };
 
@@ -53,54 +52,52 @@ function renderCards() {
 }
 
 function renderDetail() {
-    if (!activePlayer) return;
+    const detail = document.getElementById("detailPanel");
+    if (!activePlayer || !detail) return;
 
     detail.innerHTML = `
         <h3>${activePlayer.name} Detail</h3>
 
         <div class="tabs">
-            <button class="tab ${activeDetailTab === "fish" ? "active" : ""}" onclick="switchTab('fish')">Fish</button>
-            <button class="tab ${activeDetailTab === "item" ? "active" : ""}" onclick="switchTab('item')">Item</button>
-            <button class="tab ${activeDetailTab === "quest" ? "active" : ""}" onclick="switchTab('quest')">Quest</button>
+            <button onclick="switchTab('fish')" class="${activeTab==='fish'?'active':''}">Fish</button>
+            <button onclick="switchTab('item')" class="${activeTab==='item'?'active':''}">Item</button>
+            <button onclick="switchTab('quest')" class="${activeTab==='quest'?'active':''}">Quest</button>
         </div>
 
         <div id="tabContent"></div>
     `;
 
-    renderTabContent();
+    renderTab();
 }
 
 function switchTab(tab) {
-    activeDetailTab = tab;
+    activeTab = tab;
     renderDetail();
 }
 
-function renderTabContent() {
-    const content = document.getElementById("tabContent");
+function renderTab() {
+    const c = document.getElementById("tabContent");
+    if (!c) return;
 
-    if (activeDetailTab === "fish") {
-        content.innerHTML = "<p>No fish data yet</p>";
-    }
-
-    if (activeDetailTab === "item") {
-        content.innerHTML = "<p>No item data yet</p>";
-    }
-
-    if (activeDetailTab === "quest") {
+    if (activeTab === "quest") {
         if (!activePlayer.quest) {
-            content.innerHTML = "<p>No active quest</p>";
+            c.innerHTML = "<p>No active quest</p>";
         } else {
-            content.innerHTML = `
-                <div class="quest-card">
-                    <div>${activePlayer.quest.name}</div>
-                    <div class="quest-bar large">
-                        <div class="quest-fill" style="width:${activePlayer.quest.progress}%"></div>
-                    </div>
-                    <small>${activePlayer.quest.progress}%</small>
+            c.innerHTML = `
+                <p>${activePlayer.quest.name}</p>
+                <div class="quest-bar large">
+                    <div class="quest-fill" style="width:${activePlayer.quest.progress}%"></div>
                 </div>
             `;
         }
+        return;
     }
+
+    c.innerHTML = `<p>No ${activeTab} data</p>`;
 }
 
-renderCards();
+// ❗ JANGAN auto-render di load
+// Render hanya saat Accounts Monitor dibuka
+document.querySelector('[data-target="accounts"]')?.addEventListener("click", () => {
+    setTimeout(renderAccountsMonitor, 50);
+});

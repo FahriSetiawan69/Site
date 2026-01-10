@@ -1,5 +1,5 @@
 /* =========================
-   RESET & GLOBAL
+   RESET & GLOBAL FIX
 ========================= */
 * {
   margin: 0;
@@ -7,32 +7,38 @@
   box-sizing: border-box;
 }
 
-body {
+/* FIX BACKGROUND PUTIH */
+html, body {
+  width: 100%;
+  height: 100%;
+  background: #0b0616;
   font-family: "Inter", system-ui, sans-serif;
-  background: url("../img/premium_photo-1685148904.jpg") center / cover no-repeat;
-  color: #fff;
-  min-height: 100vh;
+  color: #ffffff;
 }
 
 /* =========================
-   APP LAYOUT
+   APP WRAPPER
 ========================= */
 #app {
   display: flex;
+  width: 100%;
   min-height: 100vh;
-  backdrop-filter: blur(6px);
+  background: url("../img/premium_photo-1685148904.jpg") center / cover no-repeat fixed;
 }
 
 /* =========================
-   SIDEBAR
+   SIDEBAR (ANTI KETIBAN)
 ========================= */
 .sidebar {
   width: 220px;
-  background: rgba(20, 10, 40, 0.85);
+  min-width: 220px;
+  flex-shrink: 0;              /* 🔥 KUNCI PENTING */
+  background: rgba(20, 10, 40, 0.9);
   padding: 20px;
   display: flex;
   flex-direction: column;
   gap: 20px;
+  box-shadow: 4px 0 20px rgba(0,0,0,0.4);
 }
 
 .sidebar h2 {
@@ -56,28 +62,30 @@ body {
 .main {
   flex: 1;
   padding: 20px;
+  overflow-x: hidden;          /* 🔥 CEGAH MERAMBAT */
   display: flex;
   gap: 20px;
-  overflow-x: hidden;
 }
 
 /* =========================
    CARD GRID
 ========================= */
 .card-grid {
+  flex: 1;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 16px;
-  flex: 1;
+  width: 100%;
+  max-width: 100%;
 }
 
 /* =========================
    ACCOUNT CARD
 ========================= */
 .account-card {
-  background: rgba(30, 15, 60, 0.85);
+  background: rgba(30, 15, 60, 0.88);
   border-radius: 14px;
-  padding: 14px;
+  padding: 12px;
   box-shadow: 0 0 18px rgba(120, 60, 255, 0.25);
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -88,22 +96,29 @@ body {
   box-shadow: 0 0 26px rgba(160, 90, 255, 0.45);
 }
 
+/* =========================
+   CARD CONTENT
+========================= */
 .card-title {
   font-weight: 700;
-  margin-bottom: 6px;
+  font-size: 15px;
+  margin-bottom: 4px;
   color: #e4d1ff;
 }
 
 .card-row {
-  font-size: 13px;
-  margin-bottom: 4px;
+  font-size: 12px;
+  line-height: 1.2;
+  margin-bottom: 2px;
   opacity: 0.9;
 }
 
 /* STATUS */
 .status {
-  margin-top: 6px;
-  font-weight: 600;
+  margin-top: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
 }
 
 .status.fishing {
@@ -114,18 +129,21 @@ body {
   color: #ff5c5c;
 }
 
-/* PROGRESS BAR */
+/* =========================
+   PROGRESS BAR
+========================= */
 .progress-bar {
-  margin-top: 8px;
-  height: 8px;
-  background: rgba(255, 255, 255, 0.15);
+  margin-top: 6px;
+  height: 6px;
+  background: rgba(255,255,255,0.15);
   border-radius: 6px;
   overflow: hidden;
 }
 
 .progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, #4cff8f, #7f3cff);
+  width: 0%;
+  background: linear-gradient(90deg, #00ffcc, #7f3cff, #b36bff);
   transition: width 0.4s ease;
 }
 
@@ -134,7 +152,8 @@ body {
 ========================= */
 .detail-panel {
   width: 360px;
-  background: rgba(18, 10, 40, 0.9);
+  min-width: 360px;
+  background: rgba(18, 10, 40, 0.92);
   border-radius: 16px;
   padding: 16px;
   box-shadow: 0 0 30px rgba(120, 60, 255, 0.35);
@@ -143,86 +162,6 @@ body {
 
 .detail-panel.hidden {
   display: none;
-}
-
-/* =========================
-   DETAIL HEADER
-========================= */
-.detail-header {
-  margin-bottom: 14px;
-}
-
-.detail-header h3 {
-  font-size: 18px;
-  color: #e4d1ff;
-}
-
-.detail-header p {
-  font-size: 14px;
-  opacity: 0.9;
-}
-
-/* =========================
-   DETAIL TABS
-========================= */
-.detail-tabs {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 12px;
-}
-
-.detail-tab {
-  flex: 1;
-  text-align: center;
-  padding: 8px 0;
-  border-radius: 10px;
-  background: rgba(255, 255, 255, 0.1);
-  cursor: pointer;
-  font-size: 13px;
-  transition: background 0.2s;
-}
-
-.detail-tab.active {
-  background: linear-gradient(135deg, #7f3cff, #b36bff);
-}
-
-/* =========================
-   DETAIL GRID
-========================= */
-.detail-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
-  gap: 12px;
-}
-
-/* =========================
-   GRID ITEM
-========================= */
-.grid-item {
-  background: rgba(30, 20, 60, 0.85);
-  border-radius: 12px;
-  padding: 10px;
-  text-align: center;
-  font-size: 12px;
-}
-
-.grid-item img {
-  width: 48px;
-  height: 48px;
-  margin-bottom: 6px;
-}
-
-.grid-item b {
-  display: block;
-  margin-bottom: 4px;
-  color: #e4d1ff;
-}
-
-.grid-item ul {
-  padding-left: 14px;
-  text-align: left;
-  font-size: 11px;
-  opacity: 0.9;
 }
 
 /* =========================
@@ -235,6 +174,7 @@ body {
 
   .sidebar {
     width: 100%;
+    min-width: 100%;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
@@ -246,5 +186,6 @@ body {
 
   .detail-panel {
     width: 100%;
+    min-width: 100%;
   }
-    }
+                   }

@@ -1,31 +1,34 @@
-function showPage(pageId) {
-    // hide all pages
-    document.querySelectorAll(".page").forEach(p => {
-        p.style.display = "none";
+document.addEventListener("DOMContentLoaded", () => {
+
+  const sections = document.querySelectorAll(".page-section");
+  const sidebarButtons = document.querySelectorAll("[data-page]");
+
+  function showPage(pageId) {
+    // sembunyikan semua halaman
+    sections.forEach(sec => {
+      sec.style.display = "none";
     });
 
-    // show page
-    const page = document.getElementById(pageId);
-    if (page) page.style.display = "block";
-
-    // active button
-    document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
-    const btn = document.querySelector(`.nav-btn[data-page="${pageId.replace('Page','')}"]`);
-    if (btn) btn.classList.add("active");
-
-    // 🔑 HOOK: panggil render khusus per halaman
-    if (pageId === "accountsPage" && typeof renderAccountsMonitor === "function") {
-        renderAccountsMonitor();
+    // tampilkan satu halaman
+    const target = document.getElementById(pageId);
+    if (target) {
+      target.style.display = "block";
     }
-}
 
-window.addEventListener("load", () => {
-    // DEFAULT = PROFILE
-    showPage("profilePage");
+    // update active state sidebar
+    sidebarButtons.forEach(btn => btn.classList.remove("active"));
+    const activeBtn = document.querySelector(`[data-page="${pageId}"]`);
+    if (activeBtn) activeBtn.classList.add("active");
+  }
 
-    document.querySelectorAll(".nav-btn").forEach(btn => {
-        btn.addEventListener("click", () => {
-            showPage(btn.dataset.page + "Page");
-        });
+  // klik sidebar
+  sidebarButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      const pageId = btn.dataset.page;
+      showPage(pageId);
     });
+  });
+
+  // DEFAULT SAAT LOGIN
+  showPage("page-profile");
 });

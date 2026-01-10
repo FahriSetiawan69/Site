@@ -3,7 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <title>Fishit Monitor</title>
+
+  <!-- GLOBAL -->
   <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/sidebar.css">
 </head>
 <body>
 
@@ -35,8 +38,8 @@
 
     <!-- ACCOUNTS MONITOR -->
     <section id="accountsView" class="view">
-      <section id="accountCards" class="card-grid"></section>
-      <section id="accountDetail" class="detail-panel hidden"></section>
+      <div id="accountCards" class="card-grid"></div>
+      <div id="accountDetail" class="detail-panel hidden"></div>
     </section>
 
     <!-- SETTINGS -->
@@ -55,6 +58,9 @@
   </main>
 </div>
 
+<!-- CORE -->
 <script src="js/dashboard.js"></script>
+<script src="js/sidebar.js"></script>
+
 </body>
 </html>

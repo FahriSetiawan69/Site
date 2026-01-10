@@ -1,0 +1,9 @@
+#profileView {
+  background: rgba(30,10,60,.85);
+  padding: 20px;
+  border-radius: 16px;
+}
+
+#profileView h2 {
+  margin-top: 0;
+}

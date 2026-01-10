@@ -5,51 +5,55 @@
   <title>Fishit Monitor</title>
 
   <!-- CSS -->
-  <link rel="stylesheet" href="css/dashboard.css">
   <link rel="stylesheet" href="css/sidebar.css">
+  <link rel="stylesheet" href="css/dashboard.css">
 </head>
-
 <body>
 
-<div class="dashboard">
+<div class="app">
 
   <!-- SIDEBAR -->
   <aside class="sidebar">
     <h2>Fishit Monitor</h2>
 
-    <button class="nav-btn" data-page="profile">Profile</button>
-    <button class="nav-btn active" data-page="accounts">Accounts Monitor</button>
+    <button class="nav-btn active" data-page="profile">Profile</button>
+    <button class="nav-btn" data-page="accounts">Accounts Monitor</button>
     <button class="nav-btn" data-page="settings">Settings</button>
     <button class="nav-btn" data-page="about">About</button>
 
     <button id="logoutBtn">Logout</button>
   </aside>
 
-  <!-- MAIN -->
+  <!-- MAIN CONTENT -->
   <main class="main-content">
 
     <!-- PROFILE -->
-    <section id="profilePage" class="page">
+    <section id="profilePage" class="page-section">
       <h2>User Profile</h2>
-      <p>Username: Fahri</p>
-      <p>Role: Developer</p>
-      <p>Status: Premium</p>
+      <p><b>Username:</b> Fahri</p>
+      <p><b>Role:</b> Developer</p>
+      <p><b>Active Key:</b> abogoboga</p>
+      <p><b>Status:</b> Premium</p>
     </section>
 
-    <!-- ACCOUNTS -->
-    <section id="accountsPage" class="page active">
-      <div id="accountsGrid" class="accounts-grid"></div>
-      <div id="accountDetail" class="account-detail"></div>
+    <!-- ACCOUNTS MONITOR -->
+    <section id="accountsPage" class="page-section" style="display:none;">
+      <h2>Accounts Monitor</h2>
+
+      <div id="cardsGrid" class="cards-grid"></div>
+
+      <!-- detail panel muncul di bawah grid -->
+      <div id="detailPanel"></div>
     </section>
 
     <!-- SETTINGS -->
-    <section id="settingsPage" class="page">
+    <section id="settingsPage" class="page-section" style="display:none;">
       <h2>Settings</h2>
       <p>Future configuration will be placed here.</p>
     </section>
 
     <!-- ABOUT -->
-    <section id="aboutPage" class="page">
+    <section id="aboutPage" class="page-section" style="display:none;">
       <h2>About</h2>
       <p>Fishit Monitor Dashboard</p>
       <p>Internal / Personal Use</p>
@@ -59,9 +63,8 @@
 
 </div>
 
-<!-- JS -->
-<script src="js/dashboard.js"></script>
 <script src="js/sidebar.js"></script>
+<script src="js/dashboard.js"></script>
 
 </body>
 </html>

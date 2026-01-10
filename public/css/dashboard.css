@@ -1,200 +1,107 @@
-/* RESET */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: Inter, system-ui, sans-serif;
-}
-
-/* BODY */
-body {
-  height: 100vh;
-  background: url("../img/premium_photo-1685148902854-9b9bb49fff08.jpeg")
-    center / cover no-repeat fixed;
-  color: #fff;
-  overflow: hidden;
-}
-
-/* APP */
-#app {
+/* ===== MAIN LAYOUT ===== */
+.dashboard {
   display: flex;
-  height: 100vh;
-  width: 100vw;
+  min-height: 100vh;
 }
 
-/* SIDEBAR */
-.sidebar {
-  width: 240px;
-  min-width: 240px;
-  background: rgba(40, 10, 70, 0.95);
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  z-index: 10;
-}
-
-.sidebar h2 {
-  margin-bottom: 10px;
-}
-
-.sidebar button {
-  width: 100%;
-  padding: 10px;
-  border-radius: 10px;
-  border: none;
-  background: rgba(255,255,255,0.08);
-  color: #fff;
-  cursor: pointer;
-  text-align: left;
-}
-
-.sidebar button.active {
-  background: linear-gradient(135deg, #8f4cff, #c084ff);
-}
-
-.sidebar .logout {
-  margin-top: auto;
-  background: #fff;
-  color: #000;
-  font-weight: bold;
-}
-
-/* MAIN */
-.main {
-  flex: 1;
-  padding: 24px;
-  overflow-y: auto;
-}
-
-/* VIEW */
-.view {
-  display: none;
-}
-
-.view.active {
-  display: block;
-}
-
-/* GRID AKUN */
-.accounts-grid {
+/* ===== GRID ===== */
+#accountsGrid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(260px, 1fr));
   gap: 16px;
+  padding: 20px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-/* CARD AKUN */
+/* ===== CARD ===== */
 .account-card {
-  background: rgba(70, 20, 120, 0.9);
-  border-radius: 16px;
+  background: rgba(80, 40, 140, 0.85);
+  border-radius: 14px;
   padding: 14px;
-  box-shadow: 0 0 20px rgba(180, 100, 255, 0.3);
+  color: #fff;
   cursor: pointer;
+  transition: transform 0.15s ease;
 }
 
-.account-card h3 {
-  margin-bottom: 6px;
+.account-card:hover {
+  transform: translateY(-4px);
 }
 
-/* STATUS */
+/* ===== STATUS ===== */
 .status {
   margin-top: 10px;
-  padding: 8px;
-  border-radius: 10px;
-  text-align: center;
-  font-weight: bold;
-}
-
-.status.fishing {
-  background: #2ecc71;
-  color: #000;
-}
-
-.status.idle {
-  background: #e74c3c;
-  color: #000;
-}
-
-/* DETAIL PANEL */
-.detail-panel {
-  margin-top: 24px;
-  padding: 18px;
-  border-radius: 18px;
-  background: rgba(40, 10, 70, 0.96);
-  box-shadow: 0 0 30px rgba(170, 90, 255, 0.35);
-}
-
-/* GRID TAB BAR */
-.detail-tabs {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  margin-bottom: 16px;
-}
-
-.detail-tabs button {
-  padding: 12px 0;
-  font-size: 15px;
-  font-weight: bold;
-  border-radius: 14px;
-  border: none;
-  cursor: pointer;
-  background: rgba(255,255,255,0.12);
-  color: #fff;
-}
-
-.detail-tabs button.active {
-  background: linear-gradient(135deg, #8f4cff, #c084ff);
-  box-shadow: 0 0 15px rgba(200, 130, 255, 0.6);
-}
-
-/* CONTENT GRID */
-.detail-content {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 14px;
-}
-
-/* ITEM / FISH */
-.item-card {
-  background: rgba(80, 30, 140, 0.9);
-  border-radius: 12px;
-  padding: 10px;
-  text-align: center;
-  font-size: 13px;
-}
-
-/* QUEST */
-.quest-item {
-  background: rgba(80, 30, 140, 0.9);
-  border-radius: 12px;
-  padding: 12px;
-  cursor: pointer;
-}
-
-.quest-bar {
-  height: 8px;
+  padding: 6px;
   border-radius: 8px;
-  background: rgba(255,255,255,0.2);
+  text-align: center;
+  font-weight: bold;
+}
+
+.status-fishing {
+  background: linear-gradient(90deg, #28d96f, #20b85c);
+}
+
+.status-idle {
+  background: linear-gradient(90deg, #ff5b5b, #e04848);
+}
+
+/* ===== QUEST PROGRESS ===== */
+.quest-progress {
+  width: 100%;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
   overflow: hidden;
   margin-top: 6px;
 }
 
-.quest-bar span {
-  display: block;
+.quest-progress-bar {
   height: 100%;
-  background: linear-gradient(90deg, #2ecc71, #9bffcb);
+  background: linear-gradient(90deg, #00f2ff, #a855ff);
+  transition: width 0.4s ease;
 }
 
-/* RESPONSIVE */
+/* ===== DETAIL PANEL ===== */
+#accountDetail {
+  padding: 16px;
+  background: rgba(60, 20, 120, 0.85);
+  border-radius: 14px;
+  margin: 20px;
+  color: #fff;
+}
+
+/* ===== TABS ===== */
+.detail-tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.tab-btn {
+  flex: 1;
+  padding: 8px;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.15);
+  border: none;
+  color: #fff;
+  cursor: pointer;
+}
+
+.tab-btn.active {
+  background: linear-gradient(90deg, #8f5bff, #b07cff);
+}
+
+/* ===== QUEST CARD ===== */
+.quest-card {
+  background: rgba(0,0,0,0.25);
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+/* ===== RESPONSIVE ===== */
 @media (max-width: 900px) {
-  .accounts-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 600px) {
-  .accounts-grid {
-    grid-template-columns: 1fr;
+  #accountsGrid {
+    grid-template-columns: repeat(1, 1fr);
   }
 }

@@ -1,176 +1,128 @@
-/* ===== RESET ===== */
 * {
   box-sizing: border-box;
 }
 
-body {
+html, body {
   margin: 0;
-  font-family: 'Inter', system-ui, sans-serif;
-  background: url("../img/premium_photo-1685148902854-9b9bb49fff08.jpeg")
-    center / cover no-repeat fixed;
-  color: #fff;
+  height: 100%;
+  font-family: Inter, system-ui, sans-serif;
+
+  background:
+    linear-gradient(rgba(10,5,25,.8), rgba(10,5,25,.9)),
+    url("../img/premium_photo-1685148902854-9b9bb49fff08.jpeg");
+
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+
+  color: #eee;
 }
 
-/* ===== LAYOUT ===== */
 #app {
   display: flex;
   min-height: 100vh;
-  backdrop-filter: blur(6px);
 }
 
-/* ===== SIDEBAR ===== */
+/* SIDEBAR */
 .sidebar {
   width: 240px;
-  min-width: 240px;
+  background: rgba(40,15,80,.9);
   padding: 20px;
-  background: linear-gradient(180deg, #2a0a52, #14052a);
-  box-shadow: 4px 0 25px rgba(0,0,0,.6);
-  z-index: 10;
 }
 
 .sidebar h2 {
-  margin: 0 0 20px;
-  font-size: 18px;
+  margin-bottom: 20px;
 }
 
-.sidebar button {
+.menu-btn {
   width: 100%;
   padding: 10px;
-  border-radius: 10px;
+  margin-bottom: 10px;
   border: none;
+  border-radius: 8px;
+  background: rgba(255,255,255,.08);
+  color: white;
   cursor: pointer;
-  background: linear-gradient(90deg,#7c3aed,#a855f7);
-  color: #fff;
-  font-weight: 600;
 }
 
-/* ===== MAIN ===== */
+.menu-btn.active {
+  background: linear-gradient(135deg, #8b5cf6, #a855f7);
+}
+
+.logout {
+  margin-top: 20px;
+  width: 100%;
+  padding: 10px;
+}
+
+/* MAIN */
 .main {
   flex: 1;
-  padding: 24px;
-  overflow-y: auto;
+  padding: 20px;
 }
 
-/* ===== CARD GRID ===== */
+/* VIEW SYSTEM */
+.view {
+  display: none;
+}
+
+.view.active {
+  display: block;
+}
+
+/* CARDS */
 .card-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 18px;
+  gap: 16px;
 }
 
-/* ===== ACCOUNT CARD ===== */
-.account-card {
-  background: linear-gradient(180deg,#3b1680,#1c083f);
-  border-radius: 16px;
-  padding: 16px;
+.card {
+  background: linear-gradient(135deg, #2a145f, #120826);
+  padding: 14px;
+  border-radius: 14px;
   cursor: pointer;
-  transition: all .2s ease;
-  box-shadow: 0 0 20px rgba(0,0,0,.5);
 }
 
-.account-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 0 25px rgba(168,85,247,.6);
-}
-
-.account-card h3 {
-  margin: 0 0 8px;
-}
-
-.account-card p {
-  margin: 4px 0;
-  font-size: 13px;
-}
-
-/* ===== STATUS ===== */
 .status {
   margin-top: 8px;
   padding: 6px;
   border-radius: 8px;
-  font-weight: bold;
   text-align: center;
+  font-weight: bold;
 }
 
 .status.fishing {
   background: #22c55e;
-  color: #062;
+  color: black;
 }
 
 .status.idle {
   background: #ef4444;
-  color: #300;
 }
 
-/* ===== PROGRESS BAR ===== */
+/* PROGRESS */
 .progress {
   height: 8px;
-  background: rgba(255,255,255,.15);
-  border-radius: 999px;
+  border-radius: 6px;
+  background: rgba(255,255,255,.2);
   overflow: hidden;
-  margin-top: 10px;
+  margin-top: 8px;
 }
 
-.progress > div {
+.progress-bar {
   height: 100%;
-  background: linear-gradient(90deg,#7c3aed,#22d3ee);
-  width: 0%;
+  background: linear-gradient(90deg, #7c3aed, #22d3ee);
 }
 
-/* ===== DETAIL PANEL ===== */
+/* DETAIL */
 .detail-panel {
-  margin-top: 28px;
-  padding: 20px;
-  border-radius: 18px;
-  background: linear-gradient(180deg,#3b1680,#1b083f);
-  box-shadow: 0 0 35px rgba(124,58,237,.6);
+  margin-top: 20px;
+  padding: 16px;
+  background: rgba(30,10,60,.9);
+  border-radius: 16px;
 }
 
 .hidden {
   display: none;
 }
-
-/* ===== DETAIL TABS ===== */
-.detail-tabs {
-  display: flex;
-  gap: 12px;
-  margin: 16px 0;
-}
-
-.detail-tab {
-  padding: 8px 18px;
-  border-radius: 999px;
-  background: rgba(255,255,255,.15);
-  cursor: pointer;
-  font-size: 13px;
-}
-
-.detail-tab.active {
-  background: linear-gradient(90deg,#7c3aed,#a855f7);
-}
-
-/* ===== DETAIL GRID ===== */
-.detail-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill,minmax(140px,1fr));
-  gap: 14px;
-}
-
-/* ===== GRID ITEM ===== */
-.grid-item {
-  background: rgba(0,0,0,.35);
-  border-radius: 14px;
-  padding: 12px;
-  text-align: center;
-  font-size: 12px;
-}
-
-/* ===== QUEST CARD ===== */
-.grid-item.quest {
-  cursor: pointer;
-  border: 1px solid rgba(255,255,255,.2);
-}
-
-.grid-item.quest.active {
-  border-color: #c084fc;
-  box-shadow: 0 0 18px rgba(192,132,252,.8);
-  }

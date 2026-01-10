@@ -1,6 +1,4 @@
-/* ===============================
-   RESET & BASE
-================================ */
+/* RESET */
 * {
   margin: 0;
   padding: 0;
@@ -10,182 +8,156 @@
 html, body {
   width: 100%;
   height: 100%;
-  background: #0b0616;
-  font-family: 'Inter', system-ui, sans-serif;
-  color: #fff;
+  font-family: 'Inter', sans-serif;
+  background: radial-gradient(circle at top, #1a0f2e, #090412);
+  color: #eae6ff;
   overflow-x: hidden;
 }
 
-/* ===============================
-   APP LAYOUT (ANTI OVERFLOW)
-================================ */
-#app {
+/* APP WRAPPER */
+.app {
   display: flex;
-  width: 100%;
   min-height: 100vh;
-  background: #0b0616;
-  overflow: hidden; /* ⛔ cegah card keluar */
+  width: 100%;
 }
 
-/* ===============================
-   SIDEBAR (LOCK POSITION)
-================================ */
+/* SIDEBAR */
 .sidebar {
-  width: 220px;
-  min-width: 220px;
-  max-width: 220px;
-  background: linear-gradient(180deg, #2b0a4a, #12001f);
+  width: 240px;
+  min-width: 240px;
+  background: linear-gradient(180deg, #2b135f, #1a0b38);
   padding: 20px;
-  flex-shrink: 0; /* ⛔ TIDAK BOLEH KEKECILAN */
-  border-right: 2px solid rgba(255,255,255,0.08);
+  box-shadow: 4px 0 20px rgba(0,0,0,0.4);
   z-index: 10;
 }
 
-.sidebar h2 {
+.sidebar h1 {
   font-size: 18px;
-  color: #d6b6ff;
   margin-bottom: 16px;
 }
 
 .sidebar button {
   width: 100%;
   padding: 10px;
-  border-radius: 8px;
-  background: #7f3cff;
+  background: linear-gradient(90deg, #7c3aed, #a855f7);
   border: none;
+  border-radius: 8px;
   color: white;
-  font-weight: bold;
   cursor: pointer;
 }
 
-/* ===============================
-   MAIN CONTENT (DIBATASI)
-================================ */
+/* MAIN CONTENT */
 .main {
   flex: 1;
-  min-width: 0; /* ⛔ PENTING UNTUK FLEX */
-  padding: 20px;
-  background: #10062a;
-  display: flex;
-  gap: 20px;
-  overflow: hidden;
+  padding: 24px;
+  overflow-y: auto;
 }
 
-/* ===============================
-   CARD GRID (ANTI NUBRUK)
-================================ */
+/* CARD GRID */
 .card-grid {
-  flex: 1;
-  min-width: 0;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 14px;
-  align-content: start;
+  gap: 18px;
+  align-items: stretch;
 }
 
-/* ===============================
-   ACCOUNT CARD
-================================ */
-.account-card {
-  background: rgba(25, 10, 50, 0.88);
+/* PLAYER CARD */
+.player-card {
+  background: linear-gradient(180deg, #24104f, #16082f);
   border-radius: 14px;
-  padding: 12px;
-  box-shadow: 0 0 18px rgba(120, 60, 255, 0.25);
+  padding: 14px;
+  box-shadow: 0 0 25px rgba(124,58,237,0.25);
+  transition: transform .2s ease, box-shadow .2s ease;
   cursor: pointer;
-  transition: 0.2s;
-  outline: 1px solid rgba(255,255,255,0.05);
 }
 
-.account-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 0 25px rgba(140, 80, 255, 0.45);
+.player-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 0 35px rgba(168,85,247,0.5);
 }
 
-.card-title {
-  font-weight: 700;
-  font-size: 15px;
-  color: #e4d1ff;
+.player-card h3 {
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.player-card p {
+  font-size: 12px;
+  opacity: .9;
   margin-bottom: 4px;
 }
 
-.card-row {
-  font-size: 12px;
-  margin-bottom: 2px;
-  opacity: 0.9;
-}
-
-/* ===============================
-   STATUS
-================================ */
+/* STATUS */
 .status {
+  font-size: 11px;
   margin-top: 6px;
-  font-size: 12px;
-  font-weight: bold;
-  text-transform: uppercase;
 }
 
 .status.fishing {
-  color: #4cff8f;
+  color: #34ffd2;
 }
 
 .status.idle {
-  color: #ff5c5c;
+  color: #facc15;
 }
 
-/* ===============================
-   PROGRESS BAR
-================================ */
-.progress-bar {
-  margin-top: 8px;
-  height: 8px;
-  background: rgba(255,255,255,0.15);
-  border-radius: 6px;
+/* PROGRESS BAR */
+.progress {
+  width: 100%;
+  height: 6px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 999px;
   overflow: hidden;
+  margin-top: 10px;
 }
 
-.progress-fill {
+.progress-bar {
   height: 100%;
-  width: 0%;
-  background: linear-gradient(90deg, #4cff8f, #7f3cff);
-  transition: width 0.4s ease;
+  width: 50%;
+  background: linear-gradient(90deg, #22d3ee, #a855f7);
+  border-radius: 999px;
 }
 
-/* ===============================
-   DETAIL PANEL (KANAN)
-================================ */
+/* DETAIL PANEL */
 .detail-panel {
-  width: 340px;
-  min-width: 340px;
-  max-width: 340px;
-  background: rgba(18, 10, 40, 0.95);
+  margin-top: 24px;
+  background: linear-gradient(180deg, #2b135f, #180933);
   border-radius: 16px;
-  padding: 16px;
-  box-shadow: 0 0 30px rgba(120, 60, 255, 0.35);
-  overflow-y: auto;
-  flex-shrink: 0; /* ⛔ JANGAN TERDESAK */
+  padding: 18px;
+  box-shadow: 0 0 30px rgba(0,0,0,0.4);
 }
 
-/* ===============================
-   MOBILE FIX
-================================ */
-@media (max-width: 900px) {
-  #app {
-    flex-direction: column;
-  }
-
-  .sidebar {
-    width: 100%;
-    max-width: none;
-    min-width: unset;
-  }
-
-  .main {
-    flex-direction: column;
-  }
-
-  .detail-panel {
-    width: 100%;
-    max-width: none;
-    min-width: unset;
-  }
+/* TABS */
+.tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 14px;
 }
+
+.tab {
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.1);
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.tab.active {
+  background: linear-gradient(90deg, #7c3aed, #a855f7);
+}
+
+/* TAB CONTENT */
+.tab-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 12px;
+}
+
+/* ITEM / FISH CARD */
+.mini-card {
+  background: rgba(0,0,0,0.3);
+  border-radius: 10px;
+  padding: 10px;
+  text-align: center;
+  font-size: 11px;
+   }

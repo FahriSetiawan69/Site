@@ -2,15 +2,13 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Fishit Monitor</title>
-
-  <!-- ✅ CSS WAJIB RELATIVE -->
-  <link rel="stylesheet" href="./css/dashboard.css">
+  <link rel="stylesheet" href="css/dashboard.css" />
 </head>
 <body>
 
-<div id="app">
+<div class="app">
+
   <!-- SIDEBAR -->
   <aside class="sidebar">
     <h2>Fishit Monitor</h2>
@@ -20,36 +18,36 @@
     <button data-page="settings">Settings</button>
     <button data-page="about">About</button>
 
-    <button class="logout-btn">Logout</button>
+    <button id="logoutBtn" class="logout">Logout</button>
   </aside>
 
-  <!-- MAIN -->
-  <main class="main">
+  <!-- MAIN CONTENT -->
+  <main class="content">
 
     <!-- PROFILE -->
-    <section id="profile" class="page-section active">
-      <h2>User Profile</h2>
-      <p>Username: Fahri</p>
-      <p>Role: Developer</p>
-      <p>Status: Premium</p>
+    <section id="profile" class="page-section">
+      <h3>User Profile</h3>
+      <p><b>Username:</b> Fahri</p>
+      <p><b>Role:</b> Developer</p>
+      <p><b>Status:</b> Premium</p>
     </section>
 
-    <!-- ACCOUNTS -->
+    <!-- ACCOUNTS MONITOR -->
     <section id="accounts" class="page-section">
-      <h2>Accounts Monitor</h2>
-      <div class="card-grid" id="accountsGrid"></div>
-      <div id="detailPanel" class="detail-panel hidden"></div>
+      <h3>Accounts Monitor</h3>
+      <div id="cardGrid" class="card-grid"></div>
+      <div id="detailPanel" class="detail-panel"></div>
     </section>
 
     <!-- SETTINGS -->
     <section id="settings" class="page-section">
-      <h2>Settings</h2>
+      <h3>Settings</h3>
       <p>Future configuration will be placed here.</p>
     </section>
 
     <!-- ABOUT -->
     <section id="about" class="page-section">
-      <h2>About</h2>
+      <h3>About</h3>
       <p>Fishit Monitor Dashboard</p>
       <p>Internal / Personal Use</p>
     </section>
@@ -57,7 +55,6 @@
   </main>
 </div>
 
-<!-- ✅ JS WAJIB DI BAWAH & RELATIVE -->
-<script src="./js/dashboard.js"></script>
+<script src="js/dashboard.js"></script>
 </body>
 </html>

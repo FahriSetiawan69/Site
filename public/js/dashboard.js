@@ -1,76 +1,51 @@
-const cardContainer = document.getElementById("accountCards");
-const detailPanel = document.getElementById("accountDetail");
+// -------- VIEW SWITCHING --------
+const navButtons = document.querySelectorAll(".nav-btn");
+const views = document.querySelectorAll(".view");
 
-let selectedAccountId = null;
+navButtons.forEach(btn => {
+  btn.addEventListener("click", () => {
+    navButtons.forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
 
-/* =========================
-   RENDER CARDS
-========================= */
-function renderCards() {
-  cardContainer.innerHTML = "";
+    const viewId = btn.dataset.view;
+    views.forEach(v => v.classList.remove("active"));
+    document.getElementById(viewId).classList.add("active");
+  });
+});
 
-  dummyAccounts.forEach(acc => {
+// -------- DUMMY ACCOUNTS DATA --------
+const accounts = Array.from({ length: 10 }).map((_, i) => ({
+  name: `player_${i + 1}`,
+  gold: 10000 + i * 1000,
+  backpack: Math.floor(Math.random() * 5) + 1,
+  ping: 30 + Math.floor(Math.random() * 40),
+  rod: ["Basic Rod", "Magic Rod", "Golden Rod"][i % 3],
+  status: i % 2 === 0 ? "Fishing" : "Idle"
+}));
+
+// -------- RENDER ACCOUNTS --------
+const grid = document.getElementById("accountsGrid");
+
+function renderAccounts() {
+  grid.innerHTML = "";
+
+  accounts.forEach(acc => {
     const card = document.createElement("div");
     card.className = "account-card";
-    card.dataset.id = acc.id;
 
     card.innerHTML = `
-      <h3>${acc.username}</h3>
+      <h3>${acc.name}</h3>
       <p>Gold: ${acc.gold}</p>
       <p>Backpack: ${acc.backpack}</p>
       <p>Ping: ${acc.ping} ms</p>
       <p>Rod: ${acc.rod}</p>
-
       <div class="status ${acc.status.toLowerCase()}">
         ${acc.status}
       </div>
-
-      <div class="progress">
-        <div class="progress-bar" style="width:${acc.questProgress || 0}%"></div>
-      </div>
     `;
 
-    card.addEventListener("click", () => {
-      selectAccount(acc.id);
-    });
-
-    cardContainer.appendChild(card);
+    grid.appendChild(card);
   });
 }
 
-/* =========================
-   SELECT ACCOUNT
-========================= */
-function selectAccount(id) {
-  selectedAccountId = id;
-  const acc = dummyAccounts.find(a => a.id === id);
-  if (!acc) return;
-
-  renderDetail(acc);
-}
-
-/* =========================
-   DETAIL PANEL
-========================= */
-function renderDetail(acc) {
-  detailPanel.classList.remove("hidden");
-
-  detailPanel.innerHTML = `
-    <h2>${acc.username}</h2>
-    <p><b>Status:</b> ${acc.status}</p>
-    <p><b>Gold:</b> ${acc.gold}</p>
-    <p><b>Rod:</b> ${acc.rod}</p>
-
-    <h3 style="margin-top:16px;">Quest</h3>
-    <p>${acc.quest || "No active quest"}</p>
-
-    <div class="progress">
-      <div class="progress-bar" style="width:${acc.questProgress || 0}%"></div>
-    </div>
-  `;
-}
-
-/* =========================
-   INIT
-========================= */
-renderCards();
+renderAccounts();

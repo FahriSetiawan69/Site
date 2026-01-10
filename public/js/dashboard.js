@@ -1,4 +1,3 @@
-// ========= DATA =========
 const players = Array.from({ length: 10 }, (_, i) => ({
     name: `player_${i + 1}`,
     gold: 10000 + i * 1000,
@@ -15,7 +14,9 @@ const players = Array.from({ length: 10 }, (_, i) => ({
 let activePlayer = null;
 let activeTab = "quest";
 
-// ========= RENDER GRID =========
+/* =========================
+   ACCOUNTS MONITOR RENDER
+========================= */
 function renderAccountsMonitor() {
     const grid = document.getElementById("cardsGrid");
     const detail = document.getElementById("detailPanel");
@@ -25,36 +26,38 @@ function renderAccountsMonitor() {
     grid.innerHTML = "";
     detail.innerHTML = "";
 
-    players.forEach(p => {
+    players.forEach(player => {
         const card = document.createElement("div");
         card.className = "player-card";
 
         card.innerHTML = `
-            <h4>${p.name}</h4>
-            <p>Gold: ${p.gold}</p>
-            <p>Backpack: ${p.backpack}</p>
-            <p>Ping: ${p.ping} ms</p>
-            <p>Rod: ${p.rod}</p>
+            <h4>${player.name}</h4>
+            <p>Gold: ${player.gold}</p>
+            <p>Backpack: ${player.backpack}</p>
+            <p>Ping: ${player.ping} ms</p>
+            <p>Rod: ${player.rod}</p>
 
             <div class="quest-bar">
-                <div class="quest-fill" style="width:${p.quest.progress}%"></div>
+                <div class="quest-fill" style="width:${player.quest.progress}%"></div>
             </div>
 
-            <div class="status ${p.status === "Fishing" ? "fishing" : "idle"}">
-                ${p.status}
+            <div class="status ${player.status === "Fishing" ? "fishing" : "idle"}">
+                ${player.status}
             </div>
         `;
 
-        card.onclick = () => {
-            activePlayer = p;
+        card.addEventListener("click", () => {
+            activePlayer = player;
             renderDetail();
-        };
+        });
 
         grid.appendChild(card);
     });
 }
 
-// ========= DETAIL =========
+/* =========================
+   DETAIL PANEL
+========================= */
 function renderDetail() {
     const detail = document.getElementById("detailPanel");
     if (!activePlayer || !detail) return;

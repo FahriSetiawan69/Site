@@ -1,164 +1,135 @@
-/* ================= VIEW SWITCH ================= */
-document.querySelectorAll(".nav-btn").forEach(btn => {
-  btn.onclick = () => {
-    document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
-    btn.classList.add("active");
+// dashboard.js
 
-    document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
-    document.getElementById(btn.dataset.view).classList.add("active");
-  };
-});
+import { accounts } from "./dummyData.js";
 
-/* ================= DATA ================= */
-const accounts = Array.from({ length: 10 }).map((_, i) => ({
-  name: `player_${i + 1}`,
-  gold: 10000 + i * 1000,
-  backpack: Math.floor(Math.random() * 5) + 1,
-  ping: 30 + Math.floor(Math.random() * 40),
-  rod: ["Basic Rod", "Magic Rod", "Golden Rod"][i % 3],
-  status: Math.random() > 0.5 ? "Fishing" : "Idle",
-  currentQuest: "None",
-
-  fish: [
-    { name: "Golden Carp", mut: "Shiny", weight: "2.5kg", price: 500 },
-    { name: "Blue Tuna", mut: "Normal", weight: "1.6kg", price: 320 }
-  ],
-
-  items: [
-    { name: "Magic Bait", price: 150 },
-    { name: "Lucky Charm", price: 300 }
-  ],
-
-  quests: [
-    { name: "Catch 20 Fish", progress: 0.3 },
-    { name: "Earn 5000 Gold", progress: 0.6 },
-    { name: "Big Catch > 3kg", progress: 0.1 }
-  ]
-}));
-
-/* ================= GRID ================= */
 const grid = document.getElementById("accountsGrid");
+const detail = document.getElementById("accountDetail");
+
 let selectedAccount = null;
 
+/* =============================
+   RENDER ACCOUNT CARDS
+============================= */
 function renderAccounts() {
   grid.innerHTML = "";
-  accounts.forEach(acc => {
+
+  accounts.forEach((acc) => {
     const card = document.createElement("div");
     card.className = "account-card";
 
+    const statusClass = acc.status === "Fishing" ? "status-fishing" : "status-idle";
+
     card.innerHTML = `
-      <h3>${acc.name}</h3>
+      <h3>${acc.username}</h3>
       <p>Gold: ${acc.gold}</p>
       <p>Backpack: ${acc.backpack}</p>
       <p>Ping: ${acc.ping} ms</p>
       <p>Rod: ${acc.rod}</p>
-      <p>Quest: ${acc.currentQuest}</p>
-      <div class="status ${acc.status.toLowerCase()}">${acc.status}</div>
+      <p>Quest: ${acc.currentQuest || "None"}</p>
+
+      ${
+        acc.currentQuest
+          ? `
+        <div class="quest-progress">
+          <div class="quest-progress-bar" style="width:${acc.questProgress || 0}%"></div>
+        </div>
+        `
+          : ""
+      }
+
+      <div class="status ${statusClass}">
+        ${acc.status}
+      </div>
     `;
 
-    card.onclick = () => showDetail(acc);
+    card.addEventListener("click", () => {
+      selectedAccount = acc;
+      renderDetail(acc);
+    });
+
     grid.appendChild(card);
   });
 }
 
-/* ================= DETAIL ================= */
-function showDetail(acc) {
-  selectedAccount = acc;
+/* =============================
+   DETAIL PANEL
+============================= */
+function renderDetail(acc) {
+  if (!detail) return;
 
-  let panel = document.querySelector(".detail-panel");
-  if (!panel) {
-    panel = document.createElement("div");
-    panel.className = "detail-panel";
-    grid.parentNode.appendChild(panel);
-  }
-
-  panel.innerHTML = `
-    <h3>${acc.name} Detail</h3>
+  detail.innerHTML = `
+    <h2>${acc.username} Detail</h2>
 
     <div class="detail-tabs">
-      <button class="tab active" data-tab="fish">Fish</button>
-      <button class="tab" data-tab="item">Item</button>
-      <button class="tab" data-tab="quest">Quest</button>
+      <button class="tab-btn active" data-tab="fish">Fish</button>
+      <button class="tab-btn" data-tab="item">Item</button>
+      <button class="tab-btn" data-tab="quest">Quest</button>
     </div>
 
-    <div class="detail-content"></div>
+    <div class="detail-content" id="detailContent"></div>
   `;
 
-  const tabs = panel.querySelectorAll(".tab");
-  const content = panel.querySelector(".detail-content");
-
-  tabs.forEach(tab => {
-    tab.onclick = () => {
-      tabs.forEach(t => t.classList.remove("active"));
-      tab.classList.add("active");
-      renderTab(tab.dataset.tab, content);
-    };
-  });
-
-  renderTab("fish", content);
+  bindTabs(acc);
+  renderQuestTab(acc); // default tab
 }
 
-function renderTab(type, container) {
-  container.innerHTML = "";
+/* =============================
+   TAB HANDLER
+============================= */
+function bindTabs(acc) {
+  const buttons = document.querySelectorAll(".tab-btn");
 
-  if (type === "fish") {
-    selectedAccount.fish.forEach(f => {
-      container.innerHTML += `
-        <div class="item-card">
-          <strong>${f.name}</strong><br>
-          ${f.mut}<br>
-          ${f.weight}<br>
-          💰 ${f.price}
-        </div>
-      `;
-    });
-  }
+  buttons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      buttons.forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
 
-  if (type === "item") {
-    selectedAccount.items.forEach(i => {
-      container.innerHTML += `
-        <div class="item-card">
-          <strong>${i.name}</strong><br>
-          💰 ${i.price}
-        </div>
-      `;
-    });
-  }
-
-  if (type === "quest") {
-    selectedAccount.quests.forEach(q => {
-      const div = document.createElement("div");
-      div.className = "quest-item";
-
-      div.innerHTML = `
-        <strong>${q.name}</strong>
-        <div class="quest-bar">
-          <span style="width:${q.progress * 100}%"></span>
-        </div>
-      `;
-
-      div.onclick = () => {
-        selectedAccount.currentQuest = q.name;
-        renderAccounts();
-      };
-
-      container.appendChild(div);
-    });
-  }
-}
-
-/* ================= REALTIME ================= */
-setInterval(() => {
-  accounts.forEach(a => {
-    a.gold += Math.random() > 0.7 ? 10 : 0;
-    a.ping = 30 + Math.floor(Math.random() * 40);
-    a.status = Math.random() > 0.5 ? "Fishing" : "Idle";
-    a.quests.forEach(q => {
-      q.progress = Math.min(1, q.progress + Math.random() * 0.02);
+      const tab = btn.dataset.tab;
+      if (tab === "quest") renderQuestTab(acc);
+      if (tab === "fish") renderFishTab(acc);
+      if (tab === "item") renderItemTab(acc);
     });
   });
-  renderAccounts();
-}, 2000);
+}
 
-/* INIT */
+/* =============================
+   QUEST TAB
+============================= */
+function renderQuestTab(acc) {
+  const content = document.getElementById("detailContent");
+
+  content.innerHTML = acc.quests
+    .map(
+      (q) => `
+      <div class="quest-card">
+        <h4>${q.name}</h4>
+        <p>${q.desc}</p>
+        <div class="quest-progress">
+          <div class="quest-progress-bar" style="width:${q.progress}%"></div>
+        </div>
+      </div>
+    `
+    )
+    .join("");
+}
+
+/* =============================
+   FISH TAB (PLACEHOLDER)
+============================= */
+function renderFishTab(acc) {
+  const content = document.getElementById("detailContent");
+  content.innerHTML = `<p>Fish inventory coming soon</p>`;
+}
+
+/* =============================
+   ITEM TAB (PLACEHOLDER)
+============================= */
+function renderItemTab(acc) {
+  const content = document.getElementById("detailContent");
+  content.innerHTML = `<p>Item inventory coming soon</p>`;
+}
+
+/* =============================
+   INIT
+============================= */
 renderAccounts();

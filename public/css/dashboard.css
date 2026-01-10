@@ -5,12 +5,24 @@
   box-sizing: border-box;
 }
 
+/* BACKGROUND JPG + OVERLAY */
 html, body {
   width: 100%;
   height: 100%;
   font-family: Inter, system-ui, sans-serif;
+
   background:
-    radial-gradient(circle at top, #2a145f 0%, #0b0615 45%, #05030a 100%);
+    linear-gradient(
+      rgba(10, 5, 25, 0.78),
+      rgba(10, 5, 25, 0.88)
+    ),
+    url("../img/premium_photo-1685148902854-9b9bb49fff08.jpeg");
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+
   color: #f5f3ff;
   overflow-x: hidden;
 }
@@ -19,17 +31,21 @@ html, body {
 .app {
   display: flex;
   min-height: 100vh;
+  width: 100%;
 }
 
 /* SIDEBAR */
 .sidebar {
   width: 240px;
   min-width: 240px;
-  background:
-    linear-gradient(180deg, rgba(80,40,160,.95), rgba(25,10,55,.95));
+
+  background: rgba(35, 15, 70, 0.88);
+  backdrop-filter: blur(12px);
+
   padding: 20px;
   border-right: 1px solid rgba(255,255,255,.08);
   box-shadow: 6px 0 30px rgba(0,0,0,.6);
+  z-index: 10;
 }
 
 .sidebar h1 {
@@ -58,25 +74,31 @@ html, body {
   overflow-y: auto;
 }
 
-/* GRID */
+/* CARD GRID */
 .card-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
   gap: 20px;
 }
 
-/* CARD */
+/* PLAYER CARD */
 .player-card {
-  background:
-    linear-gradient(180deg, rgba(55,25,120,.95), rgba(20,8,45,.95));
+  background: linear-gradient(
+    180deg,
+    rgba(55,25,120,.95),
+    rgba(20,8,45,.95)
+  );
   border-radius: 16px;
   padding: 16px;
+
   box-shadow:
     0 0 25px rgba(124,58,237,.35),
     inset 0 0 20px rgba(255,255,255,.05);
+
   display: flex;
   flex-direction: column;
   gap: 6px;
+
   cursor: pointer;
   transition: all .2s ease;
 }
@@ -96,7 +118,6 @@ html, body {
 .card-header {
   font-size: 15px;
   font-weight: 700;
-  color: #f5f3ff;
 }
 
 .card-info {
@@ -126,7 +147,7 @@ html, body {
   margin-top: 4px;
 }
 
-/* PROGRESS */
+/* PROGRESS BAR */
 .progress-wrapper {
   width: 100%;
   height: 7px;
@@ -138,8 +159,7 @@ html, body {
 
 .progress-bar {
   height: 100%;
-  background:
-    linear-gradient(90deg, #22d3ee, #a855f7);
+  background: linear-gradient(90deg, #22d3ee, #a855f7);
   border-radius: 999px;
   box-shadow: 0 0 12px rgba(168,85,247,.9);
 }
@@ -147,8 +167,11 @@ html, body {
 /* DETAIL PANEL */
 .detail-panel {
   margin-top: 28px;
-  background:
-    linear-gradient(180deg, rgba(70,30,140,.95), rgba(25,10,55,.95));
+  background: linear-gradient(
+    180deg,
+    rgba(70,30,140,.95),
+    rgba(25,10,55,.95)
+  );
   border-radius: 18px;
   padding: 20px;
   box-shadow:
@@ -171,7 +194,6 @@ html, body {
   text-align: center;
   cursor: pointer;
   font-size: 12px;
-  transition: .2s;
 }
 
 .detail-tab.active {
@@ -192,10 +214,9 @@ html, body {
   padding: 12px;
   text-align: center;
   font-size: 11px;
-  box-shadow: inset 0 0 12px rgba(255,255,255,.05);
 }
 
-/* QUEST */
+/* QUEST SELECTABLE */
 .grid-item.quest {
   cursor: pointer;
   border: 1px solid rgba(255,255,255,.12);
@@ -204,4 +225,4 @@ html, body {
 .grid-item.quest.active {
   border-color: #c084fc;
   box-shadow: 0 0 18px rgba(192,132,252,.8);
-}
+  }

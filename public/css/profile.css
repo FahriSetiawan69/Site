@@ -1,9 +1,104 @@
-#profileView {
-  background: rgba(30,10,60,.85);
+/* PROFILE WRAPPER */
+.profile-wrapper {
+  max-width: 1100px;
+  margin: auto;
   padding: 20px;
-  border-radius: 16px;
 }
 
-#profileView h2 {
-  margin-top: 0;
+/* WELCOME */
+.profile-welcome h1 {
+  font-size: 28px;
+  margin-bottom: 4px;
+}
+
+.profile-welcome p {
+  opacity: 0.8;
+  margin-bottom: 24px;
+}
+
+/* GRID */
+.profile-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+/* PROFILE CARD */
+.profile-card,
+.avatar-card {
+  background: rgba(30, 10, 60, 0.75);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 0 20px rgba(160, 80, 255, 0.25);
+}
+
+/* AVATAR PREVIEW */
+.avatar-preview {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.avatar-preview img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 3px solid #8b5cf6;
+}
+
+/* INPUT */
+.profile-card label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 14px;
+}
+
+.profile-card input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  margin-bottom: 12px;
+  outline: none;
+}
+
+/* BUTTON */
+.profile-card button {
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  background: linear-gradient(135deg, #7f3cff, #b36bff);
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* AVATAR GRID */
+.avatar-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.avatar-grid img {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.avatar-grid img:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 12px rgba(139, 92, 246, 0.9);
+}
+
+/* MOBILE */
+@media (max-width: 900px) {
+  .profile-grid {
+    grid-template-columns: 1fr;
+  }
 }

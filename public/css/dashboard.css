@@ -8,7 +8,7 @@ html, body {
   font-family: Inter, system-ui, sans-serif;
 
   background:
-    linear-gradient(rgba(10,5,25,.8), rgba(10,5,25,.9)),
+    linear-gradient(rgba(10,5,25,.85), rgba(10,5,25,.9)),
     url("../img/premium_photo-1685148902854-9b9bb49fff08.jpeg");
 
   background-size: cover;
@@ -21,38 +21,6 @@ html, body {
 #app {
   display: flex;
   min-height: 100vh;
-}
-
-/* SIDEBAR */
-.sidebar {
-  width: 240px;
-  background: rgba(40,15,80,.9);
-  padding: 20px;
-}
-
-.sidebar h2 {
-  margin-bottom: 20px;
-}
-
-.menu-btn {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 10px;
-  border: none;
-  border-radius: 8px;
-  background: rgba(255,255,255,.08);
-  color: white;
-  cursor: pointer;
-}
-
-.menu-btn.active {
-  background: linear-gradient(135deg, #8b5cf6, #a855f7);
-}
-
-.logout {
-  margin-top: 20px;
-  width: 100%;
-  padding: 10px;
 }
 
 /* MAIN */
@@ -70,59 +38,22 @@ html, body {
   display: block;
 }
 
-/* CARDS */
+/* GRID */
 .card-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   gap: 16px;
 }
 
-.card {
-  background: linear-gradient(135deg, #2a145f, #120826);
-  padding: 14px;
-  border-radius: 14px;
-  cursor: pointer;
-}
-
-.status {
-  margin-top: 8px;
-  padding: 6px;
-  border-radius: 8px;
-  text-align: center;
-  font-weight: bold;
-}
-
-.status.fishing {
-  background: #22c55e;
-  color: black;
-}
-
-.status.idle {
-  background: #ef4444;
-}
-
-/* PROGRESS */
-.progress {
-  height: 8px;
-  border-radius: 6px;
-  background: rgba(255,255,255,.2);
-  overflow: hidden;
-  margin-top: 8px;
-}
-
-.progress-bar {
-  height: 100%;
-  background: linear-gradient(90deg, #7c3aed, #22d3ee);
-}
-
-/* DETAIL */
+/* DETAIL PANEL */
 .detail-panel {
   margin-top: 20px;
   padding: 16px;
+  border-radius: 14px;
   background: rgba(30,10,60,.9);
-  border-radius: 16px;
 }
 
+/* UTIL */
 .hidden {
   display: none;
 }

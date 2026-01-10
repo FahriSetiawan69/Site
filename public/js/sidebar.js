@@ -4,23 +4,23 @@ function showPage(pageId) {
         p.style.display = "none";
     });
 
-    // show target page
-    const target = document.getElementById(pageId);
-    if (target) target.style.display = "block";
+    // show page
+    const page = document.getElementById(pageId);
+    if (page) page.style.display = "block";
 
     // active button
     document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
-    const btn = document.querySelector(`.nav-btn[data-page="${pageId}"]`);
+    const btn = document.querySelector(`.nav-btn[data-page="${pageId.replace('Page','')}"]`);
     if (btn) btn.classList.add("active");
 
-    // special hook: Accounts Monitor
+    // 🔑 HOOK: panggil render khusus per halaman
     if (pageId === "accountsPage" && typeof renderAccountsMonitor === "function") {
         renderAccountsMonitor();
     }
 }
 
 window.addEventListener("load", () => {
-    // default page = PROFILE
+    // DEFAULT = PROFILE
     showPage("profilePage");
 
     document.querySelectorAll(".nav-btn").forEach(btn => {

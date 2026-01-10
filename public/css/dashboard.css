@@ -144,4 +144,70 @@ body {
   .accounts-grid {
     grid-template-columns: 1fr;
   }
-  }
+  
+/* =========================
+   DETAIL PANEL
+========================= */
+.detail-panel {
+  margin-top: 24px;
+  background: rgba(50, 15, 90, 0.95);
+  border-radius: 16px;
+  padding: 16px;
+}
+
+.detail-tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.detail-tabs button {
+  padding: 8px 14px;
+  border-radius: 10px;
+  border: none;
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+  cursor: pointer;
+}
+
+.detail-tabs button.active {
+  background: linear-gradient(135deg, #8f4cff, #b36bff);
+}
+
+.detail-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 12px;
+}
+
+/* ITEM / FISH CARD */
+.item-card {
+  background: rgba(80, 30, 140, 0.9);
+  border-radius: 12px;
+  padding: 10px;
+  text-align: center;
+  font-size: 13px;
+}
+
+/* QUEST */
+.quest-item {
+  background: rgba(80, 30, 140, 0.9);
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 10px;
+}
+
+.quest-bar {
+  height: 8px;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.2);
+  overflow: hidden;
+  margin-top: 6px;
+}
+
+.quest-bar span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, #2ecc71, #9bffcb);
+}
+

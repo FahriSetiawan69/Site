@@ -1,31 +1,49 @@
-<!-- MAIN CONTENT -->
-<main id="main-content">
+<body>
 
-  <!-- PROFILE -->
-  <section id="page-profile" class="page-section">
-    <h2>User Profile</h2>
-    <p><b>Username:</b> Fahri</p>
-    <p><b>Role:</b> Developer</p>
-    <p><b>Status:</b> Premium</p>
-  </section>
+<div id="app">
 
-  <!-- ACCOUNTS MONITOR -->
-  <section id="page-accounts" class="page-section" style="display:none">
-    <h2>Accounts Monitor</h2>
-    <div id="accounts-grid"></div>
-  </section>
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <h2>Fishit Monitor</h2>
 
-  <!-- SETTINGS -->
-  <section id="page-settings" class="page-section" style="display:none">
-    <h2>Settings</h2>
-    <p>Future configuration will be placed here.</p>
-  </section>
+    <button class="sidebar-btn" data-page="page-profile">Profile</button>
+    <button class="sidebar-btn" data-page="page-accounts">Accounts Monitor</button>
+    <button class="sidebar-btn" data-page="page-settings">Settings</button>
+    <button class="sidebar-btn" data-page="page-about">About</button>
 
-  <!-- ABOUT -->
-  <section id="page-about" class="page-section" style="display:none">
-    <h2>About</h2>
-    <p>Fishit Monitor Dashboard</p>
-    <p>Internal / Personal Use</p>
-  </section>
+    <button id="logoutBtn" class="logout-btn">Logout</button>
+  </aside>
 
-</main>
+  <!-- MAIN CONTENT -->
+  <main class="main">
+
+    <section id="page-profile" class="page-section">
+      <h2>User Profile</h2>
+      <p><b>Username:</b> Fahri</p>
+      <p><b>Role:</b> Developer</p>
+      <p><b>Status:</b> Premium</p>
+    </section>
+
+    <section id="page-accounts" class="page-section" style="display:none">
+      <h2>Accounts Monitor</h2>
+      <div id="accounts-grid"></div>
+    </section>
+
+    <section id="page-settings" class="page-section" style="display:none">
+      <h2>Settings</h2>
+      <p>Future configuration will be placed here.</p>
+    </section>
+
+    <section id="page-about" class="page-section" style="display:none">
+      <h2>About</h2>
+      <p>Fishit Monitor Dashboard</p>
+      <p>Internal / Personal Use</p>
+    </section>
+
+  </main>
+
+</div>
+
+<script src="js/sidebar.js"></script>
+<script src="js/dashboard.js"></script>
+</body>

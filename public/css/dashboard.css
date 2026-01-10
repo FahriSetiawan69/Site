@@ -1,47 +1,50 @@
-/* =========================
-   RESET & GLOBAL
-========================= */
+/* ===============================
+   RESET & BASE
+================================ */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-html,
-body {
+html, body {
   width: 100%;
   height: 100%;
-  background: #0b0616; /* Warna background gelap utama */
+  background: #0b0616;
   font-family: 'Inter', system-ui, sans-serif;
   color: #fff;
+  overflow-x: hidden;
 }
 
-/* =========================
-   WRAPPER LAYOUT
-========================= */
+/* ===============================
+   APP LAYOUT (ANTI OVERFLOW)
+================================ */
 #app {
   display: flex;
   width: 100%;
   min-height: 100vh;
   background: #0b0616;
+  overflow: hidden; /* ⛔ cegah card keluar */
 }
 
-/* =========================
-   SIDEBAR
-========================= */
+/* ===============================
+   SIDEBAR (LOCK POSITION)
+================================ */
 .sidebar {
   width: 220px;
   min-width: 220px;
+  max-width: 220px;
   background: linear-gradient(180deg, #2b0a4a, #12001f);
   padding: 20px;
-  flex-shrink: 0;
-  border-right: 2px solid rgba(255, 255, 255, 0.08);
+  flex-shrink: 0; /* ⛔ TIDAK BOLEH KEKECILAN */
+  border-right: 2px solid rgba(255,255,255,0.08);
+  z-index: 10;
 }
 
 .sidebar h2 {
   font-size: 18px;
   color: #d6b6ff;
-  margin-bottom: 18px;
+  margin-bottom: 16px;
 }
 
 .sidebar button {
@@ -55,38 +58,41 @@ body {
   cursor: pointer;
 }
 
-/* =========================
-   MAIN CONTENT
-========================= */
+/* ===============================
+   MAIN CONTENT (DIBATASI)
+================================ */
 .main {
   flex: 1;
+  min-width: 0; /* ⛔ PENTING UNTUK FLEX */
   padding: 20px;
-  background: #10062a; /* Area utama tetap gelap */
+  background: #10062a;
   display: flex;
   gap: 20px;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
-/* =========================
-   CARD GRID
-========================= */
+/* ===============================
+   CARD GRID (ANTI NUBRUK)
+================================ */
 .card-grid {
   flex: 1;
+  min-width: 0;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 14px;
+  align-content: start;
 }
 
-/* =========================
-   PLAYER CARD
-========================= */
+/* ===============================
+   ACCOUNT CARD
+================================ */
 .account-card {
   background: rgba(25, 10, 50, 0.88);
   border-radius: 14px;
   padding: 12px;
   box-shadow: 0 0 18px rgba(120, 60, 255, 0.25);
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: 0.2s;
   outline: 1px solid rgba(255,255,255,0.05);
 }
 
@@ -98,8 +104,8 @@ body {
 .card-title {
   font-weight: 700;
   font-size: 15px;
-  margin-bottom: 4px;
   color: #e4d1ff;
+  margin-bottom: 4px;
 }
 
 .card-row {
@@ -108,13 +114,13 @@ body {
   opacity: 0.9;
 }
 
-/* =========================
+/* ===============================
    STATUS
-========================= */
+================================ */
 .status {
   margin-top: 6px;
-  font-weight: 700;
   font-size: 12px;
+  font-weight: bold;
   text-transform: uppercase;
 }
 
@@ -126,9 +132,9 @@ body {
   color: #ff5c5c;
 }
 
-/* =========================
+/* ===============================
    PROGRESS BAR
-========================= */
+================================ */
 .progress-bar {
   margin-top: 8px;
   height: 8px;
@@ -144,93 +150,24 @@ body {
   transition: width 0.4s ease;
 }
 
-/* =========================
-   DETAIL PANEL
-========================= */
+/* ===============================
+   DETAIL PANEL (KANAN)
+================================ */
 .detail-panel {
-  width: 350px;
-  min-width: 350px;
-  background: rgba(18, 10, 40, 0.95); /* Latar detail lebih gelap */
+  width: 340px;
+  min-width: 340px;
+  max-width: 340px;
+  background: rgba(18, 10, 40, 0.95);
   border-radius: 16px;
   padding: 16px;
   box-shadow: 0 0 30px rgba(120, 60, 255, 0.35);
   overflow-y: auto;
+  flex-shrink: 0; /* ⛔ JANGAN TERDESAK */
 }
 
-/* =========================
-   DETAIL HEADER
-========================= */
-.detail-header {
-  margin-bottom: 14px;
-}
-
-.detail-header h3 {
-  font-size: 18px;
-  color: #e4d1ff;
-  margin-bottom: 6px;
-}
-
-.detail-header p {
-  font-size: 12px;
-  opacity: 0.85;
-}
-
-/* =========================
-   DETAIL TABS
-========================= */
-.detail-tabs {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 14px;
-}
-
-.detail-tab {
-  flex: 1;
-  text-align: center;
-  padding: 8px 0;
-  border-radius: 10px;
-  background: rgba(255,255,255,0.08);
-  cursor: pointer;
-  font-size: 13px;
-  transition: 0.2s;
-  border: 1px solid rgba(255,255,255,0.15);
-}
-
-.detail-tab.active {
-  background: linear-gradient(135deg, #7f3cff, #b36bff);
-  color: #fff;
-  border-color: transparent;
-}
-
-/* =========================
-   GRID CONTENT
-========================= */
-.detail-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-  gap: 12px;
-}
-
-/* =========================
-   GRID ITEMS
-========================= */
-.grid-item {
-  background: rgba(30, 20, 60, 0.85);
-  border-radius: 12px;
-  padding: 10px;
-  text-align: center;
-  font-size: 12px;
-  outline: 1px solid rgba(255,255,255,0.08);
-}
-
-.grid-item b {
-  display: block;
-  margin-bottom: 6px;
-}
-
-/* =========================
-   MOBILE RESPONSIVE
-========================= */
+/* ===============================
+   MOBILE FIX
+================================ */
 @media (max-width: 900px) {
   #app {
     flex-direction: column;
@@ -238,11 +175,8 @@ body {
 
   .sidebar {
     width: 100%;
+    max-width: none;
     min-width: unset;
-    padding: 14px;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
   }
 
   .main {
@@ -251,7 +185,7 @@ body {
 
   .detail-panel {
     width: 100%;
+    max-width: none;
     min-width: unset;
-    margin-top: 16px;
   }
 }

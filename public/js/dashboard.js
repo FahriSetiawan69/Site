@@ -1,5 +1,5 @@
 /* ======================================================
-   VIEW SYSTEM (SIDEBAR)
+   SIDEBAR VIEW SYSTEM
 ====================================================== */
 const menuItems = document.querySelectorAll(".menu-item");
 const views = document.querySelectorAll(".view");
@@ -16,31 +16,29 @@ menuItems.forEach(btn => {
   };
 });
 
-/* LOGOUT */
 document.getElementById("logoutBtn").onclick = () => {
   localStorage.clear();
   location.href = "/";
 };
 
 /* ======================================================
-   ACCOUNTS MONITOR (FULL FEATURE)
+   ACCOUNTS MONITOR
 ====================================================== */
 const grid = document.querySelector("#view-monitor .card-grid");
 const detail = document.querySelector("#view-monitor .detail-panel");
-
 let activeIndex = null;
 
-/* DUMMY + REALTIME DATA */
+/* DATA */
 const players = Array.from({ length: 10 }, (_, i) => ({
   name: `player_${i + 1}`,
   gold: 10000 + i * 1000,
-  backpack: Math.floor(Math.random() * 6) + 1,
+  backpack: Math.floor(Math.random() * 5) + 1,
   ping: 30 + Math.floor(Math.random() * 40),
   rod: i % 2 === 0 ? "Magic Rod" : "Basic Rod",
   status: Math.random() > 0.4 ? "Fishing" : "Idle",
 
   questActive: null,
-  questProgress: 0,
+  questProgress: Math.floor(Math.random() * 60),
 
   fish: [
     { name: "Golden Carp", mutation: "Shiny", weight: "2.5kg", price: 500 },
@@ -57,7 +55,9 @@ const players = Array.from({ length: 10 }, (_, i) => ({
   ]
 }));
 
-/* ---------- CARD RENDER ---------- */
+/* ======================================================
+   CARD RENDER (WITH PROGRESS BAR)
+====================================================== */
 function renderCards() {
   grid.innerHTML = "";
 
@@ -90,7 +90,9 @@ function renderCards() {
   });
 }
 
-/* ---------- DETAIL PANEL ---------- */
+/* ======================================================
+   DETAIL PANEL WITH GRID TABS
+====================================================== */
 function renderDetail(p, index) {
   detail.innerHTML = `
     <h3>${p.name}</h3>
@@ -109,13 +111,11 @@ function renderDetail(p, index) {
   renderFish(p);
 }
 
-/* ---------- TABS ---------- */
+/* TAB LOGIC */
 function bindTabs(p, index) {
   detail.querySelectorAll(".detail-tab").forEach(tab => {
     tab.onclick = () => {
-      detail
-        .querySelectorAll(".detail-tab")
-        .forEach(t => t.classList.remove("active"));
+      detail.querySelectorAll(".detail-tab").forEach(t => t.classList.remove("active"));
       tab.classList.add("active");
 
       if (tab.dataset.tab === "fish") renderFish(p);
@@ -125,61 +125,51 @@ function bindTabs(p, index) {
   });
 }
 
-/* ---------- TAB CONTENT ---------- */
+/* GRID CONTENT */
 function renderFish(p) {
   document.getElementById("detailGrid").innerHTML =
-    p.fish
-      .map(
-        f => `
+    p.fish.map(f => `
       <div class="grid-item">
         <b>${f.name}</b><br>
         ${f.mutation}<br>
         ${f.weight}<br>
         💰 ${f.price}
-      </div>`
-      )
-      .join("");
+      </div>
+    `).join("");
 }
 
 function renderItem(p) {
   document.getElementById("detailGrid").innerHTML =
-    p.items
-      .map(
-        i => `
+    p.items.map(i => `
       <div class="grid-item">
         <b>${i.name}</b><br>
         💰 ${i.price}
-      </div>`
-      )
-      .join("");
+      </div>
+    `).join("");
 }
 
 function renderQuest(p, index) {
   document.getElementById("detailGrid").innerHTML =
-    p.quests
-      .map(
-        q => `
-      <div class="grid-item quest ${
-        p.questActive === q.name ? "active" : ""
-      }" onclick="selectQuest(${index}, '${q.name}')">
+    p.quests.map(q => `
+      <div class="grid-item quest ${p.questActive === q.name ? "active" : ""}"
+        onclick="selectQuest(${index}, '${q.name}')">
         <b>${q.name}</b><br>
         ${q.req.join("<br>")}
-      </div>`
-      )
-      .join("");
+      </div>
+    `).join("");
 }
 
-/* ---------- QUEST SELECT ---------- */
-function selectQuest(playerIndex, questName) {
-  const p = players[playerIndex];
-  p.questActive = questName;
-  p.questProgress = Math.floor(Math.random() * 20) + 10;
-
+/* QUEST SELECT */
+function selectQuest(i, questName) {
+  players[i].questActive = questName;
+  players[i].questProgress = 10;
   renderCards();
-  renderDetail(p, playerIndex);
+  renderDetail(players[i], i);
 }
 
-/* ---------- REALTIME UPDATE ---------- */
+/* ======================================================
+   REALTIME UPDATE
+====================================================== */
 setInterval(() => {
   players.forEach(p => {
     p.ping += Math.floor(Math.random() * 5 - 2);
@@ -190,7 +180,7 @@ setInterval(() => {
     }
 
     if (p.status === "Fishing") {
-      p.gold += Math.floor(Math.random() * 10);
+      p.gold += Math.floor(Math.random() * 12);
 
       if (p.questActive) {
         p.questProgress += Math.floor(Math.random() * 4);

@@ -98,12 +98,14 @@ html, body {
   font-weight: 600;
 }
 
-.card-status.fishing {
-  color: #34ffd2;
-}
+.card-status.fishing { color: #34ffd2; }
+.card-status.idle { color: #facc15; }
 
-.card-status.idle {
-  color: #facc15;
+/* QUEST LABEL ON CARD */
+.card-quest {
+  font-size: 11px;
+  color: #c4b5fd;
+  margin-top: 4px;
 }
 
 /* PROGRESS */
@@ -122,7 +124,7 @@ html, body {
   border-radius: 999px;
 }
 
-/* DETAIL PANEL */
+/* DETAIL */
 .detail-panel {
   margin-top: 24px;
   background: linear-gradient(180deg, #2b135f, #180933);
@@ -130,13 +132,7 @@ html, body {
   padding: 18px;
 }
 
-/* DETAIL HEADER */
-.detail-header h3 {
-  font-size: 16px;
-  margin-bottom: 4px;
-}
-
-/* TABS */
+/* DETAIL TABS */
 .detail-tabs {
   display: flex;
   gap: 10px;
@@ -157,7 +153,7 @@ html, body {
   background: linear-gradient(90deg, #7c3aed, #a855f7);
 }
 
-/* GRID DETAIL */
+/* DETAIL GRID */
 .detail-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
@@ -170,4 +166,15 @@ html, body {
   padding: 10px;
   text-align: center;
   font-size: 11px;
-                   }
+}
+
+/* QUEST SELECTABLE */
+.grid-item.quest {
+  cursor: pointer;
+  border: 1px solid rgba(255,255,255,0.15);
+}
+
+.grid-item.quest.active {
+  border-color: #a855f7;
+  box-shadow: 0 0 15px rgba(168,85,247,0.6);
+}

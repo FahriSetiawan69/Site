@@ -1,40 +1,99 @@
-/* === LAYOUT UTAMA === */
-.dashboard-wrapper {
-  display: flex;
-  height: 100vh;
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-/* === GRID CARD === */
+/* ROOT */
+html, body {
+  width: 100%;
+  height: 100%;
+  background: #0e0e0e;
+  font-family: Inter, system-ui, sans-serif;
+  color: #fff;
+}
+
+/* WRAPPER */
+.dashboard-wrapper {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+}
+
+/* SIDEBAR */
+.sidebar {
+  width: 240px;
+  background: #151515;
+  padding: 20px;
+}
+
+.sidebar h2 {
+  margin-bottom: 20px;
+}
+
+.sidebar button {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  background: #ff4d4d;
+  color: #fff;
+  cursor: pointer;
+}
+
+/* MAIN */
+.dashboard-main {
+  flex: 1;
+  padding: 20px;
+}
+
+/* CARD GRID */
 .card-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 16px;
 }
 
-/* === CARD PERSEGI === */
+/* CARD */
 .account-card {
-  background: #1f1f1f;
-  border-radius: 12px;
-  padding: 12px;
+  background: #1a1a1a;
+  border-radius: 14px;
+  padding: 14px;
   cursor: pointer;
-  aspect-ratio: 1 / 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  transition: transform 0.15s ease;
 }
 
 .account-card:hover {
-  background: #2a2a2a;
+  transform: translateY(-4px);
 }
 
-.card-info {
-  display: flex;
-  justify-content: space-between;
-  font-size: 12px;
+.card-title {
+  font-weight: bold;
+  margin-bottom: 6px;
 }
 
-/* === PROGRESS BAR === */
+.card-row {
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+/* STATUS */
+.status {
+  font-weight: bold;
+}
+
+.status.idle {
+  color: #ff4d4d;
+}
+
+.status.fishing {
+  color: #3dff7a;
+}
+
+/* PROGRESS BAR */
 .progress-bar {
+  margin-top: 8px;
   height: 8px;
   background: #333;
   border-radius: 6px;
@@ -43,44 +102,18 @@
 
 .progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, #00ffcc, #00aaff);
+  background: linear-gradient(90deg, #3dff7a, #00ffaa);
+  width: 0%;
 }
 
-/* === DETAIL PANEL === */
-.tab-bar {
-  display: flex;
-  gap: 8px;
-  margin: 12px 0;
+/* DETAIL */
+.detail-panel {
+  margin-top: 20px;
+  background: #151515;
+  padding: 16px;
+  border-radius: 14px;
 }
 
-.tab-btn {
-  flex: 1;
-  background: #333;
-  border: none;
-  color: #fff;
-  padding: 8px;
-  border-radius: 6px;
-}
-
-.tab-btn.active {
-  background: #00aaff;
-}
-
-/* === GRID TAB === */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-}
-
-.grid-card {
-  background: #2b2b2b;
-  padding: 12px;
-  border-radius: 8px;
-  text-align: center;
-}
-
-.grid-card.quest {
-  cursor: pointer;
-  background: #263b2f;
+.hidden {
+  display: none;
 }

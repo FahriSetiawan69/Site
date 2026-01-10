@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
 
   /* ======================
-     PAGE SWITCH (SIDEBAR)
+     PAGE SWITCH
   ====================== */
   const navButtons = document.querySelectorAll(".sidebar button[data-page]");
   const pages = document.querySelectorAll(".page-section");
@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
     btn.addEventListener("click", () => showPage(btn.dataset.page));
   });
 
-  showPage("profile"); // default
+  showPage("profile");
 
 
   /* ======================
@@ -35,11 +35,14 @@ document.addEventListener("DOMContentLoaded", () => {
     ping: 30 + i * 4,
     rod: ["Basic Rod", "Magic Rod", "Golden Rod"][i % 3],
     status: i % 2 === 0 ? "Fishing" : "Idle",
-    quest: {
-      title: "Catch Secret Fish",
-      progress: (i + 1) * 10,
-      max: 100
-    },
+
+    quests: [
+      { id: 0, title: "Catch Secret Fish", progress: 40, max: 100 },
+      { id: 1, title: "Collect Rare Fish", progress: 2, max: 5 },
+      { id: 2, title: "Earn 10.000 Gold", progress: 6000, max: 10000 }
+    ],
+    activeQuest: 0,
+
     fish: [
       { name: "Golden Carp", weight: "2.5kg", price: 5000 },
       { name: "Rainbow Trout", weight: "1.2kg", price: 2000 }
@@ -52,16 +55,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /* ======================
-     RENDER ACCOUNT CARDS
+     RENDER CARDS
   ====================== */
   const grid = document.getElementById("cardGrid");
   const detail = document.getElementById("detailPanel");
 
   function renderCards() {
-    if (!grid) return;
     grid.innerHTML = "";
 
     players.forEach(player => {
+      const quest = player.quests[player.activeQuest];
+
+      const percent = Math.min(
+        (quest.progress / quest.max) * 100,
+        100
+      );
+
       const card = document.createElement("div");
       card.className = "card";
 
@@ -74,9 +83,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
         <div class="quest-mini">
           <div class="quest-bar">
-            <span style="width:${player.quest.progress}%"></span>
+            <span style="width:${percent}%"></span>
           </div>
-          <small>${player.quest.title}</small>
+          <small>${quest.title}</small>
         </div>
 
         <div class="status ${player.status.toLowerCase()}">
@@ -114,6 +123,7 @@ document.addEventListener("DOMContentLoaded", () => {
       tabs.forEach(t => t.classList.remove("active"));
       detail.querySelector(`[data-tab="${tab}"]`).classList.add("active");
 
+      /* FISH */
       if (tab === "fish") {
         content.innerHTML = player.fish.map(f => `
           <div class="grid-item">
@@ -124,6 +134,7 @@ document.addEventListener("DOMContentLoaded", () => {
         `).join("");
       }
 
+      /* ITEM */
       if (tab === "item") {
         content.innerHTML = player.items.map(i => `
           <div class="grid-item">
@@ -133,14 +144,31 @@ document.addEventListener("DOMContentLoaded", () => {
         `).join("");
       }
 
+      /* QUEST */
       if (tab === "quest") {
-        content.innerHTML = `
-          <h4>${player.quest.title}</h4>
-          <div class="quest-bar big">
-            <span style="width:${player.quest.progress}%"></span>
-          </div>
-          <p>${player.quest.progress} / ${player.quest.max}</p>
-        `;
+        content.innerHTML = player.quests.map(q => {
+          const percent = Math.min((q.progress / q.max) * 100, 100);
+          const active = q.id === player.activeQuest ? "active" : "";
+
+          return `
+            <div class="quest-card ${active}" data-qid="${q.id}">
+              <b>${q.title}</b>
+              <div class="quest-bar big">
+                <span style="width:${percent}%"></span>
+              </div>
+              <small>${q.progress} / ${q.max}</small>
+            </div>
+          `;
+        }).join("");
+
+        /* QUEST SWITCH */
+        content.querySelectorAll(".quest-card").forEach(card => {
+          card.onclick = () => {
+            player.activeQuest = Number(card.dataset.qid);
+            renderCards();
+            renderDetail(player);
+          };
+        });
       }
     }
 

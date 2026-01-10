@@ -9,14 +9,53 @@
 
 <div class="app">
 
+  <!-- SIDEBAR -->
   <aside class="sidebar">
     <h1>Fishit Monitor</h1>
-    <button id="logoutBtn">Logout</button>
+
+    <nav class="menu">
+      <button class="menu-item active" data-view="profile">Profile</button>
+      <button class="menu-item" data-view="monitor">Accounts Monitor</button>
+      <button class="menu-item" data-view="settings">Settings</button>
+      <button class="menu-item" data-view="about">About</button>
+    </nav>
+
+    <button id="logoutBtn" class="logout-btn">Logout</button>
   </aside>
 
+  <!-- MAIN -->
   <main class="main">
-    <div class="card-grid"></div>
-    <div class="detail-panel"></div>
+
+    <!-- PROFILE VIEW (DEFAULT) -->
+    <section id="view-profile" class="view active">
+      <h2>User Profile</h2>
+      <div class="profile-card">
+        <p><b>Username:</b> Fahri</p>
+        <p><b>Role:</b> Developer</p>
+        <p><b>Active Key:</b> abogoboga</p>
+        <p><b>Status:</b> Premium</p>
+      </div>
+    </section>
+
+    <!-- MONITOR VIEW -->
+    <section id="view-monitor" class="view">
+      <div class="card-grid"></div>
+      <div class="detail-panel"></div>
+    </section>
+
+    <!-- SETTINGS VIEW -->
+    <section id="view-settings" class="view">
+      <h2>Settings</h2>
+      <p>Future configuration will be placed here.</p>
+    </section>
+
+    <!-- ABOUT VIEW -->
+    <section id="view-about" class="view">
+      <h2>About</h2>
+      <p>Fishit Monitor Dashboard</p>
+      <p>Internal / Personal Use</p>
+    </section>
+
   </main>
 
 </div>

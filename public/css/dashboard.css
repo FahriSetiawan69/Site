@@ -122,10 +122,52 @@ html, body {
   border-radius: 999px;
 }
 
-/* DETAIL */
+/* DETAIL PANEL */
 .detail-panel {
   margin-top: 24px;
   background: linear-gradient(180deg, #2b135f, #180933);
   border-radius: 16px;
   padding: 18px;
 }
+
+/* DETAIL HEADER */
+.detail-header h3 {
+  font-size: 16px;
+  margin-bottom: 4px;
+}
+
+/* TABS */
+.detail-tabs {
+  display: flex;
+  gap: 10px;
+  margin: 14px 0;
+}
+
+.detail-tab {
+  flex: 1;
+  text-align: center;
+  padding: 8px 0;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.1);
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.detail-tab.active {
+  background: linear-gradient(90deg, #7c3aed, #a855f7);
+}
+
+/* GRID DETAIL */
+.detail-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 12px;
+}
+
+.grid-item {
+  background: rgba(0,0,0,0.25);
+  border-radius: 10px;
+  padding: 10px;
+  text-align: center;
+  font-size: 11px;
+                   }

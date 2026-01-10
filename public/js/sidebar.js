@@ -1,21 +1,23 @@
-const pages = {
-  profile: document.getElementById("profilePage"),
-  accounts: document.getElementById("accountsPage"),
-  settings: document.getElementById("settingsPage"),
-  about: document.getElementById("aboutPage")
-};
+document.addEventListener("DOMContentLoaded", () => {
+    // DEFAULT PAGE
+    openSection("profile");
 
-document.querySelectorAll(".nav-btn").forEach(btn => {
-  btn.onclick = () => {
-    document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
-    btn.classList.add("active");
-
-    Object.values(pages).forEach(p => p.classList.remove("active"));
-    pages[btn.dataset.page].classList.add("active");
-  };
+    document.querySelectorAll(".sidebar-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+            const target = btn.dataset.target;
+            openSection(target);
+        });
+    });
 });
 
-document.getElementById("logoutBtn").onclick = () => {
-  localStorage.clear();
-  window.location.href = "/";
-};
+function openSection(section) {
+    document.querySelectorAll(".page-section").forEach(sec => {
+        sec.style.display = "none";
+    });
+
+    const active = document.getElementById(section);
+    if (active) active.style.display = "block";
+
+    document.querySelectorAll(".sidebar-btn").forEach(b => b.classList.remove("active"));
+    document.querySelector(`.sidebar-btn[data-target="${section}"]`)?.classList.add("active");
+}

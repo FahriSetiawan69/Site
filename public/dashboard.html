@@ -1,63 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Fishit Monitor</title>
   <link rel="stylesheet" href="css/dashboard.css">
 </head>
 <body>
 
-<div class="app">
+<div id="app">
 
   <!-- SIDEBAR -->
   <aside class="sidebar">
-    <h1>Fishit Monitor</h1>
+    <h2>Fishit Monitor</h2>
 
-    <nav class="menu">
-      <button class="menu-item active" data-view="profile">Profile</button>
-      <button class="menu-item" data-view="monitor">Accounts Monitor</button>
-      <button class="menu-item" data-view="settings">Settings</button>
-      <button class="menu-item" data-view="about">About</button>
-    </nav>
+    <button class="menu-btn active" data-view="profile">Profile</button>
+    <button class="menu-btn" data-view="accounts">Accounts Monitor</button>
+    <button class="menu-btn" data-view="settings">Settings</button>
+    <button class="menu-btn" data-view="about">About</button>
 
-    <button id="logoutBtn" class="logout-btn">Logout</button>
+    <button id="logoutBtn" class="logout">Logout</button>
   </aside>
 
-  <!-- MAIN -->
+  <!-- MAIN CONTENT -->
   <main class="main">
 
-    <!-- PROFILE VIEW (DEFAULT) -->
-    <section id="view-profile" class="view active">
+    <!-- PROFILE -->
+    <section id="profileView" class="view active">
       <h2>User Profile</h2>
-      <div class="profile-card">
-        <p><b>Username:</b> Fahri</p>
-        <p><b>Role:</b> Developer</p>
-        <p><b>Active Key:</b> abogoboga</p>
-        <p><b>Status:</b> Premium</p>
-      </div>
+      <p><b>Username:</b> Fahri</p>
+      <p><b>Role:</b> Developer</p>
+      <p><b>Active Key:</b> abogoboga</p>
+      <p><b>Status:</b> Premium</p>
     </section>
 
-    <!-- MONITOR VIEW -->
-    <section id="view-monitor" class="view">
-      <div class="card-grid"></div>
-      <div class="detail-panel"></div>
+    <!-- ACCOUNTS MONITOR -->
+    <section id="accountsView" class="view">
+      <section id="accountCards" class="card-grid"></section>
+      <section id="accountDetail" class="detail-panel hidden"></section>
     </section>
 
-    <!-- SETTINGS VIEW -->
-    <section id="view-settings" class="view">
+    <!-- SETTINGS -->
+    <section id="settingsView" class="view">
       <h2>Settings</h2>
       <p>Future configuration will be placed here.</p>
     </section>
 
-    <!-- ABOUT VIEW -->
-    <section id="view-about" class="view">
+    <!-- ABOUT -->
+    <section id="aboutView" class="view">
       <h2>About</h2>
       <p>Fishit Monitor Dashboard</p>
       <p>Internal / Personal Use</p>
     </section>
 
   </main>
-
 </div>
 
 <script src="js/dashboard.js"></script>

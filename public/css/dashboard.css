@@ -1,21 +1,15 @@
+/* =========================
+   GLOBAL
+========================= */
 * {
   box-sizing: border-box;
 }
 
-html, body {
+body {
   margin: 0;
-  height: 100%;
-  font-family: Inter, system-ui, sans-serif;
-
-  background:
-    linear-gradient(rgba(10,5,25,.85), rgba(10,5,25,.9)),
-    url("../img/premium_photo-1685148902854-9b9bb49fff08.jpeg");
-
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-
-  color: #eee;
+  font-family: 'Inter', system-ui, sans-serif;
+  background: url('../img/premium_photo-1685148902854-9b9bb49fff08.jpeg') center/cover no-repeat fixed;
+  color: #eae6ff;
 }
 
 #app {
@@ -23,37 +17,140 @@ html, body {
   min-height: 100vh;
 }
 
-/* MAIN */
+/* =========================
+   SIDEBAR
+========================= */
+.sidebar {
+  width: 240px;
+  background: linear-gradient(180deg, #2b0a4d, #1a082f);
+  padding: 16px;
+  flex-shrink: 0;
+}
+
+.sidebar h2 {
+  margin: 0 0 16px;
+  font-size: 18px;
+}
+
+.sidebar button {
+  width: 100%;
+  margin-top: 12px;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+/* =========================
+   MAIN AREA
+========================= */
 .main {
   flex: 1;
   padding: 20px;
+  overflow-y: auto;
 }
 
-/* VIEW SYSTEM */
-.view {
-  display: none;
-}
-
-.view.active {
-  display: block;
-}
-
-/* GRID */
+/* =========================
+   CARD GRID (3 KOLOM)
+========================= */
 .card-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 16px;
 }
 
-/* DETAIL PANEL */
-.detail-panel {
-  margin-top: 20px;
-  padding: 16px;
-  border-radius: 14px;
-  background: rgba(30,10,60,.9);
+/* RESPONSIVE */
+@media (max-width: 1100px) {
+  .card-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
-/* UTIL */
+@media (max-width: 700px) {
+  .card-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================
+   ACCOUNT CARD
+========================= */
+.account-card {
+  background: linear-gradient(180deg, #3b1670, #2a0f4f);
+  border-radius: 16px;
+  padding: 14px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.45);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.account-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 40px rgba(120,60,255,0.5);
+}
+
+.account-card h3 {
+  margin: 0 0 8px;
+  font-size: 16px;
+}
+
+.account-card p {
+  margin: 4px 0;
+  font-size: 13px;
+  opacity: 0.95;
+}
+
+/* =========================
+   STATUS BADGE
+========================= */
+.status {
+  margin-top: 8px;
+  padding: 6px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.status.fishing {
+  background: rgba(0,255,160,0.2);
+  color: #00ffb0;
+}
+
+.status.idle {
+  background: rgba(255,80,80,0.25);
+  color: #ff5c5c;
+}
+
+/* =========================
+   PROGRESS BAR
+========================= */
+.progress {
+  margin-top: 10px;
+  height: 8px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #7f3cff, #00ffd5);
+  transition: width 0.4s ease;
+}
+
+/* =========================
+   DETAIL PANEL
+========================= */
+.detail-panel {
+  margin-top: 20px;
+  background: linear-gradient(180deg, #2f0f55, #1b082f);
+  border-radius: 18px;
+  padding: 18px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+}
+
 .hidden {
   display: none;
 }

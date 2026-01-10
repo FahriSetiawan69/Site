@@ -1,102 +1,72 @@
-const cardsContainer = document.getElementById("accountCards");
-const detailPanel = document.getElementById("accountDetail");
+const views = {
+  profile: document.getElementById("profileView"),
+  accounts: document.getElementById("accountsView"),
+  settings: document.getElementById("settingsView"),
+  about: document.getElementById("aboutView")
+};
 
-let selectedAccount = null;
-let activeDetailTab = "fish";
+document.querySelectorAll(".menu-btn").forEach(btn => {
+  btn.onclick = () => {
+    document.querySelectorAll(".menu-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
 
-/* ===== RENDER CARDS ===== */
+    Object.values(views).forEach(v => v.classList.remove("active"));
+    views[btn.dataset.view].classList.add("active");
+  };
+});
+
+/* DUMMY DATA */
+const accounts = Array.from({ length: 10 }, (_, i) => ({
+  id: i,
+  name: `player_${i+1}`,
+  gold: 10000 + i * 1000,
+  backpack: Math.floor(Math.random()*5)+1,
+  ping: 30 + i * 3,
+  rod: ["Basic Rod","Magic Rod","Golden Rod"][i%3],
+  fishing: Math.random() > 0.5,
+  progress: Math.floor(Math.random()*100)
+}));
+
+const cardsEl = document.getElementById("accountCards");
+const detailEl = document.getElementById("accountDetail");
+
 function renderCards() {
-  cardsContainer.innerHTML = "";
-
-  dummyAccounts.forEach(acc => {
+  cardsEl.innerHTML = "";
+  accounts.forEach(acc => {
     const card = document.createElement("div");
-    card.className = "account-card";
-
+    card.className = "card";
     card.innerHTML = `
-      <h3>${acc.username}</h3>
-      <p>Gold: ${acc.gold}</p>
-      <p>Backpack: ${acc.backpack}</p>
-      <p>Ping: ${acc.ping} ms</p>
-      <p>Rod: ${acc.rod}</p>
-
-      <div class="status ${acc.status}">
-        ${acc.status.toUpperCase()}
+      <b>${acc.name}</b><br>
+      Gold: ${acc.gold}<br>
+      Backpack: ${acc.backpack}<br>
+      Ping: ${acc.ping} ms<br>
+      Rod: ${acc.rod}
+      <div class="status ${acc.fishing ? "fishing":"idle"}">
+        ${acc.fishing ? "Fishing":"Idle"}
       </div>
-
       <div class="progress">
-        <div style="width:${acc.questProgress}%"></div>
+        <div class="progress-bar" style="width:${acc.progress}%"></div>
       </div>
     `;
-
-    card.onclick = () => openDetail(acc);
-    cardsContainer.appendChild(card);
+    card.onclick = () => showDetail(acc);
+    cardsEl.appendChild(card);
   });
 }
 
-/* ===== OPEN DETAIL ===== */
-function openDetail(account) {
-  selectedAccount = account;
-  activeDetailTab = "fish";
-  detailPanel.classList.remove("hidden");
-  renderDetail();
-}
-
-/* ===== RENDER DETAIL ===== */
-function renderDetail() {
-  detailPanel.innerHTML = `
-    <h3>${selectedAccount.username}</h3>
-
-    <div class="detail-tabs">
-      <div class="detail-tab ${activeDetailTab==="fish"?"active":""}" onclick="switchTab('fish')">Fish</div>
-      <div class="detail-tab ${activeDetailTab==="item"?"active":""}" onclick="switchTab('item')">Item</div>
-      <div class="detail-tab ${activeDetailTab==="quest"?"active":""}" onclick="switchTab('quest')">Quest</div>
-    </div>
-
-    <div class="detail-grid">
-      ${renderDetailContent()}
-    </div>
+function showDetail(acc) {
+  detailEl.classList.remove("hidden");
+  detailEl.innerHTML = `
+    <h3>${acc.name}</h3>
+    <p>Gold: ${acc.gold}</p>
+    <p>Rod: ${acc.rod}</p>
+    <p>Status: ${acc.fishing ? "Fishing":"Idle"}</p>
+    <h4>Quest</h4>
+    <ul>
+      <li>Catch Rare Fish</li>
+      <li>Daily Fishing</li>
+      <li>Big Catch</li>
+    </ul>
   `;
 }
 
-/* ===== SWITCH TAB ===== */
-function switchTab(tab) {
-  activeDetailTab = tab;
-  renderDetail();
-}
-
-/* ===== DETAIL CONTENT ===== */
-function renderDetailContent() {
-  if (activeDetailTab === "fish") {
-    return selectedAccount.fish.map(f => `
-      <div class="grid-item">
-        <strong>${f.name}</strong><br>
-        ${f.mutation}<br>
-        ${f.weight} kg<br>
-        💰 ${f.price}
-      </div>
-    `).join("");
-  }
-
-  if (activeDetailTab === "item") {
-    return selectedAccount.items.map(i => `
-      <div class="grid-item">
-        <strong>${i.name}</strong><br>
-        💰 ${i.price}
-      </div>
-    `).join("");
-  }
-
-  if (activeDetailTab === "quest") {
-    return selectedAccount.quests.map(q => `
-      <div class="grid-item quest">
-        <strong>${q.name}</strong><br>
-        ${q.desc}
-      </div>
-    `).join("");
-  }
-
-  return "";
-}
-
-/* ===== INIT ===== */
 renderCards();

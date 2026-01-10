@@ -147,3 +147,22 @@ body {
   border-radius: 10px;
   margin-bottom: 8px;
 }
+
+/* QUEST CARD (DETAIL) */
+.quest-card {
+  background: rgba(255,255,255,.08);
+  padding: 12px;
+  border-radius: 12px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.quest-card.active {
+  outline: 2px solid #8affc1;
+  background: rgba(80,200,140,.15);
+}
+
+.quest-card small {
+  font-size: 12px;
+  opacity: .8;
+    }

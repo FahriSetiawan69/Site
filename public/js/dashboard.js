@@ -3,14 +3,14 @@ const detail = document.querySelector(".detail-panel");
 
 let activeIndex = null;
 
-/* DUMMY DATA */
+/* ====== DUMMY DATA REALTIME ====== */
 const players = Array.from({ length: 10 }, (_, i) => ({
   name: `player_${i + 1}`,
   gold: 10000 + i * 1000,
-  backpack: 5,
-  ping: 45,
+  backpack: Math.floor(Math.random() * 8) + 1,
+  ping: 30 + Math.floor(Math.random() * 50),
   rod: i % 2 === 0 ? "Magic Rod" : "Basic Rod",
-  status: i % 3 === 0 ? "Idle" : "Fishing",
+  status: Math.random() > 0.4 ? "Fishing" : "Idle",
 
   questActive: null,
   questProgress: 0,
@@ -28,6 +28,7 @@ const players = Array.from({ length: 10 }, (_, i) => ({
   ]
 }));
 
+/* ====== RENDER CARD ====== */
 function renderCards() {
   grid.innerHTML = "";
 
@@ -41,8 +42,10 @@ function renderCards() {
       <div class="card-info">Backpack: ${p.backpack}</div>
       <div class="card-info">Ping: ${p.ping} ms</div>
       <div class="card-info">Rod: ${p.rod}</div>
+
       <div class="card-status ${p.status.toLowerCase()}">${p.status}</div>
       <div class="card-quest">Quest: ${p.questActive || "None"}</div>
+
       <div class="progress-wrapper">
         <div class="progress-bar" style="width:${p.questProgress}%"></div>
       </div>
@@ -58,6 +61,7 @@ function renderCards() {
   });
 }
 
+/* ====== DETAIL PANEL ====== */
 function renderDetail(p, index) {
   detail.innerHTML = `
     <h3>${p.name}</h3>
@@ -115,19 +119,51 @@ function renderQuest(p, index) {
   document.getElementById("detailGrid").innerHTML =
     p.quests.map(q => `
       <div class="grid-item quest ${p.questActive === q.name ? "active" : ""}"
-           onclick="selectQuest(${index}, '${q.name}')">
+        onclick="selectQuest(${index}, '${q.name}')">
         <b>${q.name}</b><br>
         ${q.req.join("<br>")}
       </div>
     `).join("");
 }
 
+/* ====== QUEST SELECT ====== */
 function selectQuest(i, questName) {
   players[i].questActive = questName;
-  players[i].questProgress = Math.floor(Math.random() * 100);
+  players[i].questProgress = Math.floor(Math.random() * 20) + 5;
   renderCards();
   renderDetail(players[i], i);
 }
+
+/* ====== REAL-TIME SIMULATION ====== */
+setInterval(() => {
+  players.forEach(p => {
+    /* Ping bergerak */
+    p.ping += Math.floor(Math.random() * 7 - 3);
+    p.ping = Math.max(20, Math.min(p.ping, 120));
+
+    /* Status random */
+    if (Math.random() > 0.85) {
+      p.status = p.status === "Fishing" ? "Idle" : "Fishing";
+    }
+
+    /* Gold & quest jalan */
+    if (p.status === "Fishing") {
+      p.gold += Math.floor(Math.random() * 15) + 5;
+
+      if (p.questActive) {
+        p.questProgress += Math.floor(Math.random() * 5);
+        if (p.questProgress > 100) p.questProgress = 100;
+      }
+    }
+  });
+
+  renderCards();
+
+  if (activeIndex !== null) {
+    renderDetail(players[activeIndex], activeIndex);
+  }
+
+}, 2000); // update setiap 2 detik
 
 /* INIT */
 renderCards();

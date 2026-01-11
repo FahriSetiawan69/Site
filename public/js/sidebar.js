@@ -1,38 +1,40 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const navButtons = document.querySelectorAll(".nav-btn");
-  const sections = document.querySelectorAll(".page-section");
+  const buttons = document.querySelectorAll(".nav-btn");
+  const pages = document.querySelectorAll(".page-section");
 
-  function resetSections() {
-    sections.forEach(sec => {
-      sec.classList.remove("active");
-      sec.style.display = "none";
+  function switchPage(pageId) {
+    pages.forEach(p => {
+      p.classList.remove("active");
+      p.style.display = "none";
     });
+
+    const page = document.getElementById(pageId);
+    if (page) {
+      page.style.display = "block";
+      page.classList.add("active");
+    }
   }
 
-  function openPage(pageId) {
-    resetSections();
-
-    const target = document.getElementById(pageId);
-    if (!target) return;
-
-    target.style.display = "block";
-    target.classList.add("active");
-  }
-
-  navButtons.forEach(btn => {
+  buttons.forEach(btn => {
     btn.addEventListener("click", () => {
-      navButtons.forEach(b => b.classList.remove("active"));
+      buttons.forEach(b => b.classList.remove("active"));
       btn.classList.add("active");
 
-      openPage(btn.dataset.page);
+      switchPage(btn.dataset.page);
     });
   });
 
-  // ===== FORCE DEFAULT PAGE =====
-  navButtons.forEach(b => b.classList.remove("active"));
+  // === HARD RESET STATE ===
+  buttons.forEach(b => b.classList.remove("active"));
+  pages.forEach(p => {
+    p.classList.remove("active");
+    p.style.display = "none";
+  });
 
-  const profileBtn = document.querySelector('.nav-btn[data-page="profile"]');
-  if (profileBtn) profileBtn.classList.add("active");
-
-  openPage("profile");
+  // === FORCE DEFAULT PAGE ===
+  const profileBtn = document.querySelector('[data-page="profile"]');
+  if (profileBtn) {
+    profileBtn.classList.add("active");
+    switchPage("profile");
+  }
 });

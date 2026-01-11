@@ -1,208 +1,103 @@
-/* ===============================
-   RESET & BASE
-================================ */
 * {
   box-sizing: border-box;
-  font-family: "Inter", system-ui, sans-serif;
+  font-family: Inter, system-ui, sans-serif;
 }
 
-html, body {
+body {
   margin: 0;
-  padding: 0;
-  height: 100%;
-  background: #0b0214;
-  color: #e8dcff;
+  background: radial-gradient(circle at top, #1b0033, #090012);
+  color: #eae6ff;
 }
 
-/* ===============================
-   APP LAYOUT
-================================ */
 .app {
   display: flex;
-  width: 100%;
   height: 100vh;
-  overflow: hidden;
 }
 
-/* ===============================
-   MAIN CONTENT
-================================ */
 .main {
   flex: 1;
-  position: relative;
-  min-height: 100vh;
-  overflow-y: auto;
-
-  background:
-    radial-gradient(circle at top, rgba(140, 80, 220, 0.25), transparent 60%),
-    linear-gradient(180deg, #0b0214 0%, #12001f 100%);
-}
-
-/* Cyberpunk grid overlay */
-.main::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(180,120,255,0.08) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(180,120,255,0.08) 1px, transparent 1px);
-  background-size: 60px 60px;
-  pointer-events: none;
-  z-index: 0;
-}
-
-.main > * {
-  position: relative;
-  z-index: 1;
-}
-
-/* ===============================
-   PAGE SECTIONS
-================================ */
-.page-section {
-  min-height: 100vh;
   padding: 24px;
+  background:
+    linear-gradient(rgba(120,60,255,.15) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(120,60,255,.15) 1px, transparent 1px);
+  background-size: 40px 40px;
 }
 
-/* ===============================
-   ACCOUNTS MONITOR GRID
-================================ */
+/* GRID */
 .card-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(220px,1fr));
+  gap: 16px;
   margin-bottom: 24px;
-
-  /* IMPORTANT: prevent collapse */
-  min-height: 240px;
 }
 
-/* ===============================
-   ACCOUNT CARD
-================================ */
+/* CARD */
 .account-card {
-  background: linear-gradient(180deg, rgba(80,30,140,0.55), rgba(30,10,60,0.9));
+  background: linear-gradient(180deg,#2b0b52,#1a0435);
   border-radius: 14px;
   padding: 16px;
   box-shadow:
-    0 0 0 1px rgba(180,120,255,0.25),
-    0 0 20px rgba(140,80,220,0.35);
+    inset 0 0 0 1px rgba(150,90,255,.25),
+    0 0 25px rgba(120,60,255,.25);
+  cursor: pointer;
   transition: transform .15s ease, box-shadow .15s ease;
 }
 
 .account-card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-2px);
   box-shadow:
-    0 0 0 1px rgba(200,150,255,0.6),
-    0 0 28px rgba(180,120,255,0.55);
+    inset 0 0 0 1px rgba(180,120,255,.5),
+    0 0 35px rgba(150,90,255,.5);
 }
 
-.account-card h3 {
+.acc-name {
   margin: 0 0 8px;
   font-size: 16px;
-  color: #ffffff;
 }
 
-.account-card p {
-  margin: 4px 0;
-  font-size: 13px;
-  opacity: 0.9;
+.acc-status {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
 }
 
-/* Status badge */
-.account-status {
-  margin-top: 10px;
-  padding: 6px 10px;
-  border-radius: 10px;
-  text-align: center;
-  font-size: 13px;
-  font-weight: 600;
+.acc-status.idle {
+  background: #ff5a4f;
 }
 
-.status-fishing {
-  background: linear-gradient(90deg, #2ecc71, #27ae60);
-  color: #042a16;
+.acc-status.fishing {
+  background: #3ddc84;
 }
 
-.status-idle {
-  background: linear-gradient(90deg, #e74c3c, #c0392b);
-  color: #2b0404;
-}
-
-/* ===============================
-   DETAIL PANEL
-================================ */
+/* DETAIL */
 .detail-panel {
-  background: linear-gradient(180deg, rgba(70,25,120,0.7), rgba(25,10,45,0.95));
-  border-radius: 16px;
+  background: linear-gradient(180deg,#2b0b52,#1a0435);
+  border-radius: 18px;
   padding: 20px;
-  box-shadow:
-    0 0 0 1px rgba(180,120,255,0.3),
-    0 0 30px rgba(160,100,255,0.35);
-  min-height: 160px;
+  box-shadow: 0 0 35px rgba(120,60,255,.4);
 }
 
-/* ===============================
-   DETAIL TABS
-================================ */
+.hidden {
+  display: none;
+}
+
 .detail-tabs {
   display: flex;
   gap: 10px;
-  margin-bottom: 16px;
+  margin: 12px 0;
 }
 
-.detail-tab {
+.tab-btn {
   flex: 1;
+  background: #2a1640;
+  border: none;
+  border-radius: 999px;
   padding: 8px;
-  text-align: center;
-  border-radius: 10px;
-  background: rgba(255,255,255,0.08);
-  cursor: pointer;
-  font-size: 13px;
-  transition: background .15s ease;
+  color: #fff;
 }
 
-.detail-tab.active {
-  background: linear-gradient(90deg, #9b5cff, #b77bff);
-  color: #18002c;
-  font-weight: 600;
+.tab-btn.active {
+  background: linear-gradient(90deg,#9b5cff,#6f3cff);
 }
-
-/* ===============================
-   QUEST PROGRESS
-================================ */
-.quest-progress {
-  height: 8px;
-  border-radius: 8px;
-  background: rgba(255,255,255,0.12);
-  overflow: hidden;
-  margin-top: 8px;
-}
-
-.quest-progress-bar {
-  height: 100%;
-  background: linear-gradient(90deg, #9b5cff, #d6b1ff);
-  width: 0%;
-  transition: width .25s ease;
-}
-
-/* ===============================
-   EMPTY STATE
-================================ */
-.empty-state {
-  opacity: 0.6;
-  font-size: 14px;
-  padding: 12px;
-}
-
-/* ===============================
-   SCROLLBAR
-================================ */
-.main::-webkit-scrollbar {
-  width: 6px;
-}
-
-.main::-webkit-scrollbar-thumb {
-  background: rgba(180,120,255,0.4);
-  border-radius: 6px;
-   }

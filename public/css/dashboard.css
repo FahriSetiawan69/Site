@@ -101,3 +101,15 @@ body {
 .tab-btn.active {
   background: linear-gradient(90deg,#9b5cff,#6f3cff);
 }
+
+/* ================= PAGE VISIBILITY FIX ================= */
+
+.page-section {
+  display: none;
+  width: 100%;
+  min-height: 100vh;
+}
+
+.page-section.active {
+  display: block;
+}

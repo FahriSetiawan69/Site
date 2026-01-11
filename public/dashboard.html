@@ -43,14 +43,39 @@
         <div class="profile-grid">
 
           <div class="profile-card">
-            <div class="avatar-preview">
-              <img id="activeAvatar" src="img/avatars/avatar_1.png" alt="Avatar">
-            </div>
 
-            <label>Username</label>
-            <input id="usernameInput" type="text" placeholder="Enter your name">
+  <div class="avatar-preview">
+    <img id="activeAvatar" src="img/avatars/avatar_1.png" alt="Avatar">
+  </div>
 
-            <button id="saveProfileBtn">Save Profile</button>
+  <!-- TOGGLE BUTTONS -->
+  <button id="editAvatarBtn" class="secondary">
+    Edit Avatar
+  </button>
+
+  <button id="editUsernameBtn" class="secondary">
+    Edit Username
+  </button>
+
+  <!-- USERNAME -->
+  <label>Username</label>
+
+  <!-- Text (default) -->
+  <div id="profileUsername" style="margin-bottom:8px;font-weight:600;">
+    User
+  </div>
+
+  <!-- Input (hidden by default via CSS) -->
+  <input
+    id="usernameInput"
+    type="text"
+    placeholder="Enter your name"
+  >
+
+  <button id="saveProfileBtn">
+    Save Profile
+  </button>
+
           </div>
 
           <div class="avatar-card">
@@ -105,3 +130,4 @@
 
 </body>
   </html>
+

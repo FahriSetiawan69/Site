@@ -1,12 +1,10 @@
 /* ================= PROFILE PAGE ================= */
 
 #profile {
-  display: block;
   padding: 24px;
   color: #fff;
 }
 
-/* Welcome text */
 .profile-welcome h1 {
   margin: 0;
   font-size: 22px;
@@ -17,7 +15,7 @@
   opacity: 0.8;
 }
 
-/* Grid layout */
+/* Layout */
 .profile-grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -25,7 +23,6 @@
   margin-top: 24px;
 }
 
-/* Desktop */
 @media (min-width: 768px) {
   .profile-grid {
     grid-template-columns: 360px 1fr;
@@ -33,7 +30,7 @@
   }
 }
 
-/* Card base */
+/* Cards */
 .profile-card,
 .avatar-card {
   background: rgba(60, 20, 100, 0.45);
@@ -46,7 +43,7 @@
 .avatar-preview {
   width: 140px;
   height: 140px;
-  margin: 0 auto 16px auto;
+  margin: 0 auto 12px auto;
   border-radius: 50%;
   overflow: hidden;
   border: 3px solid #9b5cff;
@@ -61,24 +58,39 @@
   object-fit: cover;
 }
 
-/* Input */
-.profile-card label {
+/* Buttons */
+.profile-action-btn {
+  width: 100%;
+  padding: 8px;
+  margin-top: 10px;
+  border-radius: 8px;
+  background: rgba(155, 92, 255, 0.15);
+  border: 1px solid #9b5cff;
+  color: #fff;
+  cursor: pointer;
   font-size: 13px;
-  opacity: 0.8;
 }
 
-.profile-card input {
+/* Username edit */
+.username-edit {
+  display: none;
+  margin-top: 12px;
+}
+
+.username-edit.active {
+  display: block;
+}
+
+.username-edit input {
   width: 100%;
-  margin-top: 6px;
-  margin-bottom: 14px;
   padding: 10px;
   border-radius: 8px;
   border: none;
-  outline: none;
+  margin-bottom: 10px;
 }
 
-/* Button */
-.profile-card button {
+/* Save button */
+#saveProfileBtn {
   width: 100%;
   padding: 10px;
   border-radius: 8px;
@@ -89,15 +101,20 @@
   cursor: pointer;
 }
 
-/* Avatar chooser */
-.avatar-card h3 {
-  margin-bottom: 12px;
+/* Avatar selector */
+.avatar-card {
+  display: none;
+}
+
+.avatar-card.active {
+  display: block;
 }
 
 .avatar-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(72px, 1fr));
   gap: 14px;
+  margin-top: 12px;
 }
 
 .avatar-grid img {
@@ -116,4 +133,4 @@
 
 .avatar-grid img.active {
   border-color: #9b5cff;
-}
+  }

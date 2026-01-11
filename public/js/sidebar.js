@@ -2,20 +2,21 @@ document.addEventListener("DOMContentLoaded", () => {
   const navButtons = document.querySelectorAll(".nav-btn");
   const sections = document.querySelectorAll(".page-section");
 
-  function hideAllSections() {
-    sections.forEach(section => {
-      section.classList.remove("active");
-      section.style.display = "none";
+  function resetSections() {
+    sections.forEach(sec => {
+      sec.classList.remove("active");
+      sec.style.display = "none";
     });
   }
 
-  function showSection(id) {
-    hideAllSections();
-    const target = document.getElementById(id);
-    if (target) {
-      target.style.display = "block";
-      target.classList.add("active");
-    }
+  function openPage(pageId) {
+    resetSections();
+
+    const target = document.getElementById(pageId);
+    if (!target) return;
+
+    target.style.display = "block";
+    target.classList.add("active");
   }
 
   navButtons.forEach(btn => {
@@ -23,15 +24,15 @@ document.addEventListener("DOMContentLoaded", () => {
       navButtons.forEach(b => b.classList.remove("active"));
       btn.classList.add("active");
 
-      const page = btn.dataset.page;
-      showSection(page);
+      openPage(btn.dataset.page);
     });
   });
 
-  // ===== DEFAULT PAGE =====
-  const defaultBtn = document.querySelector('.nav-btn[data-page="profile"]');
-  if (defaultBtn) {
-    defaultBtn.classList.add("active");
-    showSection("profile");
-  }
+  // ===== FORCE DEFAULT PAGE =====
+  navButtons.forEach(b => b.classList.remove("active"));
+
+  const profileBtn = document.querySelector('.nav-btn[data-page="profile"]');
+  if (profileBtn) profileBtn.classList.add("active");
+
+  openPage("profile");
 });

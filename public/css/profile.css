@@ -1,171 +1,119 @@
-/* =========================================
-   HARD RESET KHUSUS PROFILE
-========================================= */
+/* ================= PROFILE PAGE ================= */
 
-.profile-page {
-  position: relative;
-  width: 100%;
-  min-height: 100%;
-  z-index: 2;
-  overflow: hidden;
-}
-
-/* MATIKAN SEMUA IMG LIAR */
-.profile-page img {
-  position: static !important;
-  max-width: none !important;
-  background: none !important;
-}
-
-/* =========================================
-   PROFILE CONTENT WRAPPER
-========================================= */
-
-.profile-content {
-  max-width: 900px;
-  padding: 24px;
-  background: rgba(20, 10, 40, 0.75);
-  border-radius: 18px;
-  backdrop-filter: blur(8px);
-}
-
-/* =========================================
-   HEADER
-========================================= */
-
-.profile-header h1 {
-  font-size: 22px;
-  margin-bottom: 4px;
-}
-
-.profile-header p {
-  font-size: 14px;
-  opacity: 0.7;
-}
-
-/* =========================================
-   PROFILE CARD
-========================================= */
-
-.profile-card {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  margin-top: 20px;
-}
-
-/* =========================================
-   AVATAR UTAMA (TERKUNCI TOTAL)
-========================================= */
-
-.profile-avatar-wrapper {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  overflow: hidden;
-  flex-shrink: 0;
-  box-shadow: 0 0 20px rgba(139,92,246,0.9);
-}
-
-.profile-avatar-wrapper img {
-  width: 100% !important;
-  height: 100% !important;
-  object-fit: cover !important;
-  border-radius: 50%;
+#profile {
   display: block;
+  padding: 24px;
+  color: #fff;
 }
 
-/* =========================================
-   INFO
-========================================= */
-
-.profile-info {
-  flex: 1;
+/* Welcome text */
+.profile-welcome h1 {
+  margin: 0;
+  font-size: 22px;
 }
 
-.profile-info input {
-  width: 100%;
+.profile-welcome p {
   margin-top: 6px;
-  padding: 10px;
-  border-radius: 8px;
-  border: none;
-  background: rgba(0,0,0,0.4);
-  color: #fff;
+  opacity: 0.8;
 }
 
-/* =========================================
-   ACTION BUTTONS
-========================================= */
-
-.profile-actions {
-  margin-top: 12px;
-  display: flex;
-  gap: 10px;
-}
-
-.profile-actions button {
-  background: linear-gradient(135deg, #8b5cf6, #6d28d9);
-  border: none;
-  border-radius: 8px;
-  padding: 8px 14px;
-  color: #fff;
-  cursor: pointer;
-  font-size: 13px;
-}
-
-.profile-actions button.secondary {
-  background: rgba(255,255,255,0.15);
-}
-
-/* =========================================
-   AVATAR PANEL (DISABLE DEFAULT)
-========================================= */
-
-.avatar-panel {
-  display: none;
+/* Grid layout */
+.profile-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
   margin-top: 24px;
 }
 
-.avatar-panel.active {
-  display: block;
+/* Desktop */
+@media (min-width: 768px) {
+  .profile-grid {
+    grid-template-columns: 360px 1fr;
+    align-items: start;
+  }
 }
 
-/* =========================================
-   AVATAR GRID (ANTI WALLPAPER)
-========================================= */
+/* Card base */
+.profile-card,
+.avatar-card {
+  background: rgba(60, 20, 100, 0.45);
+  backdrop-filter: blur(12px);
+  border-radius: 14px;
+  padding: 20px;
+}
+
+/* Avatar preview */
+.avatar-preview {
+  width: 140px;
+  height: 140px;
+  margin: 0 auto 16px auto;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid #9b5cff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Input */
+.profile-card label {
+  font-size: 13px;
+  opacity: 0.8;
+}
+
+.profile-card input {
+  width: 100%;
+  margin-top: 6px;
+  margin-bottom: 14px;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+}
+
+/* Button */
+.profile-card button {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #8b5cf6, #a855f7);
+  border: none;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* Avatar chooser */
+.avatar-card h3 {
+  margin-bottom: 12px;
+}
 
 .avatar-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
-  gap: 16px;
-  max-width: 500px;
+  grid-template-columns: repeat(auto-fit, minmax(72px, 1fr));
+  gap: 14px;
 }
 
 .avatar-grid img {
-  width: 90px !important;
-  height: 90px !important;
-  object-fit: cover !important;
+  width: 72px;
+  height: 72px;
   border-radius: 50%;
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  object-fit: cover;
+  border: 2px solid transparent;
+  transition: transform 0.2s, border 0.2s;
 }
 
 .avatar-grid img:hover {
   transform: scale(1.1);
-  box-shadow: 0 0 20px rgba(139,92,246,1);
 }
 
-.avatar-grid img.selected {
-  outline: 3px solid #8b5cf6;
-}
-
-/* =========================================
-   RESPONSIVE
-========================================= */
-
-@media (max-width: 768px) {
-  .profile-card {
-    flex-direction: column;
-    text-align: center;
-  }
+.avatar-grid img.active {
+  border-color: #9b5cff;
 }

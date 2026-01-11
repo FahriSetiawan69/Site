@@ -1,121 +1,70 @@
-const cardGrid = document.getElementById("cardGrid");
+const grid = document.getElementById("cardGrid");
 const detailPanel = document.getElementById("detailPanel");
+const detailTitle = document.getElementById("detailTitle");
+const detailContent = document.getElementById("detailContent");
+const template = document.getElementById("accountCardTemplate");
 
-const accountMap = new Map();
-let selectedAccountId = null;
+const accounts = new Map();
+let activeAccount = null;
 
-/* ================================
-   ENTRY POINT FROM LUA
-================================ */
-window.updateAccountsFromLua = function (accounts) {
-  const incomingIds = new Set();
+/* REGISTER CARD ONCE */
+function registerAccount(id) {
+  if (accounts.has(id)) return;
 
-  accounts.forEach(acc => {
-    incomingIds.add(acc.id);
+  const clone = template.content.cloneNode(true);
+  const card = clone.querySelector(".account-card");
+  card.dataset.id = id;
 
-    if (accountMap.has(acc.id)) {
-      updateCard(acc);
-    } else {
-      createCard(acc);
-    }
-  });
+  card.addEventListener("click", () => selectAccount(id));
 
-  // Remove disconnected accounts
-  [...accountMap.keys()].forEach(id => {
-    if (!incomingIds.has(id)) {
-      accountMap.get(id).remove();
-      accountMap.delete(id);
-      if (id === selectedAccountId) {
-        detailPanel.innerHTML = "";
-        selectedAccountId = null;
-      }
-    }
-  });
-};
-
-/* ================================
-   CREATE CARD
-================================ */
-function createCard(acc) {
-  const card = document.createElement("div");
-  card.className = "account-card";
-  card.dataset.id = acc.id;
-
-  card.innerHTML = buildCardHTML(acc);
-
-  card.onclick = () => selectAccount(acc.id);
-
-  cardGrid.appendChild(card);
-  accountMap.set(acc.id, card);
-
-  if (!selectedAccountId) {
-    selectAccount(acc.id);
-  }
+  grid.appendChild(clone);
+  accounts.set(id, card);
 }
 
-/* ================================
-   UPDATE CARD (NO RESET)
-================================ */
-function updateCard(acc) {
-  const card = accountMap.get(acc.id);
-  card.innerHTML = buildCardHTML(acc);
+/* UPDATE DATA */
+function updateAccountData(id, data) {
+  registerAccount(id);
+  const card = accounts.get(id);
 
-  if (acc.id === selectedAccountId) {
-    renderDetail(acc);
-  }
+  card.querySelector(".acc-name").textContent = data.username;
+  card.querySelector(".acc-gold").textContent = data.gold;
+  card.querySelector(".acc-backpack").textContent = data.backpack;
+  card.querySelector(".acc-ping").textContent = data.ping;
+  card.querySelector(".acc-rod").textContent = data.rod;
+
+  const status = card.querySelector(".acc-status");
+  status.textContent = data.status;
+  status.className = "acc-status " + data.status.toLowerCase();
+
+  card._quest = data.quest || null;
+
+  if (activeAccount === id) renderDetail(id);
 }
 
-/* ================================
-   SELECT ACCOUNT
-================================ */
+/* DETAIL */
 function selectAccount(id) {
-  selectedAccountId = id;
-
-  document.querySelectorAll(".account-card").forEach(c =>
-    c.classList.toggle("active", c.dataset.id === id)
-  );
-
-  const acc = [...accountMap.entries()]
-    .find(([key]) => key === id)?.[1];
-
-  if (!acc) return;
-
-  const data = [...arguments.callee.caller.arguments][0];
+  activeAccount = id;
+  renderDetail(id);
 }
 
-/* ================================
-   CARD HTML
-================================ */
-function buildCardHTML(acc) {
-  return `
-    <h3>${acc.username}</h3>
-    <p>Gold: ${acc.gold}</p>
-    <p>Backpack: ${acc.backpack}</p>
-    <p>Ping: ${acc.ping} ms</p>
-    <p>Rod: ${acc.rod}</p>
-    <span class="status ${acc.status.toLowerCase()}">
-      ${acc.status}
-    </span>
+function renderDetail(id) {
+  const card = accounts.get(id);
+  detailPanel.classList.remove("hidden");
+  detailTitle.textContent = card.querySelector(".acc-name").textContent + " Detail";
+
+  const quest = card._quest;
+  if (!quest) {
+    detailContent.textContent = "No active quest";
+    return;
+  }
+
+  detailContent.innerHTML = `
+    <strong>${quest.name}</strong>
+    <div style="margin-top:8px;">${quest.progress}%</div>
   `;
 }
 
-/* ================================
-   DETAIL PANEL
-================================ */
-function renderDetail(acc) {
-  detailPanel.innerHTML = `
-    <h3>${acc.username} Detail</h3>
-    <div class="tab-bar">
-      <button class="tab active">Fish</button>
-      <button class="tab">Item</button>
-      <button class="tab">Quest</button>
-    </div>
-    <div class="detail-content">
-      <p>${acc.quest?.name || "No quest"}</p>
-      <div class="progress">
-        <div class="progress-bar" style="width:${acc.quest?.progress || 0}%"></div>
-      </div>
-      <span>${acc.quest?.progress || 0}%</span>
-    </div>
-  `;
-                }
+/* LUA BRIDGE */
+window.updateAccountsFromLua = function(list) {
+  list.forEach(acc => updateAccountData(acc.id, acc));
+};

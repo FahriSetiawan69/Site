@@ -2,15 +2,17 @@ const grid = document.getElementById("cardGrid");
 const detailPanel = document.getElementById("detailPanel");
 
 const accounts = new Map();
-let activeId = null;
+let selectedId = null;
 
-function createCard(id) {
+function ensureCard(id) {
+  if (accounts.has(id)) return;
+
   const card = document.createElement("div");
   card.className = "account-card";
   card.dataset.id = id;
 
   card.addEventListener("click", () => {
-    activeId = id;
+    selectedId = id;
     renderDetail(id);
   });
 
@@ -19,11 +21,9 @@ function createCard(id) {
 }
 
 function updateCard(id, data) {
-  if (!accounts.has(id)) {
-    createCard(id);
-  }
-
+  ensureCard(id);
   const card = accounts.get(id);
+
   card.innerHTML = `
     <h3>${data.username}</h3>
     <p>Gold: ${data.gold}</p>
@@ -41,6 +41,7 @@ function renderDetail(id) {
   if (!card) return;
 
   detailPanel.innerHTML = "";
+
   const title = document.createElement("h3");
   title.textContent = card.querySelector("h3").textContent;
   detailPanel.appendChild(title);
@@ -55,7 +56,7 @@ function renderDetail(id) {
   }
 }
 
-// 🔗 LUA / CONSOLE ENTRY POINT
+// 🔗 ENTRY POINT
 window.updateAccountsFromLua = function(list) {
   list.forEach(acc => updateCard(acc.id, acc));
 };

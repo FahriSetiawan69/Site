@@ -1,53 +1,71 @@
+/* =========================
+   ROOT & GLOBAL
+========================= */
+:root {
+  --bg-main: #0b0618;
+  --purple-1: #2a114f;
+  --purple-2: #3a1b6b;
+  --purple-3: #6e3bcf;
+  --purple-glow: rgba(180, 130, 255, 0.6);
+
+  --card-bg: linear-gradient(
+    180deg,
+    rgba(110, 60, 200, 0.32),
+    rgba(50, 20, 120, 0.38)
+  );
+}
+
 * {
   box-sizing: border-box;
-  font-family: Inter, system-ui, sans-serif;
 }
 
 body {
   margin: 0;
-  height: 100vh;
-  background: linear-gradient(rgba(10,5,25,.85), rgba(10,5,25,.9)),
-    url("../img/premium_photo-1685148902854-9b9bb49fff08.jpeg")
-    center / cover no-repeat fixed;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  background: var(--bg-main);
   color: #fff;
 }
 
-/* LAYOUT */
+/* =========================
+   LAYOUT
+========================= */
 .app {
   display: flex;
-  height: 100vh;
+  min-height: 100vh;
+  overflow: hidden;
 }
 
-/* SIDEBAR */
-.sidebar {
-  width: 240px;
-  background: rgba(40,15,80,.9);
-  padding: 16px;
-}
-
-.sidebar button {
-  width: 100%;
-  margin-bottom: 10px;
-  padding: 10px;
-  border-radius: 10px;
-  border: none;
-  background: rgba(255,255,255,.08);
-  color: #fff;
-  cursor: pointer;
-}
-
-.sidebar button.active {
-  background: linear-gradient(135deg,#7f3cff,#b36bff);
-}
-
-/* CONTENT */
-.content {
+.main {
   flex: 1;
-  padding: 20px;
+  padding: 20px 18px 40px;
+  position: relative;
   overflow-y: auto;
+  background-image: url("../img/premium_photo-1685148902854-9b9bb49fff08.jpeg");
+  background-size: cover;
+  background-position: center;
 }
 
-/* PAGE */
+.main::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(10, 5, 30, 0.92),
+    rgba(10, 5, 30, 0.7)
+  );
+  z-index: 0;
+}
+
+.main > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* =========================
+   PAGE SYSTEM
+========================= */
 .page-section {
   display: none;
 }
@@ -56,113 +74,168 @@ body {
   display: block;
 }
 
-/* CARD GRID */
+/* =========================
+   ACCOUNTS GRID
+========================= */
 .card-grid {
   display: grid;
-  grid-template-columns: repeat(3,1fr);
-  gap: 14px;
-  margin-top: 14px;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 16px;
+  margin-bottom: 20px;
 }
 
-.card {
-  background: rgba(90,40,150,.75);
-  border-radius: 14px;
+/* =========================
+   ACCOUNT CARD (FIXED FRAME)
+========================= */
+.account-card {
+  background: var(--card-bg);
+  border-radius: 16px;
+
+  /* ✅ FRAME DEFAULT (INI YANG WAJIB ADA) */
+  border: 1px solid rgba(170, 120, 255, 0.35);
+
+  box-shadow:
+    0 0 0 1px rgba(160, 120, 255, 0.15),
+    0 10px 28px rgba(0, 0, 0, 0.55);
+
+  backdrop-filter: blur(6px);
   padding: 14px;
+
   cursor: pointer;
-  box-shadow: 0 0 20px rgba(160,80,255,.25);
+  transition: all 0.25s ease;
 }
 
-/* QUEST MINI */
-.quest-mini {
-  margin-top: 8px;
+.account-card h4 {
+  margin: 0 0 6px;
+  font-size: 15px;
+  font-weight: 600;
 }
 
-.quest-mini small {
-  font-size: 12px;
-  opacity: .85;
+.account-card p {
+  margin: 3px 0;
+  font-size: 13px;
+  opacity: 0.9;
 }
 
-/* STATUS */
-.status {
+/* =========================
+   STATUS BADGE
+========================= */
+.status-badge {
   margin-top: 10px;
-  padding: 6px;
-  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 10px;
   text-align: center;
-  font-weight: bold;
 }
 
-.status.fishing { background: #3ad47a; color:#000; }
-.status.idle { background: #e74c3c; color:#000; }
+.status-fishing {
+  background: linear-gradient(90deg, #2ecc71, #27ae60);
+}
 
-/* QUEST BAR */
+.status-idle {
+  background: linear-gradient(90deg, #e74c3c, #c0392b);
+}
+
+/* =========================
+   ACTIVE / SELECTED CARD
+========================= */
+.account-card.active {
+  border-color: #b58cff;
+
+  box-shadow:
+    0 0 0 2px rgba(180, 130, 255, 0.55),
+    0 0 24px rgba(180, 130, 255, 0.6),
+    0 14px 36px rgba(0, 0, 0, 0.6);
+}
+
+/* =========================
+   HOVER (DESKTOP)
+========================= */
+@media (hover: hover) {
+  .account-card:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      0 0 0 1px rgba(180, 130, 255, 0.45),
+      0 14px 32px rgba(0, 0, 0, 0.6);
+  }
+}
+
+/* =========================
+   DETAIL PANEL
+========================= */
+.detail-panel {
+  margin-top: 20px;
+  padding: 16px;
+  border-radius: 16px;
+
+  background: linear-gradient(
+    180deg,
+    rgba(90, 40, 160, 0.45),
+    rgba(40, 20, 90, 0.55)
+  );
+
+  border: 1px solid rgba(170, 120, 255, 0.35);
+
+  box-shadow:
+    0 0 0 1px rgba(160, 120, 255, 0.15),
+    0 14px 36px rgba(0, 0, 0, 0.55);
+
+  backdrop-filter: blur(6px);
+}
+
+/* =========================
+   DETAIL TABS
+========================= */
+.detail-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.detail-tab {
+  flex: 1;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  text-align: center;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.detail-tab.active {
+  background: var(--purple-3);
+}
+
+/* =========================
+   QUEST PROGRESS
+========================= */
+.quest-item {
+  margin-bottom: 10px;
+}
+
+.quest-title {
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+
 .quest-bar {
   height: 8px;
-  background: #2b1744;
-  border-radius: 8px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.15);
   overflow: hidden;
 }
 
-.quest-bar span {
-  display: block;
+.quest-bar-fill {
   height: 100%;
-  background: linear-gradient(90deg,#35d07f,#8affc1);
+  background: linear-gradient(90deg, #7f5cff, #b58cff);
 }
 
-.quest-bar.big {
-  height: 12px;
-  margin: 10px 0;
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 768px) {
+  .card-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
 }
-
-/* DETAIL */
-.detail-panel {
-  margin-top: 20px;
-  background: rgba(0,0,0,.45);
-  padding: 16px;
-  border-radius: 14px;
-}
-
-.detail-tabs {
-  display: flex;
-  gap: 10px;
-  margin: 10px 0;
-}
-
-.detail-tabs button {
-  flex: 1;
-  padding: 8px;
-  border-radius: 8px;
-  border: none;
-  background: rgba(255,255,255,.15);
-  color: #fff;
-  cursor: pointer;
-}
-
-.detail-tabs button.active {
-  background: linear-gradient(135deg,#7f3cff,#b36bff);
-}
-
-.grid-item {
-  background: rgba(255,255,255,.08);
-  padding: 10px;
-  border-radius: 10px;
-  margin-bottom: 8px;
-}
-
-/* QUEST CARD (DETAIL) */
-.quest-card {
-  background: rgba(255,255,255,.08);
-  padding: 12px;
-  border-radius: 12px;
-  margin-bottom: 10px;
-  cursor: pointer;
-}
-
-.quest-card.active {
-  outline: 2px solid #8affc1;
-  background: rgba(80,200,140,.15);
-}
-
-.quest-card small {
-  font-size: 12px;
-  opacity: .8;
-    }

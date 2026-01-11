@@ -1,246 +1,88 @@
-/* =========================
-   ROOT & GLOBAL
-========================= */
-
-:root {
-  --purple-1: #1a0f2e;
-  --purple-2: #2a1552;
-  --purple-3: #5f2cff;
-  --purple-4: #8b5cff;
-
-  --glass-bg: rgba(40, 18, 80, 0.65);
-  --glass-border: rgba(140, 90, 255, 0.35);
-  --glass-glow: rgba(140, 90, 255, 0.55);
-}
-
-* {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  font-family: "Segoe UI", system-ui, sans-serif;
-  background: radial-gradient(circle at bottom, #12001f, #07000f 70%);
-  color: #fff;
-}
-
-/* =========================
-   APP LAYOUT
-========================= */
-
-.app {
-  display: flex;
-  min-height: 100vh;
-}
-
-.main {
-  flex: 1;
-  position: relative;
-  overflow-x: hidden;
-  background: transparent;
-}
-
-/* =========================
-   PAGE SECTIONS
-========================= */
-
-.page-section {
-  display: none;
-  min-height: 100vh;
-}
-
-.page-section.active {
-  display: block;
-}
-
-/* =========================
-   DASHBOARD BACKGROUND
-========================= */
-
-.dashboard-content {
-  position: relative;
-  min-height: 100vh;
-  padding: 24px;
-  overflow: hidden;
-}
-
-.dashboard-content::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(160, 90, 255, 0.18) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(160, 90, 255, 0.18) 1px, transparent 1px),
-    radial-gradient(circle at bottom, rgba(140, 60, 255, 0.35), transparent 65%);
-  background-size: 60px 60px, 60px 60px, cover;
-  z-index: 0;
-}
-
-.dashboard-content > * {
-  position: relative;
-  z-index: 1;
-}
-
-/* =========================
-   CARD GRID
-========================= */
-
+/* =====================
+   GRID LAYOUT
+===================== */
 .card-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 20px;
-  max-width: 1100px;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
   margin-bottom: 24px;
 }
 
-/* =========================
+/* =====================
    ACCOUNT CARD
-========================= */
-
+===================== */
 .account-card {
-  background: var(--glass-bg);
+  background: linear-gradient(145deg, #2a1247, #12001f);
   border-radius: 14px;
   padding: 16px;
-  border: 1px solid var(--glass-border);
+  color: #fff;
   box-shadow:
-    0 0 0 1px rgba(140, 90, 255, 0.15),
-    0 0 25px rgba(140, 90, 255, 0.25);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+    0 0 0 1px rgba(180, 100, 255, 0.3),
+    0 0 25px rgba(150, 80, 255, 0.25);
+  transition: all .25s ease;
+  cursor: pointer;
+  min-height: 160px;
 }
 
 .account-card:hover {
-  transform: translateY(-3px);
+  transform: translateY(-4px);
   box-shadow:
-    0 0 0 1px rgba(160, 110, 255, 0.35),
-    0 0 30px rgba(160, 110, 255, 0.55);
+    0 0 0 1px rgba(200, 140, 255, 0.6),
+    0 0 35px rgba(180, 120, 255, 0.6);
 }
 
-.account-card h3 {
-  margin: 0 0 8px;
-  font-size: 16px;
-  color: #e6d9ff;
+.account-card.active {
+  outline: 2px solid #a855f7;
 }
 
-.account-card p {
-  margin: 4px 0;
-  font-size: 13px;
-  opacity: 0.9;
-}
-
-/* =========================
-   STATUS BADGE
-========================= */
-
+/* =====================
+   STATUS
+===================== */
 .status {
-  margin-top: 10px;
-  padding: 6px 10px;
-  font-size: 12px;
-  border-radius: 8px;
-  text-align: center;
-  font-weight: 600;
+  display: inline-block;
+  margin-top: 8px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: bold;
 }
 
 .status.fishing {
-  background: linear-gradient(90deg, #1ed760, #2aff8a);
-  color: #042b14;
+  background: #22c55e;
+  color: #052e16;
 }
 
 .status.idle {
-  background: linear-gradient(90deg, #ff4d4d, #ff7b7b);
-  color: #3a0000;
+  background: #ef4444;
+  color: #450a0a;
 }
 
-/* =========================
+/* =====================
    DETAIL PANEL
-========================= */
-
+===================== */
 .detail-panel {
-  max-width: 1100px;
-  background: var(--glass-bg);
+  background: linear-gradient(145deg, #2b1450, #16001f);
   border-radius: 16px;
-  padding: 18px;
-  border: 1px solid var(--glass-border);
+  padding: 20px;
   box-shadow:
-    0 0 0 1px rgba(140, 90, 255, 0.15),
-    0 0 28px rgba(140, 90, 255, 0.35);
+    0 0 0 1px rgba(160, 90, 255, 0.3),
+    0 0 40px rgba(140, 70, 255, 0.3);
 }
 
-/* =========================
-   DETAIL HEADER
-========================= */
-
-.detail-panel h3 {
-  margin: 0 0 12px;
-  font-size: 18px;
-}
-
-/* =========================
-   DETAIL TABS
-========================= */
-
-.detail-tabs {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 14px;
-}
-
-.detail-tabs button {
-  flex: 1;
-  padding: 8px;
-  border-radius: 8px;
-  border: none;
-  background: rgba(255,255,255,0.08);
-  color: #fff;
-  font-size: 13px;
-  cursor: pointer;
-  transition: background 0.2s ease;
-}
-
-.detail-tabs button.active {
-  background: linear-gradient(90deg, var(--purple-3), var(--purple-4));
-  box-shadow: 0 0 12px rgba(160, 110, 255, 0.6);
-}
-
-/* =========================
-   QUEST PROGRESS
-========================= */
-
-.quest-progress {
-  height: 8px;
-  background: rgba(255,255,255,0.12);
-  border-radius: 6px;
+/* =====================
+   PROGRESS BAR
+===================== */
+.progress {
+  width: 100%;
+  height: 10px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 999px;
   overflow: hidden;
   margin-top: 8px;
 }
 
-.quest-progress span {
-  display: block;
+.progress-bar {
   height: 100%;
-  background: linear-gradient(90deg, #7f5cff, #c08bff);
-  width: 0%;
-  transition: width 0.3s ease;
+  background: linear-gradient(90deg, #a855f7, #ec4899);
+  transition: width .4s ease;
 }
-
-/* =========================
-   EMPTY STATE
-========================= */
-
-.empty-state {
-  font-size: 14px;
-  opacity: 0.75;
-  padding: 20px;
-}
-
-/* =========================
-   MOBILE SAFETY
-========================= */
-
-@media (max-width: 768px) {
-  .card-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .dashboard-content {
-    padding: 16px;
-  }
-   }

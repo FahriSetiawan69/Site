@@ -1,104 +1,156 @@
-/* PROFILE WRAPPER */
-.profile-wrapper {
+/* ===============================
+   PROFILE PAGE CONTAINER
+================================ */
+
+.profile-container {
   max-width: 1100px;
-  margin: auto;
-  padding: 20px;
+  margin: 0 auto;
+  padding: 32px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  color: #f3f3f3;
 }
 
-/* WELCOME */
-.profile-welcome h1 {
-  font-size: 28px;
-  margin-bottom: 4px;
+/* ===============================
+   HEADER
+================================ */
+
+.profile-header h1 {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 6px;
 }
 
-.profile-welcome p {
-  opacity: 0.8;
-  margin-bottom: 24px;
+.profile-header p {
+  font-size: 14px;
+  opacity: 0.7;
 }
 
-/* GRID */
-.profile-grid {
+/* ===============================
+   MAIN PROFILE GRID
+================================ */
+
+.profile-main {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 20px;
+  gap: 24px;
 }
 
-/* PROFILE CARD */
-.profile-card,
-.avatar-card {
-  background: rgba(30, 10, 60, 0.75);
-  backdrop-filter: blur(10px);
+@media (max-width: 768px) {
+  .profile-main {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ===============================
+   CARD BASE STYLE
+================================ */
+
+.profile-card {
+  background: linear-gradient(
+    180deg,
+    rgba(88, 28, 135, 0.85),
+    rgba(30, 16, 60, 0.85)
+  );
   border-radius: 16px;
-  padding: 20px;
-  box-shadow: 0 0 20px rgba(160, 80, 255, 0.25);
+  padding: 24px;
+  box-shadow: 0 0 24px rgba(139, 92, 246, 0.25);
+  backdrop-filter: blur(6px);
 }
 
-/* AVATAR PREVIEW */
+/* ===============================
+   LEFT CARD (USER INFO)
+================================ */
+
 .avatar-preview {
   display: flex;
   justify-content: center;
-  margin-bottom: 16px;
+  margin-bottom: 18px;
 }
 
 .avatar-preview img {
   width: 120px;
   height: 120px;
   border-radius: 50%;
+  object-fit: cover;
   border: 3px solid #8b5cf6;
+  box-shadow: 0 0 20px rgba(139, 92, 246, 0.8);
 }
 
-/* INPUT */
 .profile-card label {
-  display: block;
-  margin-bottom: 6px;
-  font-size: 14px;
+  font-size: 13px;
+  opacity: 0.8;
 }
 
 .profile-card input {
   width: 100%;
-  padding: 10px;
+  margin-top: 6px;
+  padding: 10px 12px;
   border-radius: 10px;
   border: none;
-  margin-bottom: 12px;
   outline: none;
+  background: rgba(20, 10, 40, 0.8);
+  color: #fff;
 }
 
-/* BUTTON */
 .profile-card button {
+  margin-top: 14px;
   width: 100%;
   padding: 10px;
-  border-radius: 10px;
+  border-radius: 12px;
   border: none;
-  background: linear-gradient(135deg, #7f3cff, #b36bff);
+  background: linear-gradient(90deg, #8b5cf6, #a855f7);
   color: #fff;
-  font-weight: bold;
+  font-weight: 600;
   cursor: pointer;
 }
 
-/* AVATAR GRID */
+.profile-card button:hover {
+  opacity: 0.9;
+}
+
+/* ===============================
+   RIGHT CARD (AVATAR GRID)
+================================ */
+
 .avatar-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 12px;
-  margin-top: 12px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-top: 14px;
 }
 
 .avatar-grid img {
-  width: 64px;
-  height: 64px;
+  width: 100%;
+  aspect-ratio: 1/1;
   border-radius: 50%;
   cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
+  border: 2px solid transparent;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
 .avatar-grid img:hover {
-  transform: scale(1.1);
-  box-shadow: 0 0 12px rgba(139, 92, 246, 0.9);
+  transform: scale(1.05);
 }
 
-/* MOBILE */
-@media (max-width: 900px) {
-  .profile-grid {
-    grid-template-columns: 1fr;
-  }
+.avatar-grid img.active {
+  border-color: #8b5cf6;
+  box-shadow: 0 0 16px rgba(139, 92, 246, 0.9);
+}
+
+/* ===============================
+   RARITY STYLE (OPSIONAL)
+================================ */
+
+.avatar-mythic {
+  box-shadow: 0 0 18px rgba(255, 60, 60, 0.9);
+}
+
+.avatar-legendary {
+  box-shadow: 0 0 18px rgba(255, 200, 0, 0.9);
+}
+
+.avatar-rare {
+  box-shadow: 0 0 18px rgba(0, 200, 255, 0.9);
 }

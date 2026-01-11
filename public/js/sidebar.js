@@ -4,41 +4,34 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function hideAllSections() {
     sections.forEach(section => {
-      section.style.display = "none";
       section.classList.remove("active");
+      section.style.display = "none";
     });
   }
 
-  function activateSection(pageId) {
+  function showSection(id) {
     hideAllSections();
-
-    const target = document.getElementById(pageId);
+    const target = document.getElementById(id);
     if (target) {
       target.style.display = "block";
       target.classList.add("active");
     }
   }
 
-  // CLICK HANDLER
   navButtons.forEach(btn => {
-    btn.addEventListener("click", (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-
+    btn.addEventListener("click", () => {
       navButtons.forEach(b => b.classList.remove("active"));
       btn.classList.add("active");
 
       const page = btn.dataset.page;
-      activateSection(page);
+      showSection(page);
     });
   });
 
   // ===== DEFAULT PAGE =====
-  // PAKSA SELALU KE PROFILE
-  navButtons.forEach(b => b.classList.remove("active"));
-
-  const profileBtn = document.querySelector('.nav-btn[data-page="profile"]');
-  if (profileBtn) profileBtn.classList.add("active");
-
-  activateSection("profile");
+  const defaultBtn = document.querySelector('.nav-btn[data-page="profile"]');
+  if (defaultBtn) {
+    defaultBtn.classList.add("active");
+    showSection("profile");
+  }
 });

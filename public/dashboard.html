@@ -4,13 +4,9 @@
   <meta charset="UTF-8" />
   <title>Fishit Monitor Dashboard</title>
 
-  <!-- GLOBAL CSS -->
+  <!-- GLOBAL -->
   <link rel="stylesheet" href="css/dashboard.css">
   <link rel="stylesheet" href="css/sidebar.css">
-
-  <!-- PROFILE SPECIFIC CSS -->
-  <link rel="stylesheet" href="css/profile.css">
-
 </head>
 <body>
 
@@ -20,114 +16,65 @@
   <aside class="sidebar">
     <h2>Fishit Monitor</h2>
 
-    <button class="nav-btn active" data-page="profile">Profile</button>
-    <button class="nav-btn" data-page="accounts">Accounts Monitor</button>
+    <button class="nav-btn" data-page="profile">Profile</button>
+    <button class="nav-btn active" data-page="accounts">Accounts Monitor</button>
     <button class="nav-btn" data-page="settings">Settings</button>
     <button class="nav-btn" data-page="about">About</button>
 
-    <button id="logoutBtn" class="logout-btn">Logout</button>
+    <button class="logout-btn">Logout</button>
   </aside>
 
-  <!-- MAIN CONTENT -->
+  <!-- MAIN -->
   <main class="main">
 
-    <!-- ===================== PROFILE ===================== -->
-    <section id="profile" class="page-section">
-      <div class="profile-wrapper">
+    <!-- ACCOUNTS -->
+    <section id="accounts" class="page-section active">
 
-        <div class="profile-welcome">
-          <h1>Welcome, <span id="profileUsername">User</span></h1>
-          <p>Manage your Fishit monitoring dashboard</p>
-        </div>
-
-        <div class="profile-grid">
-
-          <div class="profile-card">
-
-  <div class="avatar-preview">
-    <img id="activeAvatar" src="img/avatars/avatar_1.png" alt="Avatar">
-  </div>
-
-  <!-- TOGGLE BUTTONS -->
-  <button id="editAvatarBtn" class="secondary">
-    Edit Avatar
-  </button>
-
-  <button id="editUsernameBtn" class="secondary">
-    Edit Username
-  </button>
-
-  <!-- USERNAME -->
-  <label>Username</label>
-
-  <!-- Text (default) -->
-  <div id="profileUsername" style="margin-bottom:8px;font-weight:600;">
-    User
-  </div>
-
-  <!-- Input (hidden by default via CSS) -->
-  <input
-    id="usernameInput"
-    type="text"
-    placeholder="Enter your name"
-  >
-
-  <button id="saveProfileBtn">
-    Save Profile
-  </button>
-
-          </div>
-
-          <div class="avatar-card">
-            <h3>Choose Avatar</h3>
-            <div class="avatar-grid">
-              <img src="img/avatars/avatar_1.png" data-avatar="avatar_1.png">
-              <img src="img/avatars/avatar_2.png" data-avatar="avatar_2.png">
-              <img src="img/avatars/avatar_3.png" data-avatar="avatar_3.png">
-              <img src="img/avatars/avatar_4.png" data-avatar="avatar_4.png">
-              <img src="img/avatars/avatar_5.png" data-avatar="avatar_5.png">
-            </div>
-          </div>
-
-        </div>
-
+      <div id="cardGrid" class="card-grid">
+        <!-- CARDS WILL BE CLONED FROM TEMPLATE -->
       </div>
-    </section>
-    <!-- ================= END PROFILE ===================== -->
 
-    <!-- ===================== ACCOUNTS MONITOR ===================== -->
-    <section id="accounts" class="page-section">
-      <!-- Content of accounts monitor (as in your existing dashboard) -->
-      <div id="cardGrid" class="card-grid"></div>
-      <div id="detailPanel" class="detail-panel"></div>
-    </section>
-    <!-- ================ END ACCOUNTS MONITOR ================ -->
+      <div id="detailPanel" class="detail-panel hidden">
+        <h3 id="detailTitle">Account Detail</h3>
 
-    <!-- ===================== SETTINGS ===================== -->
+        <div class="detail-tabs">
+          <button class="tab-btn active" data-tab="fish">Fish</button>
+          <button class="tab-btn" data-tab="item">Item</button>
+          <button class="tab-btn" data-tab="quest">Quest</button>
+        </div>
+
+        <div id="detailContent" class="detail-content">
+          No data
+        </div>
+      </div>
+
+      <!-- CARD TEMPLATE -->
+      <template id="accountCardTemplate">
+        <div class="account-card" data-id="">
+          <h4 class="acc-name">---</h4>
+          <p>Gold: <span class="acc-gold">0</span></p>
+          <p>Backpack: <span class="acc-backpack">0</span></p>
+          <p>Ping: <span class="acc-ping">0</span> ms</p>
+          <p>Rod: <span class="acc-rod">-</span></p>
+          <span class="acc-status idle">Idle</span>
+        </div>
+      </template>
+
+    </section>
+
+    <!-- SETTINGS -->
     <section id="settings" class="page-section">
       <h2>Settings</h2>
-      <p>Future configuration will be placed here.</p>
     </section>
-    <!-- ================ END SETTINGS ================ -->
 
-    <!-- ===================== ABOUT ===================== -->
+    <!-- ABOUT -->
     <section id="about" class="page-section">
       <h2>About</h2>
-      <p>Fishit Monitor Dashboard</p>
-      <p>Internal / Personal Use</p>
     </section>
-    <!-- ================ END ABOUT ================ -->
 
   </main>
 </div>
 
-<!-- GLOBAL JS -->
-<script src="js/sidebar.js"></script>
 <script src="js/dashboard.js"></script>
-
-<!-- PROFILE JS -->
-<script src="js/profile.js"></script>
-
 </body>
-  </html>
-
+</html>

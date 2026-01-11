@@ -1,40 +1,45 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const editAvatarBtn = document.getElementById("editAvatarBtn");
-  const avatarGrid = document.getElementById("avatarGrid");
-
-  const editUsernameBtn = document.getElementById("editUsernameBtn");
-  const usernameText = document.getElementById("usernameText");
   const usernameInput = document.getElementById("usernameInput");
+  const profileUsername = document.getElementById("profileUsername");
+  const activeAvatar = document.getElementById("activeAvatar");
+  const avatarImages = document.querySelectorAll(".avatar-grid img");
+  const saveBtn = document.getElementById("saveProfileBtn");
 
-  /* ==========================
-     TOGGLE AVATAR GRID
-  ========================== */
+  /* Load saved profile */
+  const savedName = localStorage.getItem("username");
+  const savedAvatar = localStorage.getItem("avatar");
 
-  if (editAvatarBtn && avatarGrid) {
-    avatarGrid.style.display = "none";
-
-    editAvatarBtn.addEventListener("click", () => {
-      avatarGrid.style.display =
-        avatarGrid.style.display === "none" ? "grid" : "none";
-    });
+  if (savedName) {
+    usernameInput.value = savedName;
+    profileUsername.textContent = savedName;
   }
 
-  /* ==========================
-     TOGGLE USERNAME EDIT
-  ========================== */
-
-  if (editUsernameBtn && usernameInput && usernameText) {
-    usernameInput.style.display = "none";
-
-    editUsernameBtn.addEventListener("click", () => {
-      const isHidden = usernameInput.style.display === "none";
-
-      usernameInput.style.display = isHidden ? "block" : "none";
-      usernameText.style.display = isHidden ? "none" : "block";
-
-      editUsernameBtn.innerText = isHidden
-        ? "Cancel Edit"
-        : "Edit Username";
-    });
+  if (savedAvatar) {
+    activeAvatar.src = `img/avatars/${savedAvatar}`;
   }
+
+  /* Avatar select */
+  avatarImages.forEach(img => {
+    if (img.dataset.avatar === savedAvatar) {
+      img.classList.add("active");
+    }
+
+    img.addEventListener("click", () => {
+      avatarImages.forEach(i => i.classList.remove("active"));
+      img.classList.add("active");
+
+      const avatarFile = img.dataset.avatar;
+      activeAvatar.src = `img/avatars/${avatarFile}`;
+      localStorage.setItem("avatar", avatarFile);
+    });
+  });
+
+  /* Save profile */
+  saveBtn.addEventListener("click", () => {
+    const name = usernameInput.value.trim();
+    if (!name) return;
+
+    localStorage.setItem("username", name);
+    profileUsername.textContent = name;
+  });
 });
